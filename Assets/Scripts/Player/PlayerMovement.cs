@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,6 +13,10 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private float _climbSpeed = 3f;
+
+    [Header("References")]
+    [SerializeField]
+    private ClickRouter _clickRouter;
 
     [Header("Debug")]
     [SerializeField]
@@ -51,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public event Action<bool> OnFacingChanged;
+    public event Action<Vector2> OnDestinationSet;
     public event Action OnMovementStarted;
     public event Action OnMovementStopped;
     public event Action OnClimbStarted;
@@ -61,7 +65,6 @@ public class PlayerMovement : MonoBehaviour
     #region Private Fields
 
     private PlatformGraphBuilder _graphBuilder;
-    private Camera _mainCamera;
     private PlatformNode _currentNode;
     private List<PlatformNode> _activePath = new();
     private Coroutine _moveCoroutine;
@@ -75,32 +78,38 @@ public class PlayerMovement : MonoBehaviour
 
     #region Unity Lifecycle
 
-    private void Awake()
+    private void OnEnable()
     {
-        _mainCamera = Camera.main;
+        if (_clickRouter != null)
+            _clickRouter.OnGroundClicked += HandleGroundClicked;
+    }
+
+    private void OnDisable()
+    {
+        if (_clickRouter != null)
+            _clickRouter.OnGroundClicked -= HandleGroundClicked;
     }
 
     private void Start()
     {
+        if (_clickRouter == null)
+        {
+            Debug.LogError("[PlayerMovement] No ClickRouter reference assigned!");
+            enabled = false;
+            return;
+        }
+
+        _graphBuilder = FindFirstObjectByType<PlatformGraphBuilder>();
         if (_graphBuilder == null)
         {
-            _graphBuilder = FindFirstObjectByType<PlatformGraphBuilder>();
-            if (_graphBuilder == null)
-            {
-                Debug.LogError("[PlayerMovement] No PlatformGraphBuilder found in scene!");
-                enabled = false;
-                return;
-            }
+            Debug.LogError("[PlayerMovement] No PlatformGraphBuilder found in scene!");
+            enabled = false;
+            return;
         }
 
         _currentNode = _graphBuilder.FindNearestNode(transform.position);
         if (_currentNode != null)
             transform.position = _currentNode.worldPosition;
-    }
-
-    void Update()
-    {
-        HandleClickInput();
     }
 
     #endregion
@@ -135,20 +144,16 @@ public class PlayerMovement : MonoBehaviour
 
     #region Input
 
-    private void HandleClickInput()
+    private void HandleGroundClicked(Vector2 worldPos)
     {
-        var mouse = Mouse.current;
-        if (mouse == null || !mouse.leftButton.wasPressedThisFrame)
-            return;
-
-        Vector2 screenPos = mouse.position.ReadValue();
-        Vector2 worldClick = _mainCamera.ScreenToWorldPoint(screenPos);
-        PlatformNode targetNode = _graphBuilder.FindNearestNode(worldClick, groundOnly: true);
-
+        PlatformNode targetNode = _graphBuilder.FindNearestNode(worldPos, groundOnly: true);
         if (targetNode == null)
             return;
 
-        Vector2 exactDest = new(worldClick.x, targetNode.worldPosition.y);
+        Vector2 exactDest = new(worldPos.x, targetNode.worldPosition.y);
+
+        // Fire immediately so the cursor updates even when the destination is queued.
+        OnDestinationSet?.Invoke(exactDest);
 
         if (_isClimbingSegment)
         {
@@ -199,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
             PlatformNode waypoint = path[waypointIndex];
             PlatformNode previous = path[waypointIndex - 1];
 
-            // Set the climb flag BEFORE any yield so HandleClickInput sees the
+            // Set the climb flag BEFORE any yield so HandleGroundClicked sees the
             // correct value on every frame within this segment.
             bool segmentIsClimb = !Mathf.Approximately(
                 waypoint.worldPosition.y,
