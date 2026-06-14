@@ -150,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
         if (targetNode == null)
             return;
 
-        Vector2 exactDest = new(worldPos.x, targetNode.worldPosition.y);
+        Vector2 exactDest = new(_graphBuilder.ClampXToPlatform(worldPos.x, targetNode), targetNode.worldPosition.y);
 
         // Fire immediately so the cursor updates even when the destination is queued.
         OnDestinationSet?.Invoke(exactDest);

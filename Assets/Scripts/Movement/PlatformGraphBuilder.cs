@@ -77,6 +77,24 @@ public class PlatformGraphBuilder : MonoBehaviour
 
     #region Public API
 
+    public float ClampXToPlatform(float clickX, PlatformNode node)
+    {
+        float minX = node.worldPosition.x;
+        float maxX = node.worldPosition.x;
+
+        foreach (var neighbor in node.neighbors)
+        {
+            if (!Mathf.Approximately(neighbor.worldPosition.y, node.worldPosition.y))
+                continue;
+
+            minX = Mathf.Min(minX, neighbor.worldPosition.x);
+            maxX = Mathf.Max(maxX, neighbor.worldPosition.x);
+        }
+
+        float halfSpacing = _nodeSpacing * 0.5f;
+        return Mathf.Clamp(clickX, minX - halfSpacing, maxX + halfSpacing);
+    }
+
     public PlatformNode FindNearestNode(Vector2 worldPos, bool groundOnly = true)
     {
         PlatformNode closest = null;
