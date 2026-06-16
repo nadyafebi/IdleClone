@@ -668,12 +668,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f036386c3b48e647a9ed082f3d0f565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClickIndicator
-  _router: {fileID: 1498583535}
   _movement: {fileID: 258905250}
   _cursor: {fileID: 882296876}
   _groundSprite: {fileID: 1359119521, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
   _groundCursorOffset: {x: 0, y: 0.175}
-  _enemySprite: {fileID: -1898279630, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
   _npcSprite: {fileID: -5063247132458878880, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
 --- !u!4 &882296875
 Transform:
@@ -1524,10 +1522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfd831850a57a874faa0ce289d795535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClickRouter
-  _enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  _npcLayer:
+  _interactableLayer:
     serializedVersion: 2
     m_Bits: 64
 --- !u!4 &1498583536

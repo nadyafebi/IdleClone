@@ -8,19 +8,13 @@ public class ClickRouter : MonoBehaviour
     #region Serialized Fields
 
     [SerializeField]
-    private LayerMask _enemyLayer;
-
-    [SerializeField]
-    private LayerMask _npcLayer;
-
+    private LayerMask _interactableLayer;
 
     #endregion
 
     #region Public Properties
 
     public event Action<Vector2> OnGroundClicked;
-    public event Action<GameObject> OnEnemyClicked;
-    public event Action<GameObject> OnNpcClicked;
 
     #endregion
 
@@ -69,17 +63,10 @@ public class ClickRouter : MonoBehaviour
 
         Vector2 worldPos = _mainCamera.ScreenToWorldPoint(screenPos);
 
-        Collider2D enemyHit = Physics2D.OverlapPoint(worldPos, _enemyLayer);
-        if (enemyHit != null)
+        Collider2D interactableHit = Physics2D.OverlapPoint(worldPos, _interactableLayer);
+        if (interactableHit != null)
         {
-            OnEnemyClicked?.Invoke(enemyHit.gameObject);
-            return;
-        }
-
-        Collider2D npcHit = Physics2D.OverlapPoint(worldPos, _npcLayer);
-        if (npcHit != null)
-        {
-            OnNpcClicked?.Invoke(npcHit.gameObject);
+            interactableHit.GetComponent<Interactable>()?.OnInteract();
             return;
         }
 

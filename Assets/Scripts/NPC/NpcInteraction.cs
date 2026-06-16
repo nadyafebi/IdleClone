@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NpcInteraction : MonoBehaviour
+public class NpcInteraction : Interactable
 {
     #region Serialized Fields
 
@@ -15,7 +15,6 @@ public class NpcInteraction : MonoBehaviour
 
     #region Private Fields
 
-    private ClickRouter _clickRouter;
     private PlayerMovement _playerMovement;
     private DialogController _dialogController;
     private ClickIndicator _clickIndicator;
@@ -28,39 +27,30 @@ public class NpcInteraction : MonoBehaviour
 
     private void Start()
     {
-        _clickRouter = FindFirstObjectByType<ClickRouter>();
         _playerMovement = FindFirstObjectByType<PlayerMovement>();
         _dialogController = FindFirstObjectByType<DialogController>();
         _clickIndicator = FindFirstObjectByType<ClickIndicator>();
 
-        if (_clickRouter == null || _playerMovement == null || _dialogController == null || _clickIndicator == null)
+        if (_playerMovement == null || _dialogController == null || _clickIndicator == null)
         {
             Debug.LogError("[NpcInteraction] Missing required scene dependency.");
             enabled = false;
             return;
         }
-
-        _clickRouter.OnNpcClicked += HandleNpcClicked;
     }
 
     private void OnDestroy()
     {
-        if (_clickRouter != null)
-            _clickRouter.OnNpcClicked -= HandleNpcClicked;
-
         if (_playerMovement != null)
             _playerMovement.OnMovementStopped -= HandlePlayerArrived;
     }
 
     #endregion
 
-    #region Private Methods
+    #region Public Methods
 
-    private void HandleNpcClicked(GameObject npc)
+    public override void OnInteract()
     {
-        if (npc != gameObject)
-            return;
-
         bool isNear = IsPlayerNear();
 
         if (_dialogOpen)
@@ -84,6 +74,10 @@ public class NpcInteraction : MonoBehaviour
 
         StartApproach();
     }
+
+    #endregion
+
+    #region Private Methods
 
     private void StartApproach()
     {

@@ -5,9 +5,6 @@ public class ClickIndicator : MonoBehaviour
     #region Serialized Fields
 
     [SerializeField]
-    private ClickRouter _router;
-
-    [SerializeField]
     private PlayerMovement _movement;
 
     [SerializeField]
@@ -21,9 +18,6 @@ public class ClickIndicator : MonoBehaviour
     private Vector2 _groundCursorOffset;
 
     [Header("Interactable Cursor Sprites")]
-    [SerializeField]
-    private Sprite _enemySprite;
-
     [SerializeField]
     private Sprite _npcSprite;
 
@@ -39,11 +33,6 @@ public class ClickIndicator : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_router != null)
-        {
-            _router.OnEnemyClicked += HandleEnemyClicked;
-        }
-
         if (_movement != null)
         {
             _movement.OnDestinationSet += HandleDestinationSet;
@@ -53,11 +42,6 @@ public class ClickIndicator : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_router != null)
-        {
-            _router.OnEnemyClicked -= HandleEnemyClicked;
-        }
-
         if (_movement != null)
         {
             _movement.OnDestinationSet -= HandleDestinationSet;
@@ -67,12 +51,6 @@ public class ClickIndicator : MonoBehaviour
 
     private void Start()
     {
-        if (_router == null)
-        {
-            Debug.LogError("[ClickIndicator] No ClickRouter reference assigned!");
-            enabled = false;
-            return;
-        }
         if (_movement == null)
         {
             Debug.LogError("[ClickIndicator] No PlayerMovement reference assigned!");
@@ -108,12 +86,6 @@ public class ClickIndicator : MonoBehaviour
     private void HandleMovementStopped()
     {
         _cursor.enabled = false;
-    }
-
-    private void HandleEnemyClicked(GameObject enemy)
-    {
-        _trackedTarget = enemy.transform;
-        ShowCursor(_enemySprite, enemy.transform.position);
     }
 
     #endregion
