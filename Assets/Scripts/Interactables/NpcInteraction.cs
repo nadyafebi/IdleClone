@@ -15,34 +15,27 @@ public class NpcInteraction : Interactable
 
     #region Private Fields
 
-    private PlayerMovement _playerMovement;
     private DialogController _dialogController;
     private ClickIndicator _clickIndicator;
     private bool _dialogOpen;
-    private bool _approachingNpc;
 
     #endregion
 
     #region Unity Lifecycle
 
-    private void Start()
+    protected override void Start()
     {
-        _playerMovement = FindFirstObjectByType<PlayerMovement>();
+        base.Start();
+        if (!enabled) return;
+
         _dialogController = FindFirstObjectByType<DialogController>();
         _clickIndicator = FindFirstObjectByType<ClickIndicator>();
 
-        if (_playerMovement == null || _dialogController == null || _clickIndicator == null)
+        if (_dialogController == null || _clickIndicator == null)
         {
             Debug.LogError("[NpcInteraction] Missing required scene dependency.");
             enabled = false;
-            return;
         }
-    }
-
-    private void OnDestroy()
-    {
-        if (_playerMovement != null)
-            _playerMovement.OnMovementStopped -= HandlePlayerArrived;
     }
 
     #endregion
@@ -57,8 +50,7 @@ public class NpcInteraction : Interactable
         {
             if (!isNear)
             {
-                // Player walked away during dialog — move back first, advance on arrival.
-                StartApproach();
+                MoveToNpc();
                 return;
             }
             _dialogController.Advance();
@@ -67,27 +59,20 @@ public class NpcInteraction : Interactable
 
         if (isNear && !_playerMovement.IsMoving)
         {
-            // Already standing next to the NPC — open dialog with no movement or cursor.
             OpenDialog();
             return;
         }
 
-        StartApproach();
+        MoveToNpc();
     }
 
     #endregion
 
     #region Private Methods
 
-    private void StartApproach()
+    private void MoveToNpc()
     {
         _clickIndicator.ShowNpcCursor(transform);
-
-        if (!_approachingNpc)
-        {
-            _approachingNpc = true;
-            _playerMovement.OnMovementStopped += HandlePlayerArrived;
-        }
 
         float approachSign = Mathf.Sign(_playerMovement.transform.position.x - transform.position.x);
         if (approachSign == 0f)
@@ -97,17 +82,12 @@ public class NpcInteraction : Interactable
             transform.position.x + approachSign * _approachDistance,
             transform.position.y
         );
-        _playerMovement.MoveTo(approachPos);
+
+        StartApproach(approachPos, _approachDistance + 0.5f, OnPlayerArrived);
     }
 
-    private void HandlePlayerArrived()
+    private void OnPlayerArrived()
     {
-        _playerMovement.OnMovementStopped -= HandlePlayerArrived;
-        _approachingNpc = false;
-
-        if (!IsPlayerNear())
-            return;
-
         if (_dialogOpen)
             _dialogController.Advance();
         else
