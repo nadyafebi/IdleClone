@@ -15,6 +15,7 @@ public class ScreenFader : MonoBehaviour
     #region Private Fields
 
     private VisualElement _overlay;
+    private ClickRouter _clickRouter;
 
     #endregion
 
@@ -34,7 +35,12 @@ public class ScreenFader : MonoBehaviour
         {
             Debug.LogError("[ScreenFader] 'fade-overlay' element not found in UIDocument.");
             enabled = false;
+            return;
         }
+
+        _clickRouter = FindFirstObjectByType<ClickRouter>();
+        if (_clickRouter == null)
+            Debug.LogWarning("[ScreenFader] No ClickRouter found — input will not be blocked during fade.");
     }
 
     #endregion
@@ -52,6 +58,7 @@ public class ScreenFader : MonoBehaviour
 
     private IEnumerator FadeOutCoroutine(float duration, Action onComplete)
     {
+        _clickRouter?.AddFullBlocker(this);
         _overlay.style.display = DisplayStyle.Flex;
         _overlay.style.opacity = 0f;
 

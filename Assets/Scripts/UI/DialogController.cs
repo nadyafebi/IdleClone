@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DialogController : MonoBehaviour
+public class DialogController : MonoBehaviour, IPointerBlocker
 {
     #region Serialized Fields
 
@@ -31,6 +31,7 @@ public class DialogController : MonoBehaviour
     private Label _lineLabel;
     private Camera _camera;
 
+    private ClickRouter _clickRouter;
     private DialogData _currentData;
     private int _currentLineIndex;
     private Transform _npcTransform;
@@ -54,6 +55,22 @@ public class DialogController : MonoBehaviour
         _panel.style.display = DisplayStyle.None;
 
         _panel.RegisterCallback<ClickEvent>((_) => Advance());
+    }
+
+    private void Start()
+    {
+        _clickRouter = FindFirstObjectByType<ClickRouter>();
+        if (_clickRouter == null)
+        {
+            Debug.LogError("[DialogController] No ClickRouter found in scene.");
+            return;
+        }
+        _clickRouter.AddSpatialBlocker(this);
+    }
+
+    private void OnDestroy()
+    {
+        _clickRouter?.RemoveSpatialBlocker(this);
     }
 
     private void Update()

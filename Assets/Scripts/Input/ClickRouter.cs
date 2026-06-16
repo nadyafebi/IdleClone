@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -21,7 +22,8 @@ public class ClickRouter : MonoBehaviour
     #region Private Fields
 
     private Camera _mainCamera;
-    private DialogController _dialogController;
+    private readonly HashSet<object> _fullBlockers = new();
+    private readonly List<IPointerBlocker> _spatialBlockers = new();
 
     #endregion
 
@@ -30,7 +32,6 @@ public class ClickRouter : MonoBehaviour
     private void Awake()
     {
         _mainCamera = Camera.main;
-        _dialogController = FindFirstObjectByType<DialogController>();
     }
 
     private void Update()
@@ -40,12 +41,16 @@ public class ClickRouter : MonoBehaviour
 
     #endregion
 
-    #region Private Helpers
+    #region Public Methods
 
-    private bool IsPointerOverUIPanel(Vector2 screenPos)
-    {
-        return _dialogController != null && _dialogController.ContainsScreenPoint(screenPos);
-    }
+    public void AddFullBlocker(object source) => _fullBlockers.Add(source);
+    public void RemoveFullBlocker(object source) => _fullBlockers.Remove(source);
+    public void AddSpatialBlocker(IPointerBlocker blocker) => _spatialBlockers.Add(blocker);
+    public void RemoveSpatialBlocker(IPointerBlocker blocker) => _spatialBlockers.Remove(blocker);
+
+    #endregion
+
+    #region Private Helpers
 
     private void HandleClick()
     {
@@ -53,13 +58,19 @@ public class ClickRouter : MonoBehaviour
         if (mouse == null || !mouse.leftButton.wasPressedThisFrame)
             return;
 
+        if (_fullBlockers.Count > 0)
+            return;
+
         Vector2 screenPos = mouse.position.ReadValue();
 
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             return;
 
-        if (IsPointerOverUIPanel(screenPos))
-            return;
+        foreach (IPointerBlocker blocker in _spatialBlockers)
+        {
+            if (blocker.ContainsScreenPoint(screenPos))
+                return;
+        }
 
         Vector2 worldPos = _mainCamera.ScreenToWorldPoint(screenPos);
 
