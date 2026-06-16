@@ -1,0 +1,5 @@
+@import url("unity-theme://default");
+
+* {
+  -unity-font-definition: url("project://database/Assets/Fonts/Play-Regular.ttf?fileID=12800000&guid=45ae1a7299bdcd8488d895f6b08c3bc5&type=3#Play-Regular");
+}

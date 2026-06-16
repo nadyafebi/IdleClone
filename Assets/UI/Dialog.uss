@@ -1,0 +1,25 @@
+.dialog-panel {
+    position: absolute;
+    width: 250px;
+    padding: 12px 16px;
+    -unity-slice-scale: 0.5px;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=5707218116961789024&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_0");
+    -unity-slice-type: tiled;
+    -unity-slice-left: 8;
+    -unity-slice-top: 8;
+    -unity-slice-right: 8;
+    -unity-slice-bottom: 8;
+}
+
+.speaker-label {
+    font-size: 14px;
+    color: rgb(226, 102, 91);
+    -unity-font-style: bold;
+    margin-bottom: -4px;
+}
+
+.line-label {
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+    white-space: normal;
+}

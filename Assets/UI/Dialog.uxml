@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Dialog.uss?fileID=7433441132597879392&amp;guid=2de98605d00a34248ad5f33ab0439cd4&amp;type=3#Dialog"/>
+    <ui:VisualElement name="dialog-panel" class="dialog-panel">
+        <ui:Label name="speaker-label" text="NPC Name" class="speaker-label"/>
+        <ui:Label name="line-label" text="Hello, world!" class="line-label"/>
+    </ui:VisualElement>
+</ui:UXML>
