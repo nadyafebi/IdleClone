@@ -7,6 +7,27 @@ A 2D idle/platformer game built in Unity inspired by IdleOn. The goal is to crea
 - **Target Platform**: WebGL
 - **UI**: UI Toolkit
 
+## Scene Structure
+
+### Global Game Manager (persistent, `DontDestroyOnLoad`)
+Lives in the first scene and survives all scene loads. Never put per-scene objects here.
+```
+Game Manager       — GameManager, ClickRouter
+├── Dialog         — DialogController
+└── Screen Fader   — ScreenFader
+```
+
+### Per-Scene hierarchy
+Each scene has a local Map Manager root. Player, camera, and input indicator all live here and are recreated on every scene load.
+```
+Map Manager        — MapManager
+├── Main Camera
+├── Global Light 2D
+├── Cursor         — ClickIndicator
+└── Player         — PlayerMovement
+    └── Player Sprite  — PlayerRenderer
+```
+
 ## C# Conventions
 
 **Naming**
