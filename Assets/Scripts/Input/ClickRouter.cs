@@ -43,9 +43,20 @@ public class ClickRouter : MonoBehaviour
 
     #region Public Methods
 
+    public void RewireCamera() => _mainCamera = Camera.main;
+
+    public void ClearAllBlockers()
+    {
+        _fullBlockers.Clear();
+        _spatialBlockers.Clear();
+    }
+
     public void AddFullBlocker(object source) => _fullBlockers.Add(source);
+
     public void RemoveFullBlocker(object source) => _fullBlockers.Remove(source);
+
     public void AddSpatialBlocker(IPointerBlocker blocker) => _spatialBlockers.Add(blocker);
+
     public void RemoveSpatialBlocker(IPointerBlocker blocker) => _spatialBlockers.Remove(blocker);
 
     #endregion

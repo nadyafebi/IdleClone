@@ -14,10 +14,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _climbSpeed = 3f;
 
-    [Header("References")]
-    [SerializeField]
-    private ClickRouter _clickRouter;
-
     [Header("Debug")]
     [SerializeField]
     private bool _drawPathGizmos = true;
@@ -64,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region Private Fields
 
+    private ClickRouter _clickRouter;
     private PlatformGraphBuilder _graphBuilder;
     private PlatformNode _currentNode;
     private List<PlatformNode> _activePath = new();
@@ -92,12 +89,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        _clickRouter = GameManager.Instance != null ? GameManager.Instance.ClickRouter : null;
         if (_clickRouter == null)
         {
-            Debug.LogError("[PlayerMovement] No ClickRouter reference assigned!");
+            Debug.LogError("[PlayerMovement] No ClickRouter found on GameManager!");
             enabled = false;
             return;
         }
+        // OnEnable fired before Start so _clickRouter was null then; subscribe now.
+        _clickRouter.OnGroundClicked += HandleGroundClicked;
 
         _graphBuilder = FindFirstObjectByType<PlatformGraphBuilder>();
         if (_graphBuilder == null)
@@ -135,6 +135,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         StartPathTo(targetNode, exactDest);
+    }
+
+    public void SetFacing(bool facingRight)
+    {
+        _facingRight = facingRight;
+        OnFacingChanged?.Invoke(_facingRight);
     }
 
     public void CancelMovement()

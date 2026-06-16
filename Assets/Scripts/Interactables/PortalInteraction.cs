@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PortalInteraction : Interactable
 {
@@ -10,11 +9,9 @@ public class PortalInteraction : Interactable
     private UnityEditor.SceneAsset _targetScene;
 #endif
 
+    [HideInInspector]
     [SerializeField]
     private string _targetSceneName;
-
-    [SerializeField]
-    private float _fadeDuration = 1f;
 
     [Tooltip("Max distance from portal for arrival to count (world units).")]
     [SerializeField]
@@ -25,7 +22,6 @@ public class PortalInteraction : Interactable
     #region Private Fields
 
     private ClickIndicator _clickIndicator;
-    private ScreenFader _screenFader;
     private BoxCollider2D _collider;
     private bool _isTransitioning;
 
@@ -44,10 +40,9 @@ public class PortalInteraction : Interactable
             return;
 
         _clickIndicator = FindFirstObjectByType<ClickIndicator>();
-        _screenFader = FindFirstObjectByType<ScreenFader>();
         _collider = GetComponent<BoxCollider2D>();
 
-        if (_clickIndicator == null || _screenFader == null)
+        if (_clickIndicator == null || GameManager.Instance == null)
         {
             Debug.LogError("[PortalInteraction] Missing required scene dependency.");
             enabled = false;
@@ -87,7 +82,7 @@ public class PortalInteraction : Interactable
     private void BeginTransition()
     {
         _isTransitioning = true;
-        _screenFader.FadeOut(_fadeDuration, () => SceneManager.LoadScene(_targetSceneName));
+        GameManager.Instance.TransitionToScene(_targetSceneName);
     }
 
     #endregion

@@ -45,32 +45,19 @@ public class DialogController : MonoBehaviour, IPointerBlocker
 
     private void Awake()
     {
-        _camera = Camera.main;
-
         var root = _document.rootVisualElement;
         _panel = root.Q("dialog-panel");
         _speakerLabel = _panel.Q<Label>("speaker-label");
         _lineLabel = _panel.Q<Label>("line-label");
 
         _panel.style.display = DisplayStyle.None;
-
         _panel.RegisterCallback<ClickEvent>((_) => Advance());
-    }
-
-    private void Start()
-    {
-        _clickRouter = FindFirstObjectByType<ClickRouter>();
-        if (_clickRouter == null)
-        {
-            Debug.LogError("[DialogController] No ClickRouter found in scene.");
-            return;
-        }
-        _clickRouter.AddSpatialBlocker(this);
     }
 
     private void OnDestroy()
     {
-        _clickRouter?.RemoveSpatialBlocker(this);
+        if (_clickRouter != null)
+            _clickRouter.RemoveSpatialBlocker(this);
     }
 
     private void Update()
@@ -84,6 +71,25 @@ public class DialogController : MonoBehaviour, IPointerBlocker
     #endregion
 
     #region Public Methods
+
+    // Called by GameManager after each scene load to rewire per-scene dependencies.
+    public void OnSceneLoaded()
+    {
+        Close();
+
+        if (_clickRouter != null)
+            _clickRouter.RemoveSpatialBlocker(this);
+
+        _clickRouter = FindFirstObjectByType<ClickRouter>();
+        if (_clickRouter == null)
+        {
+            Debug.LogError("[DialogController] No ClickRouter found in scene.");
+            return;
+        }
+        _clickRouter.AddSpatialBlocker(this);
+
+        _camera = Camera.main;
+    }
 
     public void Open(DialogData data, Transform npcTransform, Action onClosed)
     {
@@ -166,8 +172,6 @@ public class DialogController : MonoBehaviour, IPointerBlocker
     {
         _speakerLabel.text = _currentData.SpeakerName;
         _lineLabel.text = _currentData.Lines[_currentLineIndex];
-
-        bool isLastLine = _currentLineIndex == _currentData.Lines.Count - 1;
     }
 
     private void PositionPanel()

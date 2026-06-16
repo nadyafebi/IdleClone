@@ -26,9 +26,11 @@ public class NpcInteraction : Interactable
     protected override void Start()
     {
         base.Start();
-        if (!enabled) return;
+        if (!enabled)
+            return;
 
-        _dialogController = FindFirstObjectByType<DialogController>();
+        _dialogController =
+            GameManager.Instance != null ? GameManager.Instance.DialogController : null;
         _clickIndicator = FindFirstObjectByType<ClickIndicator>();
 
         if (_dialogController == null || _clickIndicator == null)
@@ -74,7 +76,9 @@ public class NpcInteraction : Interactable
     {
         _clickIndicator.ShowNpcCursor(transform);
 
-        float approachSign = Mathf.Sign(_playerMovement.transform.position.x - transform.position.x);
+        float approachSign = Mathf.Sign(
+            _playerMovement.transform.position.x - transform.position.x
+        );
         if (approachSign == 0f)
             approachSign = -1f;
 
@@ -101,7 +105,8 @@ public class NpcInteraction : Interactable
     }
 
     private bool IsPlayerNear() =>
-        Vector2.Distance(_playerMovement.transform.position, transform.position) <= _approachDistance + 0.5f;
+        Vector2.Distance(_playerMovement.transform.position, transform.position)
+        <= _approachDistance + 0.5f;
 
     #endregion
 }

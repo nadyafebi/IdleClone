@@ -35,21 +35,30 @@ public class ScreenFader : MonoBehaviour
         {
             Debug.LogError("[ScreenFader] 'fade-overlay' element not found in UIDocument.");
             enabled = false;
-            return;
         }
-
-        _clickRouter = FindFirstObjectByType<ClickRouter>();
-        if (_clickRouter == null)
-            Debug.LogWarning("[ScreenFader] No ClickRouter found — input will not be blocked during fade.");
     }
 
     #endregion
 
     #region Public Methods
 
+    public void RewireClickRouter()
+    {
+        _clickRouter = FindFirstObjectByType<ClickRouter>();
+        if (_clickRouter == null)
+            Debug.LogWarning(
+                "[ScreenFader] No ClickRouter found — input will not be blocked during fade."
+            );
+    }
+
     public void FadeOut(float duration, Action onComplete)
     {
         StartCoroutine(FadeOutCoroutine(duration, onComplete));
+    }
+
+    public void FadeIn(float duration, Action onComplete = null)
+    {
+        StartCoroutine(FadeInCoroutine(duration, onComplete));
     }
 
     #endregion
@@ -58,7 +67,8 @@ public class ScreenFader : MonoBehaviour
 
     private IEnumerator FadeOutCoroutine(float duration, Action onComplete)
     {
-        _clickRouter?.AddFullBlocker(this);
+        if (_clickRouter != null)
+            _clickRouter.AddFullBlocker(this);
         _overlay.style.display = DisplayStyle.Flex;
         _overlay.style.opacity = 0f;
 
@@ -71,6 +81,30 @@ public class ScreenFader : MonoBehaviour
         }
 
         _overlay.style.opacity = 1f;
+        onComplete?.Invoke();
+        // Blocker and overlay stay active — the scene unloads while black.
+        // FadeIn on the new scene will clean up.
+    }
+
+    private IEnumerator FadeInCoroutine(float duration, Action onComplete)
+    {
+        if (_clickRouter != null)
+            _clickRouter.AddFullBlocker(this);
+        _overlay.style.display = DisplayStyle.Flex;
+        _overlay.style.opacity = 1f;
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            _overlay.style.opacity = Mathf.Clamp01(1f - elapsed / duration);
+            yield return null;
+        }
+
+        _overlay.style.opacity = 0f;
+        _overlay.style.display = DisplayStyle.None;
+        if (_clickRouter != null)
+            _clickRouter.RemoveFullBlocker(this);
         onComplete?.Invoke();
     }
 
