@@ -14,6 +14,7 @@ public class PlatformNode
     public Vector2 worldPosition;
     public NodeType type;
     public List<PlatformNode> neighbors = new();
+    public List<PlatformNode> jumpNeighbors = new();
 
     public PlatformNode(Vector2 position, NodeType nodeType)
     {
@@ -46,6 +47,18 @@ public class PlatformGraphBuilder : MonoBehaviour
     [Tooltip("How close a ladder top/bottom must be to a ground node to connect to it.")]
     private float _ladderSnapDistance = 1.5f;
 
+    [SerializeField]
+    [Tooltip(
+        "Max horizontal distance between ground nodes on different platforms to create a jump edge."
+    )]
+    private float _jumpMaxHorizontalDist = 1.5f;
+
+    [SerializeField]
+    [Tooltip(
+        "Max vertical distance between ground nodes on different platforms to create a jump edge."
+    )]
+    private float _jumpMaxVerticalDist = 1.5f;
+
     [Header("Debug")]
     [SerializeField]
     private bool _drawGizmos = true;
@@ -63,6 +76,7 @@ public class PlatformGraphBuilder : MonoBehaviour
     private Color _groundNodeColor = Color.green;
     private Color _ladderNodeColor = Color.yellow;
     private Color _edgeColor = new(1f, 1f, 1f, 0.3f);
+    private Color _jumpEdgeColor = new(0f, 1f, 1f, 0.5f);
 
     #endregion
 
@@ -127,6 +141,7 @@ public class PlatformGraphBuilder : MonoBehaviour
         BuildGroundNodes();
         ConnectWalkingNeighbors();
         BuildLadderConnections();
+        ConnectJumpableNeighbors();
 
         Debug.Log($"[PlatformGraphBuilder] Built graph: {AllNodes.Count} nodes.");
     }
@@ -224,6 +239,36 @@ public class PlatformGraphBuilder : MonoBehaviour
         }
     }
 
+    private void ConnectJumpableNeighbors()
+    {
+        for (int i = 0; i < AllNodes.Count; i++)
+        {
+            for (int j = i + 1; j < AllNodes.Count; j++)
+            {
+                PlatformNode a = AllNodes[i];
+                PlatformNode b = AllNodes[j];
+
+                if (a.type != NodeType.Ground || b.type != NodeType.Ground)
+                    continue;
+
+                float xDist = Mathf.Abs(a.worldPosition.x - b.worldPosition.x);
+                float yDist = Mathf.Abs(a.worldPosition.y - b.worldPosition.y);
+
+                // Must differ in both axes — same-Y nodes are walk edges, same-X are ladder edges.
+                if (yDist < 0.1f || xDist < 0.1f)
+                    continue;
+
+                if (xDist <= _jumpMaxHorizontalDist && yDist <= _jumpMaxVerticalDist)
+                {
+                    if (!a.jumpNeighbors.Contains(b))
+                        a.jumpNeighbors.Add(b);
+                    if (!b.jumpNeighbors.Contains(a))
+                        b.jumpNeighbors.Add(a);
+                }
+            }
+        }
+    }
+
     private PlatformNode FindNearestGroundNodeBelow(Vector3 worldPos, float maxDist)
     {
         PlatformNode closest = null;
@@ -286,6 +331,10 @@ public class PlatformGraphBuilder : MonoBehaviour
 
             Gizmos.color = _edgeColor;
             foreach (var neighbor in node.neighbors)
+                Gizmos.DrawLine(node.worldPosition, neighbor.worldPosition);
+
+            Gizmos.color = _jumpEdgeColor;
+            foreach (var neighbor in node.jumpNeighbors)
                 Gizmos.DrawLine(node.worldPosition, neighbor.worldPosition);
         }
     }

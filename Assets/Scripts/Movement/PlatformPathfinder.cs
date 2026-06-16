@@ -3,7 +3,11 @@ using UnityEngine;
 
 public static class PlatformPathfinder
 {
-    public static List<PlatformNode> FindPath(PlatformNode start, PlatformNode goal)
+    public static List<PlatformNode> FindPath(
+        PlatformNode start,
+        PlatformNode goal,
+        bool canJump = true
+    )
     {
         if (start == null || goal == null)
         {
@@ -35,6 +39,18 @@ public static class PlatformPathfinder
 
                 cameFrom[neighbor] = current;
                 queue.Enqueue(neighbor);
+            }
+
+            if (canJump)
+            {
+                foreach (PlatformNode neighbor in current.jumpNeighbors)
+                {
+                    if (cameFrom.ContainsKey(neighbor))
+                        continue;
+
+                    cameFrom[neighbor] = current;
+                    queue.Enqueue(neighbor);
+                }
             }
         }
 

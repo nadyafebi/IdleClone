@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _climbSpeed = 3f;
 
+    [SerializeField]
+    private float _jumpArcHeight = 2f;
+
     [Header("Debug")]
     [SerializeField]
     private bool _drawPathGizmos = true;
@@ -27,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsMoving => _moveCoroutine != null;
     public bool IsClimbing => _isClimbingSegment;
+    public bool IsJumping => _isJumpingSegment;
 
     public Vector2 MovementDirection
     {
@@ -55,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
     public event Action OnMovementStopped;
     public event Action OnClimbStarted;
     public event Action OnClimbStopped;
+    public event Action OnJumpStarted;
+    public event Action OnJumpStopped;
 
     #endregion
 
@@ -67,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
     private Coroutine _moveCoroutine;
     private Vector2 _exactDestination;
     private bool _isClimbingSegment; // True for every frame of a ladder segment; cleared only once the player lands.
+    private bool _isJumpingSegment; // True for every frame of a jump arc; cleared only once the player lands.
     private bool _facingRight = false;
     private PlatformNode _pendingNode;
     private Vector2 _pendingExactDest;
@@ -127,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
             targetNode.worldPosition.y
         );
 
-        if (_isClimbingSegment)
+        if (_isClimbingSegment || _isJumpingSegment)
         {
             _pendingNode = targetNode;
             _pendingExactDest = exactDest;
@@ -158,6 +165,13 @@ public class PlayerMovement : MonoBehaviour
             _isClimbingSegment = false;
             if (wasMoving)
                 OnClimbStopped?.Invoke();
+        }
+
+        if (_isJumpingSegment)
+        {
+            _isJumpingSegment = false;
+            if (wasMoving)
+                OnJumpStopped?.Invoke();
         }
 
         _pendingNode = null;
@@ -234,13 +248,20 @@ public class PlayerMovement : MonoBehaviour
             PlatformNode waypoint = path[waypointIndex];
             PlatformNode previous = path[waypointIndex - 1];
 
-            // Set the climb flag BEFORE any yield so HandleGroundClicked sees the
-            // correct value on every frame within this segment.
-            bool segmentIsClimb = !Mathf.Approximately(
+            bool yDiffers = !Mathf.Approximately(
                 waypoint.worldPosition.y,
                 previous.worldPosition.y
             );
+            bool xDiffers = !Mathf.Approximately(
+                waypoint.worldPosition.x,
+                previous.worldPosition.x
+            );
+            bool segmentIsClimb = yDiffers && !xDiffers;
+            bool segmentIsJump = yDiffers && xDiffers;
+
+            // Set transition flags BEFORE any yield so queuing checks see the correct value.
             _isClimbingSegment = segmentIsClimb;
+            _isJumpingSegment = segmentIsJump;
 
             if (segmentIsClimb)
             {
@@ -264,60 +285,117 @@ public class PlayerMovement : MonoBehaviour
 
                 OnClimbStarted?.Invoke();
             }
+            else if (segmentIsJump)
+            {
+                // Snap to the jump source node so the arc always starts from a clean position.
+                while (true)
+                {
+                    float dist = Vector2.Distance(transform.position, previous.worldPosition);
+                    float step = _walkSpeed * Time.deltaTime;
+                    if (step >= dist)
+                    {
+                        transform.position = previous.worldPosition;
+                        break;
+                    }
+                    transform.position = Vector2.MoveTowards(
+                        transform.position,
+                        previous.worldPosition,
+                        step
+                    );
+                    yield return null;
+                }
+
+                OnJumpStarted?.Invoke();
+            }
 
             // On the final walk segment, target exactDestination to avoid overshooting the click.
-            bool isFinalWalkSegment = !segmentIsClimb && waypointIndex == path.Count - 1;
+            bool isFinalWalkSegment =
+                !segmentIsClimb && !segmentIsJump && waypointIndex == path.Count - 1;
             Vector2 segmentTarget = isFinalWalkSegment ? _exactDestination : waypoint.worldPosition;
             float speed = segmentIsClimb ? _climbSpeed : _walkSpeed;
 
             if (!segmentIsClimb)
                 SetFacing(segmentTarget.x - previous.worldPosition.x);
 
-            while (true)
+            if (segmentIsJump)
             {
-                float distToWaypoint = Vector2.Distance(transform.position, segmentTarget);
-                float stepSize = speed * Time.deltaTime;
+                Vector2 jumpStart = previous.worldPosition;
+                Vector2 jumpEnd = waypoint.worldPosition;
+                Vector2 peak = new Vector2(
+                    (jumpStart.x + jumpEnd.x) * 0.5f,
+                    Mathf.Max(jumpStart.y, jumpEnd.y) + _jumpArcHeight
+                );
 
-                if (stepSize >= distToWaypoint)
+                float duration = Vector2.Distance(jumpStart, jumpEnd) / _walkSpeed;
+                float elapsed = 0f;
+
+                while (elapsed < duration)
                 {
-                    transform.position = segmentTarget;
-                    _currentNode = waypoint;
-                    break;
+                    elapsed += Time.deltaTime;
+                    float t = Mathf.Clamp01(elapsed / duration);
+                    transform.position = QuadBezier(jumpStart, peak, jumpEnd, t);
+                    yield return null;
+
+                    if (!_isJumpingSegment)
+                        yield break;
                 }
 
-                transform.position = Vector2.MoveTowards(
-                    transform.position,
-                    segmentTarget,
-                    stepSize
-                );
-                yield return null;
+                transform.position = jumpEnd;
+                _currentNode = waypoint;
+            }
+            else
+            {
+                while (true)
+                {
+                    float distToWaypoint = Vector2.Distance(transform.position, segmentTarget);
+                    float stepSize = speed * Time.deltaTime;
 
-                // Exit the inner loop if CancelMovement cleared the climb flag externally.
-                if (!_isClimbingSegment && segmentIsClimb)
-                    yield break;
+                    if (stepSize >= distToWaypoint)
+                    {
+                        transform.position = segmentTarget;
+                        _currentNode = waypoint;
+                        break;
+                    }
+
+                    transform.position = Vector2.MoveTowards(
+                        transform.position,
+                        segmentTarget,
+                        stepSize
+                    );
+                    yield return null;
+
+                    // Exit the inner loop if CancelMovement cleared the climb flag externally.
+                    if (!_isClimbingSegment && segmentIsClimb)
+                        yield break;
+                }
             }
 
-            // Clear the flag only after landing so no mid-segment frame sees it false.
+            // Clear transition flags only after landing so no mid-segment frame sees them false.
             if (segmentIsClimb)
             {
                 _isClimbingSegment = false;
                 OnClimbStopped?.Invoke();
+            }
+            else if (segmentIsJump)
+            {
+                _isJumpingSegment = false;
+                OnJumpStopped?.Invoke();
+            }
 
-                if (_pendingNode != null)
+            if ((segmentIsClimb || segmentIsJump) && _pendingNode != null)
+            {
+                PlatformNode queued = _pendingNode;
+                Vector2 queuedDest = _pendingExactDest;
+                _pendingNode = null;
+
+                List<PlatformNode> newPath = PlatformPathfinder.FindPath(_currentNode, queued);
+                if (newPath.Count > 0)
                 {
-                    PlatformNode queued = _pendingNode;
-                    Vector2 queuedDest = _pendingExactDest;
-                    _pendingNode = null;
-
-                    List<PlatformNode> newPath = PlatformPathfinder.FindPath(_currentNode, queued);
-                    if (newPath.Count > 0)
-                    {
-                        _exactDestination = queuedDest;
-                        _activePath = newPath;
-                        path = newPath;
-                        waypointIndex = 1;
-                        continue;
-                    }
+                    _exactDestination = queuedDest;
+                    _activePath = newPath;
+                    path = newPath;
+                    waypointIndex = 1;
+                    continue;
                 }
             }
 
@@ -340,6 +418,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         _isClimbingSegment = false;
+        _isJumpingSegment = false;
         _activePath.Clear();
         _moveCoroutine = null;
 
@@ -354,6 +433,12 @@ public class PlayerMovement : MonoBehaviour
         {
             OnMovementStopped?.Invoke();
         }
+    }
+
+    private static Vector2 QuadBezier(Vector2 p0, Vector2 p1, Vector2 p2, float t)
+    {
+        float u = 1f - t;
+        return u * u * p0 + 2f * u * t * p1 + t * t * p2;
     }
 
     private void SetFacing(float directionX)
