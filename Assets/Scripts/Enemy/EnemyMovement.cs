@@ -51,32 +51,37 @@ public class EnemyMovement : MonoBehaviour
     private Coroutine _moveCoroutine;
     private Vector2 _movementDirection;
     private bool _facingRight = true;
+    private bool _activated;
 
     #endregion
 
     #region Unity Lifecycle
 
-    private void Start()
+    private void Awake()
     {
         _graphBuilder = FindFirstObjectByType<PlatformGraphBuilder>();
         if (_graphBuilder == null)
         {
             Debug.LogError("[EnemyMovement] No PlatformGraphBuilder found in scene!");
             enabled = false;
-            return;
         }
+    }
 
-        _currentNode = _graphBuilder.FindNearestNode(transform.position, groundOnly: true);
-        if (_currentNode == null)
+    private void Start()
+    {
+        // Spawner calls Activate() before this Start() fires; skip auto-start if so.
+        if (_activated || !enabled)
+            return;
+
+        PlatformNode startNode = _graphBuilder.FindNearestNode(transform.position, groundOnly: true);
+        if (startNode == null)
         {
             Debug.LogError("[EnemyMovement] Could not find a ground node near spawn position!");
             enabled = false;
             return;
         }
 
-        transform.position = _currentNode.worldPosition;
-        CollectPlatformNodes();
-        _patrolCoroutine = StartCoroutine(PatrolRoutine());
+        Activate(startNode);
     }
 
     private void OnDisable()
@@ -96,6 +101,28 @@ public class EnemyMovement : MonoBehaviour
     #endregion
 
     #region Public Methods
+
+    public void Activate(PlatformNode startNode)
+    {
+        _activated = true;
+
+        if (_patrolCoroutine != null)
+        {
+            StopCoroutine(_patrolCoroutine);
+            _patrolCoroutine = null;
+        }
+        if (_moveCoroutine != null)
+        {
+            StopCoroutine(_moveCoroutine);
+            _moveCoroutine = null;
+        }
+        _movementDirection = Vector2.zero;
+
+        _currentNode = startNode;
+        transform.position = startNode.worldPosition;
+        CollectPlatformNodes();
+        _patrolCoroutine = StartCoroutine(PatrolRoutine());
+    }
 
     public void CancelMovement()
     {
