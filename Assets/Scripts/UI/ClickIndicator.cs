@@ -42,7 +42,6 @@ public class ClickIndicator : MonoBehaviour
         if (_router != null)
         {
             _router.OnEnemyClicked += HandleEnemyClicked;
-            _router.OnNpcClicked += HandleNpcClicked;
         }
 
         if (_movement != null)
@@ -57,7 +56,6 @@ public class ClickIndicator : MonoBehaviour
         if (_router != null)
         {
             _router.OnEnemyClicked -= HandleEnemyClicked;
-            _router.OnNpcClicked -= HandleNpcClicked;
         }
 
         if (_movement != null)
@@ -118,10 +116,14 @@ public class ClickIndicator : MonoBehaviour
         ShowCursor(_enemySprite, enemy.transform.position);
     }
 
-    private void HandleNpcClicked(GameObject npc)
+    #endregion
+
+    #region Public Methods
+
+    public void ShowNpcCursor(Transform npc)
     {
-        _trackedTarget = npc.transform;
-        ShowCursor(_npcSprite, npc.transform.position);
+        _trackedTarget = npc;
+        ShowCursor(_npcSprite, npc.position);
     }
 
     #endregion

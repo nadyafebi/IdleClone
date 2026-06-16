@@ -13,6 +13,7 @@ public class ClickRouter : MonoBehaviour
     [SerializeField]
     private LayerMask _npcLayer;
 
+
     #endregion
 
     #region Public Properties
@@ -26,6 +27,7 @@ public class ClickRouter : MonoBehaviour
     #region Private Fields
 
     private Camera _mainCamera;
+    private DialogController _dialogController;
 
     #endregion
 
@@ -34,6 +36,7 @@ public class ClickRouter : MonoBehaviour
     private void Awake()
     {
         _mainCamera = Camera.main;
+        _dialogController = FindFirstObjectByType<DialogController>();
     }
 
     private void Update()
@@ -45,16 +48,26 @@ public class ClickRouter : MonoBehaviour
 
     #region Private Helpers
 
+    private bool IsPointerOverUIPanel(Vector2 screenPos)
+    {
+        return _dialogController != null && _dialogController.ContainsScreenPoint(screenPos);
+    }
+
     private void HandleClick()
     {
         var mouse = Mouse.current;
         if (mouse == null || !mouse.leftButton.wasPressedThisFrame)
             return;
 
+        Vector2 screenPos = mouse.position.ReadValue();
+
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             return;
 
-        Vector2 worldPos = _mainCamera.ScreenToWorldPoint(mouse.position.ReadValue());
+        if (IsPointerOverUIPanel(screenPos))
+            return;
+
+        Vector2 worldPos = _mainCamera.ScreenToWorldPoint(screenPos);
 
         Collider2D enemyHit = Physics2D.OverlapPoint(worldPos, _enemyLayer);
         if (enemyHit != null)

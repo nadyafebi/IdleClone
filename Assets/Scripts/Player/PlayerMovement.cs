@@ -116,6 +116,27 @@ public class PlayerMovement : MonoBehaviour
 
     #region Public Methods
 
+    public void MoveTo(Vector2 worldPos)
+    {
+        PlatformNode targetNode = _graphBuilder.FindNearestNode(worldPos, groundOnly: true);
+        if (targetNode == null)
+            return;
+
+        Vector2 exactDest = new(
+            _graphBuilder.ClampXToPlatform(worldPos.x, targetNode),
+            targetNode.worldPosition.y
+        );
+
+        if (_isClimbingSegment)
+        {
+            _pendingNode = targetNode;
+            _pendingExactDest = exactDest;
+            return;
+        }
+
+        StartPathTo(targetNode, exactDest);
+    }
+
     public void CancelMovement()
     {
         bool wasMoving = _moveCoroutine != null;
@@ -150,7 +171,10 @@ public class PlayerMovement : MonoBehaviour
         if (targetNode == null)
             return;
 
-        Vector2 exactDest = new(_graphBuilder.ClampXToPlatform(worldPos.x, targetNode), targetNode.worldPosition.y);
+        Vector2 exactDest = new(
+            _graphBuilder.ClampXToPlatform(worldPos.x, targetNode),
+            targetNode.worldPosition.y
+        );
 
         // Fire immediately so the cursor updates even when the destination is queued.
         OnDestinationSet?.Invoke(exactDest);
