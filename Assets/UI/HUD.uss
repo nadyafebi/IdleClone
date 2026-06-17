@@ -1,0 +1,171 @@
+.hud-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 80px;
+    flex-direction: row;
+    background-color: rgb(81, 95, 107);
+}
+
+.hud-panel {
+    padding: 12px 16px;
+    -unity-slice-scale: 0.5px;
+    -unity-slice-type: tiled;
+    -unity-slice-left: 8;
+    -unity-slice-top: 8;
+    -unity-slice-right: 8;
+    -unity-slice-bottom: 8;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=-8816031292267695619&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_2");
+}
+
+#player-panel {
+    width: 12.5%;
+}
+
+#stats-panel {
+    width: 27.5%;
+}
+
+#skills-panel {
+    width: 30%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.skill-slot {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    -unity-slice-scale: 0.5px;
+    -unity-slice-type: tiled;
+    -unity-slice-left: 10;
+    -unity-slice-top: 10;
+    -unity-slice-right: 10;
+    -unity-slice-bottom: 10;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=230389703&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_9");
+}
+
+.skill-slot__active {
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=-309200935&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_17");
+}
+
+#menu-panel {
+    width: 30%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-item {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    -unity-slice-type: tiled;
+    align-items: center;
+    justify-content: center;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=1316983033&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_19");
+    -unity-slice-left: 10;
+    -unity-slice-top: 10;
+    -unity-slice-right: 10;
+    -unity-slice-bottom: 10;
+    -unity-slice-scale: 0.5px;
+}
+
+.menu-item:hover {
+    scale: 1.05 1.05;
+}
+
+.menu-item-label {
+    font-size: 10px;
+    color: rgb(0, 0, 0);
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    padding-left: 4px;
+    margin-bottom: 4px;
+}
+
+.stat-bar {
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.stat-bar-label {
+    font-size: 12px;
+    color: rgb(0, 0, 0);
+    width: 20px;
+    flex-shrink: 0;
+    -unity-text-align: middle-left;
+    margin-right: 4px;
+    -unity-font-style: bold;
+    margin-bottom: 4px;
+}
+
+.stat-bar-track {
+    flex-grow: 1;
+    align-self: stretch;
+}
+
+.stat-bar-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    -unity-slice-scale: 0.2px;
+    -unity-slice-type: tiled;
+    -unity-slice-left: 9;
+    -unity-slice-top: 9;
+    -unity-slice-right: 9;
+    -unity-slice-bottom: 9;
+}
+
+.stat-bar-frame {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    -unity-slice-scale: 0.2px;
+    -unity-slice-type: tiled;
+    -unity-slice-left: 12;
+    -unity-slice-top: 12;
+    -unity-slice-right: 12;
+    -unity-slice-bottom: 12;
+    background-image: url("project://database/Assets/Sprites/ui_small.png?fileID=4058399898844115310&guid=9f472bb881c86834792be008a14b7fbe&type=3#ui_small_60");
+}
+
+.hp-bar-fill {
+    background-image: url("project://database/Assets/Sprites/ui_small.png?fileID=-8184444711889011787&guid=9f472bb881c86834792be008a14b7fbe&type=3#ui_small_62");
+}
+
+.xp-bar-fill {
+    background-image: url("project://database/Assets/Sprites/ui_small.png?fileID=8987308723645140177&guid=9f472bb881c86834792be008a14b7fbe&type=3#ui_small_66");
+}
+
+.stat-bar-amount {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    font-size: 11px;
+    color: rgb(0, 0, 0);
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    margin-bottom: 4px;
+}
+
+.player-class-label {
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+    -unity-font-style: bold;
+    margin-bottom: -4px;
+}
+
+.player-level-label {
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+}

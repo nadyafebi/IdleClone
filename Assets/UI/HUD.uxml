@@ -1,0 +1,51 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/HUD.uss?fileID=7433441132597879392&amp;guid=bdaf38c3c5249904ab9cc57a843d936c&amp;type=3#HUD"/>
+    <ui:VisualElement name="hud-panel" class="hud-area">
+        <ui:VisualElement name="player-panel" class="hud-panel">
+            <ui:Label name="player-class-label" text="Beginner" class="player-class-label"/>
+            <ui:Label name="player-level-label" text="Lv. 1" class="player-level-label"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="stats-panel" class="hud-panel">
+            <ui:VisualElement class="stat-bar">
+                <ui:Label text="HP" class="stat-bar-label"/>
+                <ui:VisualElement class="stat-bar-track">
+                    <ui:VisualElement class="stat-bar-frame"/>
+                    <ui:VisualElement class="stat-bar-fill hp-bar-fill"/>
+                    <ui:Label text="100 / 100" class="stat-bar-amount"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="stat-bar">
+                <ui:Label text="XP" class="stat-bar-label"/>
+                <ui:VisualElement class="stat-bar-track">
+                    <ui:VisualElement class="stat-bar-frame"/>
+                    <ui:VisualElement class="stat-bar-fill xp-bar-fill" style="width: 0;"/>
+                    <ui:Label text="0 / 100" class="stat-bar-amount"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="skills-panel" class="hud-panel">
+            <ui:VisualElement class="skill-slot"/>
+            <ui:VisualElement class="skill-slot"/>
+            <ui:VisualElement class="skill-slot"/>
+            <ui:VisualElement class="skill-slot"/>
+            <ui:VisualElement class="skill-slot"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="menu-panel" class="hud-panel">
+            <ui:VisualElement class="menu-item">
+                <ui:Label text="Items" class="menu-item-label"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="menu-item">
+                <ui:Label text="Skills" class="menu-item-label"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="menu-item">
+                <ui:Label text="Cards" class="menu-item-label"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="menu-item">
+                <ui:Label text="Cheat" class="menu-item-label"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="menu-item">
+                <ui:Label text="Menu" class="menu-item-label"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

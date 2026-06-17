@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     private DialogController _dialogController;
 
     [SerializeField]
+    private HUDController _hudController;
+
+    [SerializeField]
     private ClickRouter _clickRouter;
 
     [Tooltip("Fade duration used for all scene transitions.")]
@@ -73,6 +76,7 @@ public class GameManager : MonoBehaviour
         _clickRouter.RewireCamera();
         _screenFader.RewireClickRouter();
         _dialogController.OnSceneLoaded();
+        _hudController.OnSceneLoaded();
 
         MapManager mapManager = FindFirstObjectByType<MapManager>();
         if (mapManager != null)
