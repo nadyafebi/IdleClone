@@ -54,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public float WalkSpeed => _walkSpeed;
+
     public event Action<bool> OnFacingChanged;
     public event Action<Vector2> OnDestinationSet;
     public event Action OnMovementStarted;
@@ -62,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
     public event Action OnClimbStopped;
     public event Action OnJumpStarted;
     public event Action OnJumpStopped;
+    public event Action<float> OnWalkSpeedChanged;
 
     #endregion
 
@@ -123,6 +126,12 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     #region Public Methods
+
+    public void SetWalkSpeed(float speed)
+    {
+        _walkSpeed = speed;
+        OnWalkSpeedChanged?.Invoke(_walkSpeed);
+    }
 
     public void MoveTo(Vector2 worldPos)
     {
