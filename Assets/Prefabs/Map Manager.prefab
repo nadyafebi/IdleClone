@@ -319,6 +319,7 @@ MonoBehaviour:
   _cursor: {fileID: 4264294551316782724}
   _groundSprite: {fileID: 1359119521, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
   _groundCursorOffset: {x: 0, y: 0.175}
+  _interactableCursorOffset: {x: 0, y: 0.5}
   _npcSprite: {fileID: -5063247132458878880, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
   _portalSprite: {fileID: -7232391428614292779, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
   _enemySprite: {fileID: -1898279630, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}

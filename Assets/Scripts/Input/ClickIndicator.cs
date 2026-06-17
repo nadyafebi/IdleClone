@@ -17,7 +17,10 @@ public class ClickIndicator : MonoBehaviour
     [SerializeField]
     private Vector2 _groundCursorOffset;
 
-    [Header("Interactable Cursor Sprites")]
+    [Header("Interactable Cursor")]
+    [SerializeField]
+    private Vector2 _interactableCursorOffset;
+
     [SerializeField]
     private Sprite _npcSprite;
 
@@ -32,6 +35,7 @@ public class ClickIndicator : MonoBehaviour
     #region Private Fields
 
     private Transform _trackedTarget;
+    private Vector2 _trackedOffset;
 
     #endregion
 
@@ -76,7 +80,7 @@ public class ClickIndicator : MonoBehaviour
     private void Update()
     {
         if (_trackedTarget != null)
-            _cursor.transform.position = _trackedTarget.position;
+            _cursor.transform.position = (Vector2)_trackedTarget.position + _trackedOffset;
     }
 
     #endregion
@@ -86,6 +90,7 @@ public class ClickIndicator : MonoBehaviour
     private void HandleDestinationSet(Vector2 exactDest)
     {
         _trackedTarget = null;
+        _trackedOffset = Vector2.zero;
         ShowCursor(_groundSprite, exactDest + _groundCursorOffset);
     }
 
@@ -101,24 +106,28 @@ public class ClickIndicator : MonoBehaviour
     public void ShowNpcCursor(Transform npc)
     {
         _trackedTarget = npc;
-        ShowCursor(_npcSprite, npc.position);
+        _trackedOffset = _interactableCursorOffset;
+        ShowCursor(_npcSprite, (Vector2)npc.position + _interactableCursorOffset);
     }
 
     public void ShowPortalCursor(Transform portal)
     {
         _trackedTarget = portal;
-        ShowCursor(_portalSprite, portal.position);
+        _trackedOffset = _interactableCursorOffset;
+        ShowCursor(_portalSprite, (Vector2)portal.position + _interactableCursorOffset);
     }
 
     public void ShowEnemyCursor(Transform enemy)
     {
         _trackedTarget = enemy;
-        ShowCursor(_enemySprite, enemy.position);
+        _trackedOffset = _interactableCursorOffset;
+        ShowCursor(_enemySprite, (Vector2)enemy.position + _interactableCursorOffset);
     }
 
     public void HideCursor()
     {
         _trackedTarget = null;
+        _trackedOffset = Vector2.zero;
         if (_cursor != null)
             _cursor.enabled = false;
     }
