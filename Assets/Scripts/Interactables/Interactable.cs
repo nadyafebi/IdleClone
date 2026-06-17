@@ -59,6 +59,16 @@ public abstract class Interactable : MonoBehaviour
         _playerMovement.MoveTo(destination);
     }
 
+    protected void CancelApproach()
+    {
+        if (!_isApproaching)
+            return;
+        if (_playerMovement != null)
+            _playerMovement.OnMovementStopped -= HandleApproachArrived;
+        _isApproaching = false;
+        _onArrived = null;
+    }
+
     #endregion
 
     #region Protected Methods

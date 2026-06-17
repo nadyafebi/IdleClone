@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyInteraction : Interactable
@@ -11,6 +12,12 @@ public class EnemyInteraction : Interactable
     private ClickRouter _clickRouter;
     private bool _isFollowing;
     private bool _isTargeting;
+
+    #endregion
+
+    #region Static Events
+
+    private static event Action<EnemyInteraction> OnAnyEnemyTargeted;
 
     #endregion
 
@@ -28,7 +35,12 @@ public class EnemyInteraction : Interactable
         _clickIndicator = FindFirstObjectByType<ClickIndicator>();
         _clickRouter = GameManager.Instance?.ClickRouter;
 
-        if (_health == null || _enemyMovement == null || _playerCombat == null || _clickIndicator == null)
+        if (
+            _health == null
+            || _enemyMovement == null
+            || _playerCombat == null
+            || _clickIndicator == null
+        )
         {
             Debug.LogError("[EnemyInteraction] Missing required dependency.");
             enabled = false;
@@ -38,6 +50,7 @@ public class EnemyInteraction : Interactable
         _health.OnDied += HandleDied;
         if (_clickRouter != null)
             _clickRouter.OnGroundClicked += HandleGroundClicked;
+        OnAnyEnemyTargeted += HandleAnyEnemyTargeted;
     }
 
     private void OnDisable()
@@ -52,6 +65,7 @@ public class EnemyInteraction : Interactable
             _health.OnDied -= HandleDied;
         if (_clickRouter != null)
             _clickRouter.OnGroundClicked -= HandleGroundClicked;
+        OnAnyEnemyTargeted -= HandleAnyEnemyTargeted;
     }
 
     #endregion
@@ -64,6 +78,7 @@ public class EnemyInteraction : Interactable
             return;
 
         _clickIndicator.ShowEnemyCursor(transform);
+        OnAnyEnemyTargeted?.Invoke(this);
         BeginFollowing();
     }
 
@@ -129,7 +144,6 @@ public class EnemyInteraction : Interactable
         _playerCombat.StartAttacking(_health);
     }
 
-    // Stops the attack without hiding the cursor — used when transitioning back to following.
     private void StopTargeting()
     {
         if (!_isTargeting)
@@ -138,27 +152,49 @@ public class EnemyInteraction : Interactable
         _isTargeting = false;
         _playerMovement.OnMovementStarted -= HandlePlayerMovedAway;
         _enemyMovement.OnMovementStarted -= HandleEnemyMovedAway;
-        _playerCombat.OnTargetOutOfRange -= HandleOutOfRange;
-        _playerCombat.StopAttacking();
+        if (_playerCombat != null)
+        {
+            _playerCombat.OnTargetOutOfRange -= HandleOutOfRange;
+            _playerCombat.StopAttacking();
+        }
     }
 
-    // Cancels both following and attacking and hides the cursor.
-    private void CancelAll()
+    // Cancels following/attacking state without touching cursor — caller owns cursor state.
+    private void CancelState()
     {
         _isFollowing = false;
         StopTargeting();
+        CancelApproach();
+    }
+
+    private void CancelAll()
+    {
+        CancelState();
         _clickIndicator?.HideCursor();
+    }
+
+    private void HandleAnyEnemyTargeted(EnemyInteraction targeted)
+    {
+        if (targeted == this)
+            return;
+        if (_isFollowing || _isTargeting)
+            CancelState();
     }
 
     private void HandleGroundClicked(Vector2 _)
     {
-        if (_isFollowing || _isTargeting)
-            CancelAll();
+        if (!_isFollowing && !_isTargeting)
+            return;
+
+        // Don't hide the cursor here — PlayerMovement's handler will show the ground cursor.
+        CancelState();
     }
 
     private void HandlePlayerMovedAway()
     {
-        CancelAll();
+        // Player started moving toward something else — cancel without hiding cursor since the
+        // new target manages its own cursor.
+        CancelState();
     }
 
     private void HandleEnemyMovedAway()
