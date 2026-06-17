@@ -72,9 +72,8 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        _clickRouter.ClearAllBlockers();
         _clickRouter.RewireCamera();
-        _screenFader.RewireClickRouter();
+        _screenFader.RewireClickRouter(_clickRouter);
         _dialogController.OnSceneLoaded();
         _hudController.OnSceneLoaded();
 

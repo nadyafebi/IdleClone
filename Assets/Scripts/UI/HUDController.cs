@@ -19,7 +19,7 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
     #region Unity Lifecycle
 
-    private void Awake()
+    private void Start()
     {
         _hudPanel = _document.rootVisualElement.Q("hud-panel");
     }
@@ -39,7 +39,7 @@ public class HUDController : MonoBehaviour, IPointerBlocker
         if (_clickRouter != null)
             _clickRouter.RemoveSpatialBlocker(this);
 
-        _clickRouter = FindFirstObjectByType<ClickRouter>();
+        _clickRouter = GameManager.Instance.ClickRouter;
         if (_clickRouter == null)
         {
             Debug.LogError("[HUDController] No ClickRouter found in scene.");

@@ -42,13 +42,9 @@ public class ScreenFader : MonoBehaviour
 
     #region Public Methods
 
-    public void RewireClickRouter()
+    public void RewireClickRouter(ClickRouter clickRouter)
     {
-        _clickRouter = FindFirstObjectByType<ClickRouter>();
-        if (_clickRouter == null)
-            Debug.LogWarning(
-                "[ScreenFader] No ClickRouter found — input will not be blocked during fade."
-            );
+        _clickRouter = clickRouter;
     }
 
     public void FadeOut(float duration, Action onComplete)
@@ -81,9 +77,9 @@ public class ScreenFader : MonoBehaviour
         }
 
         _overlay.style.opacity = 1f;
+        if (_clickRouter != null)
+            _clickRouter.RemoveFullBlocker(this);
         onComplete?.Invoke();
-        // Blocker and overlay stay active — the scene unloads while black.
-        // FadeIn on the new scene will clean up.
     }
 
     private IEnumerator FadeInCoroutine(float duration, Action onComplete)

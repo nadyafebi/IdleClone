@@ -43,7 +43,7 @@ public class DialogController : MonoBehaviour, IPointerBlocker
 
     #region Unity Lifecycle
 
-    private void Awake()
+    private void Start()
     {
         var root = _document.rootVisualElement;
         _panel = root.Q("dialog-panel");
@@ -80,7 +80,7 @@ public class DialogController : MonoBehaviour, IPointerBlocker
         if (_clickRouter != null)
             _clickRouter.RemoveSpatialBlocker(this);
 
-        _clickRouter = FindFirstObjectByType<ClickRouter>();
+        _clickRouter = GameManager.Instance.ClickRouter;
         if (_clickRouter == null)
         {
             Debug.LogError("[DialogController] No ClickRouter found in scene.");
