@@ -47,8 +47,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRenderer
   _movement: {fileID: 966976923989622526}
+  _health: {fileID: 4057608699658277958}
   _spriteRenderer: {fileID: 1562526714720078499}
   _animator: {fileID: 8364653831838536282}
+  _hitColor: {r: 1, g: 0.25, b: 0.25, a: 1}
+  _hitBlinkDuration: 0.12
 --- !u!212 &1562526714720078499
 SpriteRenderer:
   serializedVersion: 2
@@ -141,7 +144,9 @@ GameObject:
   - component: {fileID: 808135187432332396}
   - component: {fileID: 966976923989622526}
   - component: {fileID: 4057608699658277958}
-  m_Layer: 0
+  - component: {fileID: 9125159873205638320}
+  - component: {fileID: 1608518404761080648}
+  m_Layer: 6
   m_Name: Worm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,8 +182,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   _walkSpeed: 1
-  _idleTimeMin: 0
-  _idleTimeMax: 3
+  _idleTimeMin: 3
+  _idleTimeMax: 6
   _moveProbability: 0.6
   _drawGizmos: 1
 --- !u!114 &4057608699658277958
@@ -193,3 +198,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81eb883d9e83d0e41810559dace125a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  _maxHealth: 10
+--- !u!114 &9125159873205638320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8436414018492821479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 212fd338c39ed6748973cd1783b06263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyInteraction
+  _approachDistance: 1.5
+--- !u!61 &1608518404761080648
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8436414018492821479}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.25}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 0.5}
+  m_EdgeRadius: 0

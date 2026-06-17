@@ -105,6 +105,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy(GameObject go, PlatformNode node)
     {
+        go.GetComponent<EnemyHealth>().ResetHealth();
         go.SetActive(true);
         go.GetComponent<EnemyMovement>().Activate(node);
     }

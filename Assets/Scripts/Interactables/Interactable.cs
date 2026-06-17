@@ -64,7 +64,10 @@ public abstract class Interactable : MonoBehaviour
     #region Protected Methods
 
     protected virtual bool IsPlayerInRange() =>
-        Vector2.Distance(_playerMovement.transform.position, transform.position) <= _activeArrivalThreshold;
+        Vector2.Distance(_playerMovement.transform.position, transform.position)
+        <= _activeArrivalThreshold;
+
+    protected virtual void OnApproachFailed() { }
 
     #endregion
 
@@ -76,7 +79,10 @@ public abstract class Interactable : MonoBehaviour
         _isApproaching = false;
 
         if (!IsPlayerInRange())
+        {
+            OnApproachFailed();
             return;
+        }
 
         _onArrived?.Invoke();
     }

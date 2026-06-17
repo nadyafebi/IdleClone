@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public bool IsMoving => _moveCoroutine != null;
     public bool IsClimbing => _isClimbingSegment;
     public bool IsJumping => _isJumpingSegment;
+    public bool FacingRight => _facingRight;
 
     public Vector2 MovementDirection
     {

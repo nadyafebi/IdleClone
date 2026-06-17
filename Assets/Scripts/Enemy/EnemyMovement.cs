@@ -14,11 +14,11 @@ public class EnemyMovement : MonoBehaviour
     [Header("Patrol")]
     [SerializeField]
     [Tooltip("Minimum seconds to idle before choosing the next action.")]
-    private float _idleTimeMin = 1f;
+    private float _idleTimeMin = 3f;
 
     [SerializeField]
     [Tooltip("Maximum seconds to idle before choosing the next action.")]
-    private float _idleTimeMax = 3f;
+    private float _idleTimeMax = 6f;
 
     [SerializeField]
     [Range(0f, 1f)]
@@ -141,21 +141,33 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator PatrolRoutine()
     {
+        // Roll immediately on spawn so enemies don't all freeze for the full idle delay.
+        if (UnityEngine.Random.value <= _moveProbability)
+            yield return TryWalkToRandomNode();
+
         while (true)
         {
             yield return new WaitForSeconds(UnityEngine.Random.Range(_idleTimeMin, _idleTimeMax));
 
-            if (UnityEngine.Random.value > _moveProbability || _platformNodes.Count <= 1)
+            if (UnityEngine.Random.value > _moveProbability)
                 continue;
 
-            PlatformNode target = PickRandomNode();
-            if (target == null)
-                continue;
-
-            _moveCoroutine = StartCoroutine(WalkToNode(target));
-            yield return _moveCoroutine;
-            _moveCoroutine = null;
+            yield return TryWalkToRandomNode();
         }
+    }
+
+    private IEnumerator TryWalkToRandomNode()
+    {
+        if (_platformNodes.Count <= 1)
+            yield break;
+
+        PlatformNode target = PickRandomNode();
+        if (target == null)
+            yield break;
+
+        _moveCoroutine = StartCoroutine(WalkToNode(target));
+        yield return _moveCoroutine;
+        _moveCoroutine = null;
     }
 
     private PlatformNode PickRandomNode()

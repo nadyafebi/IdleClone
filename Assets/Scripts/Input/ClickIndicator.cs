@@ -24,6 +24,9 @@ public class ClickIndicator : MonoBehaviour
     [SerializeField]
     private Sprite _portalSprite;
 
+    [SerializeField]
+    private Sprite _enemySprite;
+
     #endregion
 
     #region Private Fields
@@ -105,6 +108,19 @@ public class ClickIndicator : MonoBehaviour
     {
         _trackedTarget = portal;
         ShowCursor(_portalSprite, portal.position);
+    }
+
+    public void ShowEnemyCursor(Transform enemy)
+    {
+        _trackedTarget = enemy;
+        ShowCursor(_enemySprite, enemy.position);
+    }
+
+    public void HideCursor()
+    {
+        _trackedTarget = null;
+        if (_cursor != null)
+            _cursor.enabled = false;
     }
 
     #endregion
