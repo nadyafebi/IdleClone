@@ -152,7 +152,8 @@ public class EnemyInteraction : Interactable
 
     private void HandleGroundClicked(Vector2 _)
     {
-        CancelAll();
+        if (_isFollowing || _isTargeting)
+            CancelAll();
     }
 
     private void HandlePlayerMovedAway()
