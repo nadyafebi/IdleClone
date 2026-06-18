@@ -43,6 +43,7 @@ public class EnemyHealth : MonoBehaviour
             return;
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
+        DamagePopupSpawner.TrySpawnPlayerDamage(transform.position, amount);
         OnTookDamage?.Invoke();
         OnHealthChanged?.Invoke(CurrentHealth, _maxHealth);
 

@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerHealth _playerHealth;
 
+    [SerializeField]
+    private DamagePopupSpawner _damagePopupSpawner;
+
     [Header("Respawn")]
 #if UNITY_EDITOR
     [SerializeField]
@@ -51,6 +54,7 @@ public class GameManager : MonoBehaviour
     public PlayerInventory PlayerInventory => _playerInventory;
     public PlayerLevel PlayerLevel => _playerLevel;
     public PlayerHealth PlayerHealth => _playerHealth;
+    public DamagePopupSpawner DamagePopupSpawner => _damagePopupSpawner;
 
     #endregion
 

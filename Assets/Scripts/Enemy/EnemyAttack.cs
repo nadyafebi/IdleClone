@@ -25,6 +25,7 @@ public class EnemyAttack : MonoBehaviour
     private ContactFilter2D _playerFilter;
     private readonly Collider2D[] _overlapResults = new Collider2D[1];
     private float _nextAttackTime;
+    private PlayerMovement _playerMovement;
 
     #endregion
 
@@ -60,6 +61,7 @@ public class EnemyAttack : MonoBehaviour
         }
 
         _data = enemy.Data;
+        _playerMovement = FindFirstObjectByType<PlayerMovement>();
 
         _playerFilter = new ContactFilter2D
         {
@@ -96,6 +98,9 @@ public class EnemyAttack : MonoBehaviour
         PlayerHealth playerHealth = GameManager.Instance.PlayerHealth;
         if (playerHealth != null)
             playerHealth.TakeDamage(_data.AttackDamage);
+
+        if (_playerMovement != null)
+            DamagePopupSpawner.TrySpawnEnemyDamage(_playerMovement.transform.position, _data.AttackDamage);
     }
 
     #endregion
