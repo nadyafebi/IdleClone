@@ -80,6 +80,8 @@ GameObject:
   - component: {fileID: 6756787219872152073}
   - component: {fileID: 8767336109236545063}
   - component: {fileID: 842414625112250478}
+  - component: {fileID: 2473805898657569612}
+  - component: {fileID: 8252955786503460730}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -121,6 +123,7 @@ MonoBehaviour:
   _dialogController: {fileID: 7591245712636952950}
   _hudController: {fileID: 8850692712998546788}
   _clickRouter: {fileID: 842414625112250478}
+  _playerInventory: {fileID: 2473805898657569612}
   _transitionFadeDuration: 1
 --- !u!114 &842414625112250478
 MonoBehaviour:
@@ -137,6 +140,33 @@ MonoBehaviour:
   _interactableLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &2473805898657569612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3775220622017857759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf89fddad8b40f46954b94b97164964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
+--- !u!114 &8252955786503460730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3775220622017857759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea09a8051b858ae4197da693f11bf513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LootDragCollector
+  _lootLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &4581154389133667746
 GameObject:
   m_ObjectHideFlags: 0

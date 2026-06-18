@@ -14,6 +14,9 @@ public class DroppedItem : MonoBehaviour
     [SerializeField]
     private float _bobFrequency = 2f;
 
+    [SerializeField]
+    private float _autoLootDelay = 10f;
+
     #endregion
 
     #region Private Fields
@@ -21,6 +24,8 @@ public class DroppedItem : MonoBehaviour
     private Vector3 _basePosition;
     private ItemData _item;
     private int _quantity;
+    private PlayerInventory _inventory;
+    private bool _collected;
 
     #endregion
 
@@ -37,13 +42,29 @@ public class DroppedItem : MonoBehaviour
         _item = item;
         _quantity = quantity;
         _icon.sprite = item.Icon;
+        _inventory = GameManager.Instance.PlayerInventory;
 
         StartCoroutine(SpawnArc());
+        StartCoroutine(AutoLootCoroutine());
+    }
+
+    public void Collect()
+    {
+        if (_collected) return;
+        _collected = true;
+        _inventory?.AddItem(_item, _quantity);
+        Destroy(gameObject);
     }
 
     #endregion
 
     #region Private Helpers
+
+    private IEnumerator AutoLootCoroutine()
+    {
+        yield return new WaitForSeconds(_autoLootDelay);
+        Collect();
+    }
 
     private IEnumerator SpawnArc()
     {
