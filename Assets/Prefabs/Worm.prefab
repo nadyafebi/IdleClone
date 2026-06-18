@@ -142,9 +142,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 808135187432332396}
+  - component: {fileID: -2743152569639370894}
   - component: {fileID: 966976923989622526}
   - component: {fileID: 4057608699658277958}
   - component: {fileID: 9125159873205638320}
+  - component: {fileID: -4977809356216810586}
   - component: {fileID: 1608518404761080648}
   m_Layer: 6
   m_Name: Worm
@@ -169,6 +171,19 @@ Transform:
   - {fileID: 1051684738795867089}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2743152569639370894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8436414018492821479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 781f6ff635f72f14c871c73d9c831821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  _data: {fileID: 11400000, guid: e657342593934e4468d7354ab2ecf4d4, type: 2}
 --- !u!114 &966976923989622526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +226,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 212fd338c39ed6748973cd1783b06263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyInteraction
-  _approachDistance: 1.5
+--- !u!114 &-4977809356216810586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8436414018492821479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4898e519465a64d9059a7df1f5aa9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyLoot
+  _droppedItemPrefab: {fileID: 759378227370150575, guid: 3f6f776769ca93240a5056e0707e0649, type: 3}
 --- !u!61 &1608518404761080648
 BoxCollider2D:
   m_ObjectHideFlags: 0
