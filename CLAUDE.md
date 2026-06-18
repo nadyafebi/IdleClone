@@ -12,8 +12,10 @@ A 2D idle/platformer game built in Unity inspired by IdleOn. The goal is to crea
 ### Global Game Manager (persistent, `DontDestroyOnLoad`)
 Lives in the first scene and survives all scene loads. Never put per-scene objects here.
 ```
-Game Manager       — GameManager, ClickRouter
+Game Manager       — GameManager, ClickRouter, LootDragCollector
 ├── Dialog         — DialogController
+├── HUD            — HUDController
+├── Inventory      — PlayerInventory
 └── Screen Fader   — ScreenFader
 ```
 
@@ -57,3 +59,4 @@ Map Manager        — MapManager
 - `FindFirstObjectByType<T>()` — not the deprecated `FindObjectOfType<T>()`
 - Always disable the component (`enabled = false`) and log an error when a required dependency is missing in `Start()`
 - Gizmo debug drawing behind a `[SerializeField] bool _drawGizmos` toggle
+- Any component that lives on the global Game Manager must be exposed as a public property on `GameManager` and accessed via `GameManager.Instance.<Property>` — never use `FindFirstObjectByType` to locate a global singleton
