@@ -61,6 +61,11 @@ public class EnemyData : ScriptableObject
     [SerializeField]
     private Vector2 _colliderOffset = Vector2.zero;
 
+    [Header("Rewards")]
+    [SerializeField]
+    [Min(0)]
+    private int _xpReward = 10;
+
     [Header("Drops")]
     [SerializeField]
     private List<DropTableEntry> _dropTable = new();
@@ -76,6 +81,7 @@ public class EnemyData : ScriptableObject
     public float RespawnCooldown => _respawnCooldown;
     public Vector2 ColliderSize => _colliderSize;
     public Vector2 ColliderOffset => _colliderOffset;
+    public int XpReward => _xpReward;
 
     #endregion
 

@@ -19,6 +19,11 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     private ClickRouter _clickRouter;
     private GameMenu _openMenu;
 
+    private Label _levelLabel;
+    private VisualElement _xpBarFill;
+    private Label _xpAmountLabel;
+    private PlayerLevel _playerLevel;
+
     #endregion
 
     #region Unity Lifecycle
@@ -29,12 +34,35 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
         _document.rootVisualElement.Q("btn-items")
             ?.RegisterCallback<ClickEvent>(_ => ToggleMenu(_inventoryMenu));
+
+        _levelLabel = _document.rootVisualElement.Q<Label>("player-level-label");
+        _xpBarFill = _document.rootVisualElement.Q("xp-bar-fill");
+        _xpAmountLabel = _document.rootVisualElement.Q<Label>("xp-amount");
+
+        _playerLevel = GameManager.Instance?.PlayerLevel;
+        if (_playerLevel != null)
+        {
+            _playerLevel.OnLevelChanged += HandleLevelChanged;
+            _playerLevel.OnXpChanged += HandleXpChanged;
+            RefreshLevelLabel(_playerLevel.Level);
+            RefreshXpBar(_playerLevel.CurrentXp, _playerLevel.XpToNextLevel);
+        }
+        else
+        {
+            Debug.LogWarning("[HUDController] No PlayerLevel found on GameManager.");
+        }
     }
 
     private void OnDestroy()
     {
         if (_clickRouter != null)
             _clickRouter.RemoveSpatialBlocker(this);
+
+        if (_playerLevel != null)
+        {
+            _playerLevel.OnLevelChanged -= HandleLevelChanged;
+            _playerLevel.OnXpChanged -= HandleXpChanged;
+        }
     }
 
     #endregion
@@ -89,6 +117,29 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
         menu.Toggle();
         _openMenu = menu.IsVisible ? menu : null;
+    }
+
+    private void HandleLevelChanged(int newLevel) => RefreshLevelLabel(newLevel);
+
+    private void HandleXpChanged(int currentXp, int xpToNextLevel) =>
+        RefreshXpBar(currentXp, xpToNextLevel);
+
+    private void RefreshLevelLabel(int level)
+    {
+        if (_levelLabel != null)
+            _levelLabel.text = $"Lv. {level}";
+    }
+
+    private void RefreshXpBar(int currentXp, int xpToNextLevel)
+    {
+        if (_xpBarFill != null)
+        {
+            float ratio = xpToNextLevel > 0 ? (float)currentXp / xpToNextLevel : 0f;
+            _xpBarFill.style.width = Length.Percent(ratio * 100f);
+        }
+
+        if (_xpAmountLabel != null)
+            _xpAmountLabel.text = $"{currentXp} / {xpToNextLevel}";
     }
 
     #endregion

@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerInventory _playerInventory;
 
+    [SerializeField]
+    private PlayerLevel _playerLevel;
+
     [Tooltip("Fade duration used for all scene transitions.")]
     [SerializeField]
     private float _transitionFadeDuration = 1f;
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
     public DialogController DialogController => _dialogController;
     public ClickRouter ClickRouter => _clickRouter;
     public PlayerInventory PlayerInventory => _playerInventory;
+    public PlayerLevel PlayerLevel => _playerLevel;
 
     #endregion
 

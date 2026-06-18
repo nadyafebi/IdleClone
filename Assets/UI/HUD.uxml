@@ -18,8 +18,8 @@
                 <ui:Label text="XP" class="stat-bar-label"/>
                 <ui:VisualElement class="stat-bar-track">
                     <ui:VisualElement class="stat-bar-frame"/>
-                    <ui:VisualElement class="stat-bar-fill xp-bar-fill" style="width: 0;"/>
-                    <ui:Label text="0 / 100" class="stat-bar-amount"/>
+                    <ui:VisualElement name="xp-bar-fill" class="stat-bar-fill xp-bar-fill" style="width: 0;"/>
+                    <ui:Label name="xp-amount" text="0 / 100" class="stat-bar-amount"/>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

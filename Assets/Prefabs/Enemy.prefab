@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 4057608699658277958}
   - component: {fileID: 9125159873205638320}
   - component: {fileID: -4977809356216810586}
+  - component: {fileID: 5088163299965610842}
   - component: {fileID: 1608518404761080648}
   m_Layer: 6
   m_Name: Enemy
@@ -213,7 +214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81eb883d9e83d0e41810559dace125a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  _maxHealth: 10
 --- !u!114 &9125159873205638320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +239,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLoot
   _droppedItemPrefab: {fileID: 759378227370150575, guid: 3f6f776769ca93240a5056e0707e0649, type: 3}
+--- !u!114 &5088163299965610842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8436414018492821479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7ece5b052b6c4b489df1edd03c26b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyXP
 --- !u!61 &1608518404761080648
 BoxCollider2D:
   m_ObjectHideFlags: 0
