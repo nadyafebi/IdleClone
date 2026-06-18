@@ -1,0 +1,91 @@
+.inventory-panel {
+    position: absolute;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=3556181715638617739&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_1");
+    background-color: rgba(0, 0, 0, 0);
+    -unity-slice-type: tiled;
+    -unity-slice-left: 4;
+    -unity-slice-top: 4;
+    -unity-slice-right: 4;
+    -unity-slice-bottom: 4;
+    -unity-slice-scale: 0.5px;
+    right: 32px;
+    top: 32px;
+    bottom: 112px;
+    width: 32.5%;
+}
+
+.inventory-label {
+    font-size: 24px;
+    -unity-font-style: bold;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-top: 16px;
+    margin-right: 16px;
+    margin-bottom: 8px;
+    margin-left: 16px;
+}
+
+.inventory-scroll {
+    flex-grow: 1;
+    height: 100%;
+}
+
+.inventory-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 12px;
+}
+
+.inventory-slot {
+    width: 64px;
+    height: 64px;
+    margin: 4px;
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=5707218116961789024&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_0");
+}
+
+.slot-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.slot-quantity {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    font-size: 12px;
+    -unity-text-align: lower-right;
+    -unity-font-style: bold;
+}
+
+.tab-bar {
+    flex-direction: row;
+    padding: 0 12px 8px 12px;
+}
+
+.tab-button {
+    width: 48px;
+    height: 32px;
+    margin-right: 4px;
+    padding: 0;
+    font-size: 16px;
+    border-width: 0;
+    background-color: rgba(255, 255, 255, 0);
+    -unity-font-style: bold;
+    -unity-slice-left: 12;
+    -unity-slice-top: 12;
+    -unity-slice-right: 12;
+    -unity-slice-bottom: 12;
+    -unity-slice-scale: 0.5px;
+    -unity-slice-type: tiled;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=2035392382&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_14");
+}
+
+.tab-button--active {
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=1387578008&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_5");
+}

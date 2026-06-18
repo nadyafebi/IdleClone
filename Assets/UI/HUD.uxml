@@ -31,7 +31,7 @@
             <ui:VisualElement class="skill-slot"/>
         </ui:VisualElement>
         <ui:VisualElement name="menu-panel" class="hud-panel">
-            <ui:VisualElement class="menu-item">
+            <ui:VisualElement name="btn-items" class="menu-item">
                 <ui:Label text="Items" class="menu-item-label"/>
             </ui:VisualElement>
             <ui:VisualElement class="menu-item">

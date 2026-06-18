@@ -8,12 +8,16 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     [SerializeField]
     private UIDocument _document;
 
+    [SerializeField]
+    private InventoryMenu _inventoryMenu;
+
     #endregion
 
     #region Private Fields
 
     private VisualElement _hudPanel;
     private ClickRouter _clickRouter;
+    private GameMenu _openMenu;
 
     #endregion
 
@@ -22,6 +26,9 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     private void Start()
     {
         _hudPanel = _document.rootVisualElement.Q("hud-panel");
+
+        _document.rootVisualElement.Q("btn-items")
+            ?.RegisterCallback<ClickEvent>(_ => ToggleMenu(_inventoryMenu));
     }
 
     private void OnDestroy()
@@ -63,6 +70,25 @@ public class HUDController : MonoBehaviour, IPointerBlocker
             && screenPos.x <= xMax
             && screenPos.y >= yMin
             && screenPos.y <= yMax;
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private void ToggleMenu(GameMenu menu)
+    {
+        if (menu == null) return;
+
+        // Close whatever is open if it's a different menu
+        if (_openMenu != null && _openMenu != menu)
+        {
+            _openMenu.Hide();
+            _openMenu = null;
+        }
+
+        menu.Toggle();
+        _openMenu = menu.IsVisible ? menu : null;
     }
 
     #endregion
