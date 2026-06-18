@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 5529005399912300930}
   - component: {fileID: 5891749161220573694}
   - component: {fileID: 6449026688105973347}
+  - component: {fileID: 122896568108127867}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -196,3 +197,15 @@ MonoBehaviour:
   _attackDamage: 1
   _attackCooldown: 1
   _attackRange: 1
+--- !u!114 &122896568108127867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5142390754216219042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06505895e455ada4fb241ab21728d56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoAttackController

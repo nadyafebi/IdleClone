@@ -27,6 +27,7 @@ public class PlayerCombat : MonoBehaviour
     public float AttackRange => _attackRange;
 
     public event Action OnTargetOutOfRange;
+    public event Action OnTargetKilled;
 
     #endregion
 
@@ -61,7 +62,7 @@ public class PlayerCombat : MonoBehaviour
 
         StopAttacking();
         _target = target;
-        _target.OnDied += StopAttacking;
+        _target.OnDied += HandleTargetDied;
         _attackCoroutine = StartCoroutine(AttackLoop());
     }
 
@@ -74,7 +75,7 @@ public class PlayerCombat : MonoBehaviour
         }
         if (_target != null)
         {
-            _target.OnDied -= StopAttacking;
+            _target.OnDied -= HandleTargetDied;
             _target = null;
         }
     }
@@ -83,14 +84,22 @@ public class PlayerCombat : MonoBehaviour
 
     #region Combat
 
+    private void HandleTargetDied()
+    {
+        StopAttacking();
+        OnTargetKilled?.Invoke();
+    }
+
     private IEnumerator AttackLoop()
     {
         while (_target != null)
         {
             float dirX = _target.transform.position.x - transform.position.x;
-            bool outOfRange = Vector2.Distance(transform.position, _target.transform.position) > _attackRange;
+            bool outOfRange =
+                Vector2.Distance(transform.position, _target.transform.position) > _attackRange;
             // 0.1f dead zone prevents re-follow flicker when the enemy is almost directly above/below.
-            bool enemyBehind = Mathf.Abs(dirX) > 0.1f && (_playerMovement.FacingRight != (dirX > 0f));
+            bool enemyBehind =
+                Mathf.Abs(dirX) > 0.1f && (_playerMovement.FacingRight != (dirX > 0f));
 
             if (outOfRange || enemyBehind)
             {
