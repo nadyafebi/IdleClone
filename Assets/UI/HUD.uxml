@@ -10,8 +10,8 @@
                 <ui:Label text="HP" class="stat-bar-label"/>
                 <ui:VisualElement class="stat-bar-track">
                     <ui:VisualElement class="stat-bar-frame"/>
-                    <ui:VisualElement class="stat-bar-fill hp-bar-fill"/>
-                    <ui:Label text="100 / 100" class="stat-bar-amount"/>
+                    <ui:VisualElement name="hp-bar-fill" class="stat-bar-fill hp-bar-fill"/>
+                    <ui:Label name="hp-amount" text="100 / 100" class="stat-bar-amount"/>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement class="stat-bar">

@@ -24,6 +24,10 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     private Label _xpAmountLabel;
     private PlayerLevel _playerLevel;
 
+    private VisualElement _hpBarFill;
+    private Label _hpAmountLabel;
+    private PlayerHealth _playerHealth;
+
     #endregion
 
     #region Unity Lifecycle
@@ -51,6 +55,20 @@ public class HUDController : MonoBehaviour, IPointerBlocker
         {
             Debug.LogWarning("[HUDController] No PlayerLevel found on GameManager.");
         }
+
+        _hpBarFill = _document.rootVisualElement.Q("hp-bar-fill");
+        _hpAmountLabel = _document.rootVisualElement.Q<Label>("hp-amount");
+
+        _playerHealth = GameManager.Instance?.PlayerHealth;
+        if (_playerHealth != null)
+        {
+            _playerHealth.OnHealthChanged += HandleHealthChanged;
+            RefreshHpBar(_playerHealth.CurrentHealth, _playerHealth.MaxHealth);
+        }
+        else
+        {
+            Debug.LogWarning("[HUDController] No PlayerHealth found on GameManager.");
+        }
     }
 
     private void OnDestroy()
@@ -63,6 +81,9 @@ public class HUDController : MonoBehaviour, IPointerBlocker
             _playerLevel.OnLevelChanged -= HandleLevelChanged;
             _playerLevel.OnXpChanged -= HandleXpChanged;
         }
+
+        if (_playerHealth != null)
+            _playerHealth.OnHealthChanged -= HandleHealthChanged;
     }
 
     #endregion
@@ -119,10 +140,24 @@ public class HUDController : MonoBehaviour, IPointerBlocker
         _openMenu = menu.IsVisible ? menu : null;
     }
 
+    private void HandleHealthChanged(int current, int max) => RefreshHpBar(current, max);
+
     private void HandleLevelChanged(int newLevel) => RefreshLevelLabel(newLevel);
 
     private void HandleXpChanged(int currentXp, int xpToNextLevel) =>
         RefreshXpBar(currentXp, xpToNextLevel);
+
+    private void RefreshHpBar(int current, int max)
+    {
+        if (_hpBarFill != null)
+        {
+            float ratio = max > 0 ? (float)current / max : 0f;
+            _hpBarFill.style.width = Length.Percent(ratio * 100f);
+        }
+
+        if (_hpAmountLabel != null)
+            _hpAmountLabel.text = $"{current} / {max}";
+    }
 
     private void RefreshLevelLabel(int level)
     {

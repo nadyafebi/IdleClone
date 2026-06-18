@@ -209,6 +209,9 @@ MonoBehaviour:
   _clickRouter: {fileID: 842414625112250478}
   _playerInventory: {fileID: 7117721857683428247}
   _playerLevel: {fileID: 7651052297677074660}
+  _playerHealth: {fileID: 572126893711085078}
+  _townScene: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
+  _townSceneName: Town
   _transitionFadeDuration: 1
 --- !u!114 &842414625112250478
 MonoBehaviour:
@@ -392,6 +395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6083986346499041083}
   - component: {fileID: 7651052297677074660}
+  - component: {fileID: 572126893711085078}
   m_Layer: 0
   m_Name: Player Stats
   m_TagString: Untagged
@@ -428,3 +432,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLevel
   _baseXp: 100
   _exponent: 1.5
+--- !u!114 &572126893711085078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330844530447224311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf995633bd7fefa4ab9eb081fb48472e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  _maxHealth: 100

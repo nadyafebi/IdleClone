@@ -66,6 +66,10 @@ public class EnemyData : ScriptableObject
     [Min(0)]
     private int _xpReward = 10;
 
+    [SerializeField]
+    [Min(0)]
+    private int _attackDamage = 5;
+
     [Header("Drops")]
     [SerializeField]
     private List<DropTableEntry> _dropTable = new();
@@ -82,6 +86,7 @@ public class EnemyData : ScriptableObject
     public Vector2 ColliderSize => _colliderSize;
     public Vector2 ColliderOffset => _colliderOffset;
     public int XpReward => _xpReward;
+    public int AttackDamage => _attackDamage;
 
     #endregion
 

@@ -23,6 +23,20 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerLevel _playerLevel;
 
+    [SerializeField]
+    private PlayerHealth _playerHealth;
+
+    [Header("Respawn")]
+#if UNITY_EDITOR
+    [SerializeField]
+    private UnityEditor.SceneAsset _townScene;
+#endif
+
+    [HideInInspector]
+    [SerializeField]
+    private string _townSceneName;
+
+    [Header("Transitions")]
     [Tooltip("Fade duration used for all scene transitions.")]
     [SerializeField]
     private float _transitionFadeDuration = 1f;
@@ -36,6 +50,7 @@ public class GameManager : MonoBehaviour
     public ClickRouter ClickRouter => _clickRouter;
     public PlayerInventory PlayerInventory => _playerInventory;
     public PlayerLevel PlayerLevel => _playerLevel;
+    public PlayerHealth PlayerHealth => _playerHealth;
 
     #endregion
 
@@ -43,10 +58,16 @@ public class GameManager : MonoBehaviour
 
     private string _previousSceneName;
     private bool _isTransitioning;
+    private bool _isRespawning;
 
     #endregion
 
     #region Unity Lifecycle
+
+#if UNITY_EDITOR
+    private void OnValidate() =>
+        _townSceneName = _townScene != null ? _townScene.name : "";
+#endif
 
     private void Awake()
     {
@@ -57,6 +78,9 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        if (_playerHealth != null)
+            _playerHealth.OnDied += RespawnPlayer;
     }
 
     private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
@@ -74,12 +98,27 @@ public class GameManager : MonoBehaviour
         _screenFader.FadeOut(_transitionFadeDuration, () => SceneManager.LoadScene(sceneName));
     }
 
+    public void RespawnPlayer()
+    {
+        _isRespawning = true;
+        _isTransitioning = true;
+        Time.timeScale = 0f;
+        _screenFader.FadeOut(_transitionFadeDuration, () => SceneManager.LoadScene(_townSceneName));
+    }
+
     #endregion
 
     #region Scene Loading
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (_isRespawning)
+        {
+            _isRespawning = false;
+            Time.timeScale = 1f;
+            _playerHealth.ResetHealth();
+        }
+
         _clickRouter.RewireCamera();
         _screenFader.RewireClickRouter(_clickRouter);
         _dialogController.OnSceneLoaded();

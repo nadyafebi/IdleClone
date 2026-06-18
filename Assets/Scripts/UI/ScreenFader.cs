@@ -71,7 +71,7 @@ public class ScreenFader : MonoBehaviour
         float elapsed = 0f;
         while (elapsed < duration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             _overlay.style.opacity = Mathf.Clamp01(elapsed / duration);
             yield return null;
         }
@@ -92,7 +92,7 @@ public class ScreenFader : MonoBehaviour
         float elapsed = 0f;
         while (elapsed < duration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             _overlay.style.opacity = Mathf.Clamp01(1f - elapsed / duration);
             yield return null;
         }
