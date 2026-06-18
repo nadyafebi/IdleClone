@@ -128,7 +128,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4888347}
-  - component: {fileID: 4888348}
   m_Layer: 0
   m_Name: Spawner1
   m_TagString: Untagged
@@ -151,22 +150,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1107583600}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4888348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4888346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 837cb2c01ffd1004aa8fc6ab71408d17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  _enemyData: {fileID: 11400000, guid: e657342593934e4468d7354ab2ecf4d4, type: 2}
-  _enemyPrefab: {fileID: 8436414018492821479, guid: 39269b4d5bb0d7b4882c195ad9df28eb, type: 3}
-  _maxCount: 7
-  _drawGizmos: 1
 --- !u!1 &609873044
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,7 +372,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 861245662}
-  - component: {fileID: 861245663}
   m_Layer: 0
   m_Name: Spawner2
   m_TagString: Untagged
@@ -412,22 +394,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1107583600}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &861245663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861245661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 837cb2c01ffd1004aa8fc6ab71408d17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  _enemyData: {fileID: 0}
-  _enemyPrefab: {fileID: 8436414018492821479, guid: 39269b4d5bb0d7b4882c195ad9df28eb, type: 3}
-  _maxCount: 3
-  _drawGizmos: 1
 --- !u!1001 &869082838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -970,6 +936,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1107583600}
+  - component: {fileID: 1107583601}
   m_Layer: 0
   m_Name: Spawners
   m_TagString: Untagged
@@ -994,6 +961,26 @@ Transform:
   - {fileID: 861245662}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1107583601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107583599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 837cb2c01ffd1004aa8fc6ab71408d17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  _enemyData: {fileID: 11400000, guid: e657342593934e4468d7354ab2ecf4d4, type: 2}
+  _enemyPrefab: {fileID: 8436414018492821479, guid: 39269b4d5bb0d7b4882c195ad9df28eb, type: 3}
+  _spawnPoints:
+  - _point: {fileID: 4888347}
+    _maxCount: 7
+  - _point: {fileID: 861245662}
+    _maxCount: 3
+  _drawGizmos: 1
 --- !u!1 &1171160010
 GameObject:
   m_ObjectHideFlags: 0

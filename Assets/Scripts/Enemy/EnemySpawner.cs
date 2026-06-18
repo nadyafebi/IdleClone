@@ -1,6 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+[Serializable]
+public class SpawnPoint
+{
+    #region Serialized Fields
+
+    [SerializeField]
+    private Transform _point;
+
+    [SerializeField]
+    [Min(1)]
+    [Tooltip("Maximum number of enemies alive at once from this spawn point.")]
+    private int _maxCount = 3;
+
+    #endregion
+
+    #region Public Properties
+
+    public Transform Point => _point;
+    public int MaxCount => _maxCount;
+
+    #endregion
+}
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -14,8 +38,7 @@ public class EnemySpawner : MonoBehaviour
     private GameObject _enemyPrefab;
 
     [SerializeField]
-    [Tooltip("Maximum number of enemies alive at once from this spawner.")]
-    private int _maxCount = 3;
+    private List<SpawnPoint> _spawnPoints = new();
 
     [Header("Debug")]
     [SerializeField]
@@ -23,11 +46,30 @@ public class EnemySpawner : MonoBehaviour
 
     #endregion
 
+    #region Private Types
+
+    private readonly struct PoolEntry
+    {
+        public readonly Enemy Enemy;
+        public readonly EnemyHealth Health;
+        public readonly EnemyMovement Movement;
+        public readonly PlatformNode[] PlatformNodes;
+
+        public PoolEntry(Enemy enemy, EnemyHealth health, EnemyMovement movement, PlatformNode[] platformNodes)
+        {
+            Enemy = enemy;
+            Health = health;
+            Movement = movement;
+            PlatformNodes = platformNodes;
+        }
+    }
+
+    #endregion
+
     #region Private Fields
 
     private PlatformGraphBuilder _graphBuilder;
-    private List<PlatformNode> _platformNodes = new();
-    private List<GameObject> _pool = new();
+    private readonly List<PoolEntry> _pool = new();
 
     #endregion
 
@@ -57,15 +99,13 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        PlatformNode anchor = _graphBuilder.FindNearestNode(transform.position, groundOnly: true);
-        if (anchor == null)
+        if (_spawnPoints.Count == 0)
         {
-            Debug.LogError("[EnemySpawner] No ground node near spawner position!");
+            Debug.LogError("[EnemySpawner] No spawn points configured!");
             enabled = false;
             return;
         }
 
-        CollectPlatformNodes(anchor);
         BuildPool();
         SpawnAll();
     }
@@ -76,67 +116,64 @@ public class EnemySpawner : MonoBehaviour
 
     private void BuildPool()
     {
-        for (int i = 0; i < _maxCount; i++)
+        foreach (SpawnPoint sp in _spawnPoints)
         {
-            GameObject go = Instantiate(_enemyPrefab, transform);
-            go.SetActive(false);
-
-            EnemyHealth health = go.GetComponent<EnemyHealth>();
-            if (health == null)
+            if (sp.Point == null)
             {
-                Debug.LogError("[EnemySpawner] Enemy prefab is missing EnemyHealth!");
-                Destroy(go);
+                Debug.LogWarning("[EnemySpawner] Spawn point has no transform assigned, skipping.");
                 continue;
             }
 
-            health.OnDied += () => HandleEnemyDied(go);
-            _pool.Add(go);
+            PlatformNode anchor = _graphBuilder.FindNearestNode(sp.Point.position, groundOnly: true);
+            if (anchor == null)
+            {
+                Debug.LogWarning($"[EnemySpawner] No ground node near '{sp.Point.name}', skipping.");
+                continue;
+            }
+
+            PlatformNode[] platformNodes = CollectPlatformNodes(anchor);
+
+            for (int i = 0; i < sp.MaxCount; i++)
+            {
+                GameObject go = Instantiate(_enemyPrefab, transform);
+                go.SetActive(false);
+
+                Enemy enemy = go.GetComponent<Enemy>();
+                EnemyHealth health = go.GetComponent<EnemyHealth>();
+                EnemyMovement movement = go.GetComponent<EnemyMovement>();
+
+                if (enemy == null || health == null || movement == null)
+                {
+                    Debug.LogError("[EnemySpawner] Enemy prefab is missing a required component!");
+                    Destroy(go);
+                    continue;
+                }
+
+                var entry = new PoolEntry(enemy, health, movement, platformNodes);
+                health.OnDied += () => HandleEnemyDied(entry);
+                _pool.Add(entry);
+            }
         }
     }
 
     private void SpawnAll()
     {
-        // Distribute enemies across platform nodes without stacking on initial spawn.
-        var available = new List<PlatformNode>(_platformNodes);
-        foreach (GameObject go in _pool)
-        {
-            if (available.Count == 0)
-                available.AddRange(_platformNodes);
-
-            int idx = Random.Range(0, available.Count);
-            SpawnEnemy(go, available[idx]);
-            available.RemoveAt(idx);
-        }
+        foreach (PoolEntry entry in _pool)
+            SpawnEnemy(entry);
     }
 
-    private void SpawnEnemy(GameObject go, PlatformNode node)
+    private void SpawnEnemy(PoolEntry entry)
     {
-        go.GetComponent<Enemy>().SetData(_enemyData);
-        go.GetComponent<EnemyHealth>().ResetHealth();
-        go.SetActive(true);
-        go.GetComponent<EnemyMovement>().Activate(node);
+        entry.Enemy.SetData(_enemyData);
+        entry.Health.ResetHealth();
+        entry.Enemy.gameObject.SetActive(true);
+        PlatformNode node = entry.PlatformNodes[UnityEngine.Random.Range(0, entry.PlatformNodes.Length)];
+        entry.Movement.Activate(node);
     }
 
-    private void HandleEnemyDied(GameObject go)
+    private PlatformNode[] CollectPlatformNodes(PlatformNode anchor)
     {
-        go.SetActive(false);
-        StartCoroutine(RespawnAfterCooldown(go));
-    }
-
-    private IEnumerator RespawnAfterCooldown(GameObject go)
-    {
-        yield return new WaitForSeconds(_enemyData.RespawnCooldown);
-        PlatformNode node = _platformNodes[Random.Range(0, _platformNodes.Count)];
-        SpawnEnemy(go, node);
-    }
-
-    #endregion
-
-    #region Platform Detection
-
-    private void CollectPlatformNodes(PlatformNode anchor)
-    {
-        _platformNodes.Clear();
+        var result = new List<PlatformNode>();
         var visited = new HashSet<PlatformNode>();
         var queue = new Queue<PlatformNode>();
 
@@ -146,7 +183,7 @@ public class EnemySpawner : MonoBehaviour
         while (queue.Count > 0)
         {
             PlatformNode node = queue.Dequeue();
-            _platformNodes.Add(node);
+            result.Add(node);
 
             foreach (PlatformNode neighbor in node.neighbors)
             {
@@ -159,6 +196,20 @@ public class EnemySpawner : MonoBehaviour
                 queue.Enqueue(neighbor);
             }
         }
+
+        return result.ToArray();
+    }
+
+    private void HandleEnemyDied(PoolEntry entry)
+    {
+        entry.Enemy.gameObject.SetActive(false);
+        StartCoroutine(RespawnAfterCooldown(entry));
+    }
+
+    private IEnumerator RespawnAfterCooldown(PoolEntry entry)
+    {
+        yield return new WaitForSeconds(_enemyData.RespawnCooldown);
+        SpawnEnemy(entry);
     }
 
     #endregion
@@ -167,12 +218,15 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!_drawGizmos || _platformNodes == null || _platformNodes.Count == 0)
+        if (!_drawGizmos || _spawnPoints == null)
             return;
 
         Gizmos.color = new Color(1f, 0.2f, 0.2f, 0.5f);
-        foreach (var node in _platformNodes)
-            Gizmos.DrawSphere(node.worldPosition, 0.18f);
+        foreach (SpawnPoint sp in _spawnPoints)
+        {
+            if (sp.Point != null)
+                Gizmos.DrawSphere(sp.Point.position, 0.18f);
+        }
     }
 
     #endregion
