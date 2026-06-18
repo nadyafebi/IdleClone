@@ -8,15 +8,14 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Spawn")]
     [SerializeField]
+    private EnemyData _enemyData;
+
+    [SerializeField]
     private GameObject _enemyPrefab;
 
     [SerializeField]
     [Tooltip("Maximum number of enemies alive at once from this spawner.")]
     private int _maxCount = 3;
-
-    [SerializeField]
-    [Tooltip("Seconds before a dead enemy respawns.")]
-    private float _respawnCooldown = 10f;
 
     [Header("Debug")]
     [SerializeField]
@@ -40,6 +39,13 @@ public class EnemySpawner : MonoBehaviour
         if (_graphBuilder == null)
         {
             Debug.LogError("[EnemySpawner] No PlatformGraphBuilder found in scene!");
+            enabled = false;
+            return;
+        }
+
+        if (_enemyData == null)
+        {
+            Debug.LogError("[EnemySpawner] No EnemyData assigned!");
             enabled = false;
             return;
         }
@@ -105,6 +111,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy(GameObject go, PlatformNode node)
     {
+        go.GetComponent<Enemy>().SetData(_enemyData);
         go.GetComponent<EnemyHealth>().ResetHealth();
         go.SetActive(true);
         go.GetComponent<EnemyMovement>().Activate(node);
@@ -118,7 +125,7 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator RespawnAfterCooldown(GameObject go)
     {
-        yield return new WaitForSeconds(_respawnCooldown);
+        yield return new WaitForSeconds(_enemyData.RespawnCooldown);
         PlatformNode node = _platformNodes[Random.Range(0, _platformNodes.Count)];
         SpawnEnemy(go, node);
     }

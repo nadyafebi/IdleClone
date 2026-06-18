@@ -122,6 +122,18 @@ public class EnemyRenderer : MonoBehaviour
 
     #endregion
 
+    #region Public Methods
+
+    public void ApplyData(EnemyData data)
+    {
+        if (_spriteRenderer != null)
+            _spriteRenderer.sprite = data.Sprite;
+        if (_animator != null)
+            _animator.runtimeAnimatorController = data.AnimatorController;
+    }
+
+    #endregion
+
     #region Hit Feedback
 
     private IEnumerator HitBlink()

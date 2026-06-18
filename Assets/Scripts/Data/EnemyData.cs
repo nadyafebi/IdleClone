@@ -35,9 +35,47 @@ public class EnemyData : ScriptableObject
 {
     #region Serialized Fields
 
+    [Header("Identity")]
+    [SerializeField]
+    private string _enemyName = "Enemy";
+
+    [SerializeField]
+    [Min(1)]
+    private int _maxHealth = 10;
+
+    [SerializeField]
+    private Sprite _sprite;
+
+    [SerializeField]
+    private RuntimeAnimatorController _animatorController;
+
+    [Header("Spawning")]
+    [SerializeField]
+    [Tooltip("Seconds before a dead enemy respawns.")]
+    private float _respawnCooldown = 10f;
+
+    [Header("Collider")]
+    [SerializeField]
+    private Vector2 _colliderSize = Vector2.one;
+
+    [SerializeField]
+    private Vector2 _colliderOffset = Vector2.zero;
+
     [Header("Drops")]
     [SerializeField]
     private List<DropTableEntry> _dropTable = new();
+
+    #endregion
+
+    #region Public Properties
+
+    public string EnemyName => _enemyName;
+    public int MaxHealth => _maxHealth;
+    public Sprite Sprite => _sprite;
+    public RuntimeAnimatorController AnimatorController => _animatorController;
+    public float RespawnCooldown => _respawnCooldown;
+    public Vector2 ColliderSize => _colliderSize;
+    public Vector2 ColliderOffset => _colliderOffset;
 
     #endregion
 

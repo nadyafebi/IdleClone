@@ -3,13 +3,6 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    #region Serialized Fields
-
-    [SerializeField]
-    private int _maxHealth = 10;
-
-    #endregion
-
     #region Public Properties
 
     public int CurrentHealth { get; private set; }
@@ -23,6 +16,7 @@ public class EnemyHealth : MonoBehaviour
 
     #region Private Fields
 
+    private int _maxHealth = 10;
     private bool _isDead;
 
     #endregion
@@ -37,6 +31,11 @@ public class EnemyHealth : MonoBehaviour
     #endregion
 
     #region Public Methods
+
+    public void SetMaxHealth(int maxHealth)
+    {
+        _maxHealth = maxHealth;
+    }
 
     public void TakeDamage(int amount)
     {

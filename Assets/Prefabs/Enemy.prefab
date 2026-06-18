@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: -4977809356216810586}
   - component: {fileID: 1608518404761080648}
   m_Layer: 6
-  m_Name: Worm
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
