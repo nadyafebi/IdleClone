@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 8252955786503460730}
   - component: {fileID: 4568240914605413369}
   - component: {fileID: 3831874744845938819}
+  - component: {fileID: 1650594566442791155}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -285,6 +286,7 @@ MonoBehaviour:
   _damagePopupSpawner: {fileID: 4568240914605413369}
   _itemPickupNotifier: {fileID: 8243217604302649360}
   _questManager: {fileID: 3831874744845938819}
+  _enemyProgressTracker: {fileID: 1650594566442791155}
   _townScene: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
   _townSceneName: Town
   _transitionFadeDuration: 1
@@ -345,6 +347,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fc0a92da38f2154dbd8c26cd93cad20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestManager
+--- !u!114 &1650594566442791155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3775220622017857759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a24347d965a2d0d4891ca1a698fc2f39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyProgressTracker
 --- !u!1 &4581154389133667746
 GameObject:
   m_ObjectHideFlags: 0

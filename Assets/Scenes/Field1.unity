@@ -203,9 +203,21 @@ PrefabInstance:
       value: Door to Field2
       objectReference: {fileID: 0}
     - target: {fileID: 8727123454206855361, guid: 0ed85a081554b0d4eb66723cda6623a0, type: 3}
+      propertyPath: _lockType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8727123454206855361, guid: 0ed85a081554b0d4eb66723cda6623a0, type: 3}
+      propertyPath: _targetEnemy
+      value: 
+      objectReference: {fileID: 11400000, guid: e657342593934e4468d7354ab2ecf4d4, type: 2}
+    - target: {fileID: 8727123454206855361, guid: 0ed85a081554b0d4eb66723cda6623a0, type: 3}
       propertyPath: _targetScene
       value: 
       objectReference: {fileID: 102900000, guid: 8f7a5fa1eff212a42b18fe031010e035, type: 3}
+    - target: {fileID: 8727123454206855361, guid: 0ed85a081554b0d4eb66723cda6623a0, type: 3}
+      propertyPath: _requiredKills
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8727123454206855361, guid: 0ed85a081554b0d4eb66723cda6623a0, type: 3}
       propertyPath: _targetSceneName
       value: Field2

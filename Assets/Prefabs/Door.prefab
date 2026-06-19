@@ -49,6 +49,15 @@ MonoBehaviour:
   _targetScene: {fileID: 0}
   _targetSceneName: 
   _arrivalThreshold: 0.75
+  _lockType: 0
+  _targetEnemy: {fileID: 0}
+  _requiredKills: 0
+  _lockIcon: {fileID: -2161890461989255489, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
+  _keyItem: {fileID: 0}
+  _indicatorOffset: {x: 0, y: 0.5}
+  _indicatorFontSize: 4
+  _indicatorFont: {fileID: 11400000, guid: 616f2f56977bbf44f86d877c4de5f208, type: 2}
+  _indicatorIconSize: 0.75
 --- !u!212 &6149360565029409166
 SpriteRenderer:
   serializedVersion: 2

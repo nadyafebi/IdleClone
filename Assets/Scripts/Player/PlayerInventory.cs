@@ -28,5 +28,20 @@ public class PlayerInventory : MonoBehaviour
         ItemPickupNotifier.TrySpawn(item.DisplayName, quantity);
     }
 
+    public bool RemoveItem(ItemData item, int quantity)
+    {
+        if (item == null || !_items.TryGetValue(item, out int current) || current < quantity)
+            return false;
+
+        int newCount = current - quantity;
+        if (newCount == 0)
+            _items.Remove(item);
+        else
+            _items[item] = newCount;
+
+        OnChanged?.Invoke();
+        return true;
+    }
+
     #endregion
 }
