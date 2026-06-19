@@ -1,3 +1,19 @@
+.item-pickup-container {
+    position: absolute;
+    right: 16px;
+    bottom: 96px;
+    align-items: flex-end;
+}
+
+.item-pickup-label {
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    margin-top: 2px;
+}
+
 .hud-area {
     position: absolute;
     left: 0;

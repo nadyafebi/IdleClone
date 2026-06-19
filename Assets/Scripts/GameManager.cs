@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
     private DamagePopupSpawner _damagePopupSpawner;
 
     [SerializeField]
+    private ItemPickupNotifier _itemPickupNotifier;
+
+    [SerializeField]
     private QuestManager _questManager;
 
     [Header("Respawn")]
@@ -58,6 +61,7 @@ public class GameManager : MonoBehaviour
     public PlayerLevel PlayerLevel => _playerLevel;
     public PlayerHealth PlayerHealth => _playerHealth;
     public DamagePopupSpawner DamagePopupSpawner => _damagePopupSpawner;
+    public ItemPickupNotifier ItemPickupNotifier => _itemPickupNotifier;
     public QuestManager QuestManager => _questManager;
 
     #endregion

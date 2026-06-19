@@ -283,6 +283,7 @@ MonoBehaviour:
   _playerLevel: {fileID: 7651052297677074660}
   _playerHealth: {fileID: 572126893711085078}
   _damagePopupSpawner: {fileID: 4568240914605413369}
+  _itemPickupNotifier: {fileID: 8243217604302649360}
   _questManager: {fileID: 3831874744845938819}
   _townScene: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
   _townSceneName: Town
@@ -354,6 +355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6323312787546107904}
   - component: {fileID: 8850692712998546788}
+  - component: {fileID: 8243217604302649360}
   - component: {fileID: 8512095664225728988}
   m_Layer: 0
   m_Name: HUD
@@ -391,6 +393,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HUDController
   _document: {fileID: 8512095664225728988}
   _inventoryMenu: {fileID: 7179458480576263740}
+--- !u!114 &8243217604302649360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4581154389133667746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c305a9dbad53474458c16845ca1ef9cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemPickupNotifier
+  _document: {fileID: 8512095664225728988}
+  _duration: 1.5
+  _floatPixels: 60
 --- !u!114 &8512095664225728988
 MonoBehaviour:
   m_ObjectHideFlags: 0

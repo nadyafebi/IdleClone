@@ -25,7 +25,7 @@ public class PlayerInventory : MonoBehaviour
         _items.TryGetValue(item, out int current);
         _items[item] = current + quantity;
         OnChanged?.Invoke();
-        Debug.Log($"[PlayerInventory] +{quantity} {item.DisplayName} (total: {_items[item]})");
+        ItemPickupNotifier.TrySpawn(item.DisplayName, quantity);
     }
 
     #endregion
