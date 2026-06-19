@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
     {
         _previousSceneName = SceneManager.GetActiveScene().name;
         _isTransitioning = true;
+        Time.timeScale = 0f;
         _screenFader.FadeOut(_transitionFadeDuration, () => SceneManager.LoadScene(sceneName));
     }
 
@@ -131,10 +132,10 @@ public class GameManager : MonoBehaviour
         if (_isRespawning)
         {
             _isRespawning = false;
-            Time.timeScale = 1f;
             _playerHealth.ResetHealth();
         }
 
+        Time.timeScale = 1f;
         _clickRouter.RewireCamera();
         _screenFader.RewireClickRouter(_clickRouter);
         _dialogController.OnSceneLoaded();
