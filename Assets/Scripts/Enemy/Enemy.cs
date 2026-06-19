@@ -8,6 +8,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private EnemyData _data;
 
+    [SerializeField]
+    private EnemyRenderer _renderer;
+
     #endregion
 
     #region Public Properties
@@ -55,9 +58,8 @@ public class Enemy : MonoBehaviour
         if (health != null)
             health.SetMaxHealth(data.MaxHealth);
 
-        var renderer = GetComponent<EnemyRenderer>();
-        if (renderer != null)
-            renderer.ApplyData(data);
+        if (_renderer != null)
+            _renderer.ApplyData(data);
 
         var col = GetComponent<Collider2D>();
         if (col is CapsuleCollider2D capsule)

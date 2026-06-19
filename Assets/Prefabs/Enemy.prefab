@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   _data: {fileID: 11400000, guid: e657342593934e4468d7354ab2ecf4d4, type: 2}
+  _renderer: {fileID: 3633869900333112985}
 --- !u!114 &966976923989622526
 MonoBehaviour:
   m_ObjectHideFlags: 0
