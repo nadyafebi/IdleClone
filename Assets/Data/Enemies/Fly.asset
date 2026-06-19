@@ -10,18 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34cf45b7b163cfc41874e3f5975e1d29, type: 3}
-  m_Name: Worm
+  m_Name: Fly
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  _enemyName: Worm
+  _enemyName: Fly
   _maxHealth: 1
-  _sprite: {fileID: -8643118696297500109, guid: a8c5ab4cc4d9c6647a7e65a84fef8fc9, type: 3}
-  _animatorController: {fileID: 9100000, guid: 3afc7ba654e0c3a4687271d28c91863c, type: 2}
+  _sprite: {fileID: 4920321868862412396, guid: a8c5ab4cc4d9c6647a7e65a84fef8fc9, type: 3}
+  _animatorController: {fileID: 9100000, guid: 753a905a0463acb4f9e84074be49a69e, type: 2}
   _respawnCooldown: 10
-  _colliderSize: {x: 1, y: 0.5}
-  _colliderOffset: {x: 0, y: 0.25}
+  _colliderSize: {x: 1, y: 1}
+  _colliderOffset: {x: 0, y: 0}
   _xpReward: 10
   _attackDamage: 0
-  _dropTable:
-  - _item: {fileID: 11400000, guid: cf441f95aaaf89144ad75db94ba78e00, type: 2}
-    _quantity: 5
-    _chance: 2
+  _dropTable: []

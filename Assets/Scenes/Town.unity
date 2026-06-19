@@ -249,7 +249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af75736e5ddd30428aa662793cf399f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NpcInteraction
-  _dialogData: {fileID: 11400000, guid: 76729378608e48344823922b36dc7131, type: 2}
   _approachDistance: 1.5
 --- !u!61 &707551423
 BoxCollider2D:

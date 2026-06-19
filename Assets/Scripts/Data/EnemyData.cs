@@ -39,15 +39,21 @@ public class EnemyData : ScriptableObject
     [SerializeField]
     private string _enemyName = "Enemy";
 
-    [SerializeField]
-    [Min(1)]
-    private int _maxHealth = 10;
-
+    [Header("Visual")]
     [SerializeField]
     private Sprite _sprite;
 
     [SerializeField]
     private RuntimeAnimatorController _animatorController;
+
+    [Header("Combat")]
+    [SerializeField]
+    [Min(1)]
+    private int _maxHealth = 10;
+
+    [SerializeField]
+    [Min(0)]
+    private int _attackDamage = 5;
 
     [Header("Spawning")]
     [SerializeField]
@@ -65,10 +71,6 @@ public class EnemyData : ScriptableObject
     [SerializeField]
     [Min(0)]
     private int _xpReward = 10;
-
-    [SerializeField]
-    [Min(0)]
-    private int _attackDamage = 5;
 
     [Header("Drops")]
     [SerializeField]

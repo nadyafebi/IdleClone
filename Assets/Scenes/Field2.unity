@@ -209,14 +209,14 @@ PrefabInstance:
     - target: {fileID: 8727123454206855361, guid: 0ed85a081554b0d4eb66723cda6623a0, type: 3}
       propertyPath: _targetEnemy
       value: 
-      objectReference: {fileID: 11400000, guid: e657342593934e4468d7354ab2ecf4d4, type: 2}
+      objectReference: {fileID: 11400000, guid: 2c4005073ba97d445a1145c017962aee, type: 2}
     - target: {fileID: 8727123454206855361, guid: 0ed85a081554b0d4eb66723cda6623a0, type: 3}
       propertyPath: _targetScene
       value: 
       objectReference: {fileID: 102900000, guid: 3347ef0647ba7824c866fc1c7b8e44ab, type: 3}
     - target: {fileID: 8727123454206855361, guid: 0ed85a081554b0d4eb66723cda6623a0, type: 3}
       propertyPath: _requiredKills
-      value: 100
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 8727123454206855361, guid: 0ed85a081554b0d4eb66723cda6623a0, type: 3}
       propertyPath: _targetSceneName
@@ -1018,7 +1018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 837cb2c01ffd1004aa8fc6ab71408d17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  _enemyData: {fileID: 11400000, guid: e657342593934e4468d7354ab2ecf4d4, type: 2}
+  _enemyData: {fileID: 11400000, guid: 2c4005073ba97d445a1145c017962aee, type: 2}
   _enemyPrefab: {fileID: 8436414018492821479, guid: 39269b4d5bb0d7b4882c195ad9df28eb, type: 3}
   _spawnPoints:
   - _point: {fileID: 4888347}
