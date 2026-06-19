@@ -20,5 +20,5 @@ MonoBehaviour:
   _dropItem: {fileID: 11400000, guid: c489c798fc86fe64691ebb3aedf3589a, type: 2}
   _dropQuantity: 1
   _xpReward: 5
-  _colliderSize: {x: 1, y: 1}
-  _colliderOffset: {x: 0, y: 0}
+  _colliderSize: {x: 2, y: 1.5}
+  _colliderOffset: {x: 0, y: 0.75}

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af6a147f249d86144b6556344d36bbe5, type: 3}
-  m_Name: Copper
+  m_Name: Tree
   m_EditorClassIdentifier: Assembly-CSharp::ResourceData
   _resourceName: Resource
-  _nodeType: 0
-  _sprite: {fileID: -2705597995764985619, guid: 157826d5c5950d3469fa846c88b9bdac, type: 3}
+  _nodeType: 1
+  _sprite: {fileID: -1161885816, guid: ec4e8aaa32033734a95279b46be9df73, type: 3}
   _maxHealth: 5
   _requiredLevel: 1
-  _dropItem: {fileID: 11400000, guid: 0ab0b66947a7bf648a2efa001c9bffc0, type: 2}
+  _dropItem: {fileID: 11400000, guid: 3b42ac8c9ea16b54cbc49bb413c2c002, type: 2}
   _dropQuantity: 1
   _xpReward: 5
-  _colliderSize: {x: 2, y: 1.5}
+  _colliderSize: {x: 1, y: 1.5}
   _colliderOffset: {x: 0, y: 0.75}

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ffd6c26ac59ad44cbf2c72ae52595f8, type: 3}
+  m_Name: Spikey_1_Get5Logs
+  m_EditorClassIdentifier: Assembly-CSharp::QuestData
+  QuestName: Gathering 101
+  Type: 1
+  TargetEnemy: {fileID: 0}
+  TargetItem: {fileID: 11400000, guid: 3b42ac8c9ea16b54cbc49bb413c2c002, type: 2}
+  RequiredCount: 5
+  OfferDialog: {fileID: 11400000, guid: eb66dffa1802e7b46b287c4c7f4cde80, type: 2}
+  ActiveDialog: {fileID: 11400000, guid: 9322df5ffde51d04e8451e8a158e2288, type: 2}
+  CompleteDialog: {fileID: 11400000, guid: 9e7f57c71a3d07041ad16b31a56ae874, type: 2}
+  LockedDialog: {fileID: 0}
+  ItemRewards: []
+  XpReward: 0
+  Dependency: {fileID: 0}

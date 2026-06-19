@@ -991,6 +991,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 425187597909755820, guid: 1aef8d06ef709654db8c7aedab095d66, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8032301891362702160, guid: 157826d5c5950d3469fa846c88b9bdac, type: 3}
+    - target: {fileID: 8001119829061619675, guid: 1aef8d06ef709654db8c7aedab095d66, type: 3}
+      propertyPath: _data
+      value: 
+      objectReference: {fileID: 11400000, guid: 5753c805305f9ea4d8237043a36bdcd7, type: 2}
     - target: {fileID: 8626853318307748965, guid: 1aef8d06ef709654db8c7aedab095d66, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -1033,7 +1041,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8645501883196139876, guid: 1aef8d06ef709654db8c7aedab095d66, type: 3}
       propertyPath: m_Name
-      value: Resource (1)
+      value: Iron
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2677,7 +2685,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8645501883196139876, guid: 1aef8d06ef709654db8c7aedab095d66, type: 3}
       propertyPath: m_Name
-      value: Resource
+      value: Copper
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
