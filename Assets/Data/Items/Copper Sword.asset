@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   _displayName: Copper Sword
   _icon: {fileID: 5860025163644826426, guid: 36a1262be64505941b3861c58ff47cef, type: 3}
+  _category: 1
+  _attackBonus: 5
+  _defenseBonus: 0
+  _healAmount: 0

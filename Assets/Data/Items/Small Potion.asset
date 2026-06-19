@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   _displayName: Small Potion
   _icon: {fileID: -980344073, guid: 36a1262be64505941b3861c58ff47cef, type: 3}
+  _category: 3
+  _attackBonus: 0
+  _defenseBonus: 0
+  _healAmount: 100

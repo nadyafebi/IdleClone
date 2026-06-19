@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   _displayName: Iron Sword
   _icon: {fileID: -7833671090200325546, guid: 36a1262be64505941b3861c58ff47cef, type: 3}
+  _category: 1
+  _attackBonus: 25
+  _defenseBonus: 0
+  _healAmount: 0
