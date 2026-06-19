@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,6 +14,9 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
     [SerializeField]
     private CraftingMenu _craftingMenu;
+
+    [SerializeField]
+    private ShopMenu _shopMenu;
 
     #endregion
 
@@ -108,10 +112,22 @@ public class HUDController : MonoBehaviour, IPointerBlocker
         _clickRouter.AddSpatialBlocker(this);
     }
 
-    public void OpenCraftingUI(System.Collections.Generic.IReadOnlyList<RecipeData> recipes)
+    public void OpenCraftingUI(IReadOnlyList<RecipeData> recipes)
     {
+        if (_shopMenu != null && _shopMenu.IsVisible)
+            _shopMenu.Hide();
         if (_craftingMenu != null)
             _craftingMenu.Open(recipes);
+        if (_inventoryMenu != null && !_inventoryMenu.IsVisible)
+            _inventoryMenu.Show();
+    }
+
+    public void OpenShopUI(string shopName, ItemData currency, IReadOnlyList<ShopItemEntry> entries)
+    {
+        if (_craftingMenu != null && _craftingMenu.IsVisible)
+            _craftingMenu.Hide();
+        if (_shopMenu != null)
+            _shopMenu.Open(shopName, currency, entries);
         if (_inventoryMenu != null && !_inventoryMenu.IsVisible)
             _inventoryMenu.Show();
     }

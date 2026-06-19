@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="ShopMenu.uss"/>
+    <ui:VisualElement name="shop-panel" class="shop-panel">
+        <ui:Label name="shop-label" text="Shop" class="shop-label"/>
+        <ui:ScrollView name="shop-list" class="shop-list" horizontal-scroller-visibility="Hidden"/>
+    </ui:VisualElement>
+</ui:UXML>

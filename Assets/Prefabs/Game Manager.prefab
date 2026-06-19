@@ -263,6 +263,7 @@ Transform:
   - {fileID: 6083986346499041083}
   - {fileID: 1617548275721267118}
   - {fileID: 4248928611455210220}
+  - {fileID: 881180972586104851}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8767336109236545063
@@ -410,6 +411,7 @@ MonoBehaviour:
   _document: {fileID: 8512095664225728988}
   _inventoryMenu: {fileID: 7179458480576263740}
   _craftingMenu: {fileID: 5718937061726304254}
+  _shopMenu: {fileID: 101933988966301245}
 --- !u!114 &8243217604302649360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,6 +582,75 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   _maxHealth: 100
+--- !u!1 &6278313426624425596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 881180972586104851}
+  - component: {fileID: 101933988966301245}
+  - component: {fileID: 5771835482793010490}
+  m_Layer: 0
+  m_Name: Shop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &881180972586104851
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6278313426624425596}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6756787219872152073}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &101933988966301245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6278313426624425596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506305914357b264f8b0fd34704d6fb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopMenu
+  _document: {fileID: 5771835482793010490}
+--- !u!114 &5771835482793010490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6278313426624425596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 89e756f419cf942458c1302c6dce70bb, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 962f3db78a5c90548a3bc44409a1b7e3, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
 --- !u!1 &6578491096982048195
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,11 +697,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CraftingMenu
   _document: {fileID: 8297511317760834177}
-  _recipes:
-  - {fileID: 11400000, guid: 2c9b2129435488747adb42cbddb0d4ba, type: 2}
-  - {fileID: 11400000, guid: 1875d40b806d5bb49b49b71818fb15f4, type: 2}
-  - {fileID: 11400000, guid: 50f6b4ccb93d2ff4c8d91d44c6fb3231, type: 2}
-  - {fileID: 11400000, guid: 6b1865ce2cb5d9c498b6250c6c6eeca9, type: 2}
 --- !u!114 &8297511317760834177
 MonoBehaviour:
   m_ObjectHideFlags: 0
