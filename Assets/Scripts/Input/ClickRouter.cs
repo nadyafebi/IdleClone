@@ -24,6 +24,8 @@ public class ClickRouter : MonoBehaviour
     private Camera _mainCamera;
     private readonly HashSet<object> _fullBlockers = new();
     private readonly List<IPointerBlocker> _spatialBlockers = new();
+    private float _mouseDownTime = -1f;
+    private Vector2 _mouseDownScreenPos;
 
     #endregion
 
@@ -66,13 +68,26 @@ public class ClickRouter : MonoBehaviour
     private void HandleClick()
     {
         var mouse = Mouse.current;
-        if (mouse == null || !mouse.leftButton.wasPressedThisFrame)
+        if (mouse == null)
+            return;
+
+        if (mouse.leftButton.wasPressedThisFrame)
+        {
+            _mouseDownTime = Time.unscaledTime;
+            _mouseDownScreenPos = mouse.position.ReadValue();
+            return;
+        }
+
+        if (!mouse.leftButton.wasReleasedThisFrame)
+            return;
+
+        if (Time.unscaledTime - _mouseDownTime >= 1f)
             return;
 
         if (_fullBlockers.Count > 0)
             return;
 
-        Vector2 screenPos = mouse.position.ReadValue();
+        Vector2 screenPos = _mouseDownScreenPos;
 
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             return;
