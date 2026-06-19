@@ -30,6 +30,12 @@ public abstract class GameMenu : MonoBehaviour, IPointerBlocker
 
     private void Awake()
     {
+        if (GameManager.Instance != null)
+        {
+            enabled = false;
+            return;
+        }
+
         if (_document == null)
         {
             Debug.LogError($"[{GetType().Name}] Missing UIDocument.");
@@ -61,7 +67,10 @@ public abstract class GameMenu : MonoBehaviour, IPointerBlocker
 
     public void Toggle()
     {
-        if (IsVisible) Hide(); else Show();
+        if (IsVisible)
+            Hide();
+        else
+            Show();
     }
 
     public bool ContainsScreenPoint(Vector2 screenPos)
@@ -77,8 +86,10 @@ public abstract class GameMenu : MonoBehaviour, IPointerBlocker
         float yMin = Screen.height - wb.yMax * dpi;
         float yMax = Screen.height - wb.yMin * dpi;
 
-        return screenPos.x >= xMin && screenPos.x <= xMax
-            && screenPos.y >= yMin && screenPos.y <= yMax;
+        return screenPos.x >= xMin
+            && screenPos.x <= xMax
+            && screenPos.y >= yMin
+            && screenPos.y <= yMax;
     }
 
     #endregion
@@ -86,6 +97,7 @@ public abstract class GameMenu : MonoBehaviour, IPointerBlocker
     #region Protected Methods
 
     protected virtual void OnShow() { }
+
     protected virtual void OnHide() { }
 
     #endregion
