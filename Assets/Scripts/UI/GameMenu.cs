@@ -54,6 +54,7 @@ public abstract class GameMenu : MonoBehaviour, IPointerBlocker
         Root.style.display = DisplayStyle.Flex;
         IsVisible = true;
         GameManager.Instance.ClickRouter.AddSpatialBlocker(this);
+        GameManager.Instance.ClickRouter.OnClickedOutside += Hide;
         OnShow();
     }
 
@@ -62,6 +63,7 @@ public abstract class GameMenu : MonoBehaviour, IPointerBlocker
         Root.style.display = DisplayStyle.None;
         IsVisible = false;
         GameManager.Instance.ClickRouter.RemoveSpatialBlocker(this);
+        GameManager.Instance.ClickRouter.OnClickedOutside -= Hide;
         OnHide();
     }
 

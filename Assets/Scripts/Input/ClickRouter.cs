@@ -16,6 +16,7 @@ public class ClickRouter : MonoBehaviour
     #region Public Properties
 
     public event Action<Vector2> OnGroundClicked;
+    public event Action OnClickedOutside;
 
     #endregion
 
@@ -97,6 +98,8 @@ public class ClickRouter : MonoBehaviour
             if (blocker.ContainsScreenPoint(screenPos))
                 return;
         }
+
+        OnClickedOutside?.Invoke();
 
         Vector2 worldPos = _mainCamera.ScreenToWorldPoint(screenPos);
 
