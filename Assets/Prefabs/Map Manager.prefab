@@ -323,6 +323,8 @@ MonoBehaviour:
   _npcSprite: {fileID: -5063247132458878880, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
   _portalSprite: {fileID: -7232391428614292779, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
   _enemySprite: {fileID: -1898279630, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
+  _miningSprite: {fileID: 1124674446, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
+  _woodcuttingSprite: {fileID: 1784692157, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
 --- !u!212 &4264294551316782724
 SpriteRenderer:
   serializedVersion: 2
