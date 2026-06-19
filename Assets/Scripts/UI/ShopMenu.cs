@@ -65,6 +65,7 @@ public class ShopMenu : GameMenu
     protected override void OnHide()
     {
         _inventory.OnChanged -= RefreshButtons;
+        GameManager.Instance.ItemTooltip.Hide();
     }
 
     #endregion
@@ -95,6 +96,7 @@ public class ShopMenu : GameMenu
             itemIcon.AddToClassList("shop-item-icon");
             itemIcon.style.backgroundImage = new StyleBackground(entry.Item.Icon);
             itemWrapper.Add(itemIcon);
+            GameManager.Instance.ItemTooltip.RegisterHover(itemWrapper, entry.Item);
             row.Add(itemWrapper);
 
             // Info column: name + price chip stacked

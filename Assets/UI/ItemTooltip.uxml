@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="ItemTooltip.uss"/>
+    <ui:VisualElement name="tooltip-panel" class="tooltip-panel" picking-mode="Ignore">
+        <ui:Label name="tooltip-name" class="tooltip-name" picking-mode="Ignore"/>
+        <ui:Label name="tooltip-category" class="tooltip-category" picking-mode="Ignore"/>
+        <ui:Label name="tooltip-effect" class="tooltip-effect" picking-mode="Ignore"/>
+    </ui:VisualElement>
+</ui:UXML>

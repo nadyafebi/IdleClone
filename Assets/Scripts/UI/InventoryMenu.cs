@@ -54,6 +54,7 @@ public class InventoryMenu : GameMenu
     protected override void OnHide()
     {
         _inventory.OnChanged -= Rebuild;
+        GameManager.Instance.ItemTooltip.Hide();
     }
 
     #endregion
@@ -97,15 +98,19 @@ public class InventoryMenu : GameMenu
             int itemIndex = startIndex + i;
             if (itemIndex < items.Count)
             {
+                ItemData item = items[itemIndex].Key;
+
                 var icon = new VisualElement();
                 icon.AddToClassList("slot-icon");
-                icon.style.backgroundImage = new StyleBackground(items[itemIndex].Key.Icon);
+                icon.style.backgroundImage = new StyleBackground(item.Icon);
 
                 var label = new Label(FormatQuantity(items[itemIndex].Value));
                 label.AddToClassList("slot-quantity");
 
                 slot.Add(icon);
                 slot.Add(label);
+
+                GameManager.Instance.ItemTooltip.RegisterHover(slot, item);
             }
 
             _grid.Add(slot);

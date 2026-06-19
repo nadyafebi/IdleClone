@@ -56,6 +56,7 @@ public class CraftingMenu : GameMenu
     protected override void OnHide()
     {
         _inventory.OnChanged -= RefreshButtons;
+        GameManager.Instance.ItemTooltip.Hide();
     }
 
     #endregion
@@ -94,6 +95,7 @@ public class CraftingMenu : GameMenu
                 resultWrapper.Add(qtyLabel);
             }
 
+            GameManager.Instance.ItemTooltip.RegisterHover(resultWrapper, recipe.ResultItem);
             row.Add(resultWrapper);
 
             // Ingredient chips
@@ -117,6 +119,7 @@ public class CraftingMenu : GameMenu
 
                 chip.Add(icon);
                 chip.Add(countLabel);
+                GameManager.Instance.ItemTooltip.RegisterHover(chip, ingredient.Item);
                 ingredientsContainer.Add(chip);
             }
 
