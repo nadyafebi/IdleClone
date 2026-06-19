@@ -44,7 +44,7 @@ public class DamagePopupSpawner : MonoBehaviour
 
     public static void TrySpawnEnemyDamage(Vector2 worldPos, int amount)
     {
-        if (GameManager.Instance == null)
+        if (amount == 0 || GameManager.Instance == null)
             return;
 
         DamagePopupSpawner spawner = GameManager.Instance.DamagePopupSpawner;
