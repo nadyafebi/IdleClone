@@ -31,6 +31,20 @@ public class QuestManager : MonoBehaviour
         Enemy.OnAnyEnemyKilled -= HandleEnemyKilled;
     }
 
+    private void Start()
+    {
+        PlayerInventory inventory = GameManager.Instance?.PlayerInventory;
+        if (inventory != null)
+            inventory.OnChanged += HandleInventoryChanged;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerInventory inventory = GameManager.Instance?.PlayerInventory;
+        if (inventory != null)
+            inventory.OnChanged -= HandleInventoryChanged;
+    }
+
     #endregion
 
     #region Public Methods
@@ -130,6 +144,18 @@ public class QuestManager : MonoBehaviour
 
         GameManager.Instance.PlayerInventory.Items.TryGetValue(quest.TargetItem, out int count);
         return count;
+    }
+
+    private void HandleInventoryChanged()
+    {
+        foreach (var kvp in _states)
+        {
+            QuestData quest = kvp.Key;
+            if (kvp.Value != QuestState.Active || quest.Type != QuestType.Collect)
+                continue;
+
+            OnQuestUpdated?.Invoke(quest);
+        }
     }
 
     private void HandleEnemyKilled(EnemyData enemyData)
