@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -11,7 +12,36 @@ public class Enemy : MonoBehaviour
 
     #region Public Properties
 
+    public static event Action<EnemyData> OnAnyEnemyKilled;
+
     public EnemyData Data => _data;
+
+    #endregion
+
+    #region Private Fields
+
+    private EnemyHealth _health;
+
+    #endregion
+
+    #region Unity Lifecycle
+
+    private void Awake()
+    {
+        _health = GetComponent<EnemyHealth>();
+    }
+
+    private void Start()
+    {
+        if (_health != null)
+            _health.OnDied += HandleDied;
+    }
+
+    private void OnDestroy()
+    {
+        if (_health != null)
+            _health.OnDied -= HandleDied;
+    }
 
     #endregion
 
@@ -40,6 +70,16 @@ public class Enemy : MonoBehaviour
             box.size = data.ColliderSize;
             box.offset = data.ColliderOffset;
         }
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private void HandleDied()
+    {
+        if (_data != null)
+            OnAnyEnemyKilled?.Invoke(_data);
     }
 
     #endregion

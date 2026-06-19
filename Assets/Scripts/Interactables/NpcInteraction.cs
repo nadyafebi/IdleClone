@@ -4,9 +4,6 @@ public class NpcInteraction : Interactable
 {
     #region Serialized Fields
 
-    [SerializeField]
-    private DialogData _dialogData;
-
     [Tooltip("How far from the NPC the player stops (world units).")]
     [SerializeField]
     private float _approachDistance = 1.5f;
@@ -17,6 +14,7 @@ public class NpcInteraction : Interactable
 
     private DialogController _dialogController;
     private ClickIndicator _clickIndicator;
+    private NpcQuestGiver _questGiver;
     private bool _dialogOpen;
 
     #endregion
@@ -37,7 +35,10 @@ public class NpcInteraction : Interactable
         {
             Debug.LogError("[NpcInteraction] Missing required scene dependency.");
             enabled = false;
+            return;
         }
+
+        _questGiver = GetComponent<NpcQuestGiver>();
     }
 
     #endregion
@@ -100,8 +101,19 @@ public class NpcInteraction : Interactable
 
     private void OpenDialog()
     {
+        if (_questGiver == null)
+            return;
+
+        DialogData dialog = _questGiver.GetCurrentDialog();
+        if (dialog == null)
+            return;
+
         _dialogOpen = true;
-        _dialogController.Open(_dialogData, transform, () => _dialogOpen = false);
+        _dialogController.Open(dialog, transform, () =>
+        {
+            _questGiver.OnDialogClosed();
+            _dialogOpen = false;
+        });
     }
 
     private bool IsPlayerNear() =>

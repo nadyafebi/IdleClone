@@ -20,7 +20,8 @@ MonoBehaviour:
   _colliderSize: {x: 1, y: 0.5}
   _colliderOffset: {x: 0, y: 0.25}
   _xpReward: 10
+  _attackDamage: 0
   _dropTable:
   - _item: {fileID: 11400000, guid: cf441f95aaaf89144ad75db94ba78e00, type: 2}
-    _quantity: 1
+    _quantity: 5
     _chance: 2

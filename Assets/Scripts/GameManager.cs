@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private DamagePopupSpawner _damagePopupSpawner;
 
+    [SerializeField]
+    private QuestManager _questManager;
+
     [Header("Respawn")]
 #if UNITY_EDITOR
     [SerializeField]
@@ -55,6 +58,7 @@ public class GameManager : MonoBehaviour
     public PlayerLevel PlayerLevel => _playerLevel;
     public PlayerHealth PlayerHealth => _playerHealth;
     public DamagePopupSpawner DamagePopupSpawner => _damagePopupSpawner;
+    public QuestManager QuestManager => _questManager;
 
     #endregion
 

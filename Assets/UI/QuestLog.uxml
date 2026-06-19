@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/QuestLog.uss"/>
+    <ui:VisualElement name="quest-panel" class="quest-panel">
+        <ui:VisualElement name="quest-header" class="quest-header">
+            <ui:Label text="Quests" class="quest-title"/>
+            <ui:Button name="quest-toggle" text="▲" class="quest-toggle-btn"/>
+        </ui:VisualElement>
+        <ui:ScrollView name="quest-list" class="quest-list" horizontal-scroller-visibility="Hidden"/>
+    </ui:VisualElement>
+</ui:UXML>

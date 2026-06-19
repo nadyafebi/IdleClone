@@ -10,11 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9024d1781799b6f4b9de84bc0207d71a, type: 3}
-  m_Name: Wingus_FirstQuest
+  m_Name: Wingus_1_Active
   m_EditorClassIdentifier: Assembly-CSharp::DialogData
   SpeakerName: Wingus
   Lines:
-  - Howdy player! Welcome to the world of IdleClone!
-  - What? You feel like you've played this before? No way.
-  - Anyway, I'm Wingus, the quest master. I'll be guiding you throughout your journey.
-  - Here comes your first mission!
+  - What are you dawdling about? Go kill some worms!

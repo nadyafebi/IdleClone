@@ -1,0 +1,69 @@
+.quest-panel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 240px;
+    padding: 8px;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=-382030422&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_10");
+    -unity-slice-left: 10;
+    -unity-slice-top: 10;
+    -unity-slice-right: 10;
+    -unity-slice-bottom: 10;
+    -unity-slice-scale: 0.4px;
+}
+
+.quest-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quest-title {
+    font-size: 13px;
+    -unity-font-style: bold;
+    color: rgb(165, 112, 57);
+    margin-left: 8px;
+    -unity-text-align: middle-left;
+}
+
+.quest-toggle-btn {
+    width: 22px;
+    height: 22px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-width: 0px;
+    font-size: 10px;
+    padding: 0;
+    -unity-text-align: middle-center;
+    color: rgb(107, 77, 41);
+}
+
+.quest-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.quest-list {
+    max-height: 220px;
+}
+
+.quest-entry {
+    margin-bottom: 6px;
+    padding: 0px 7px;
+}
+
+.quest-name {
+    font-size: 12px;
+    -unity-font-style: bold;
+    white-space: normal;
+    margin-bottom: -8px;
+}
+
+.quest-name.quest-ready {
+    color: #72b84e;
+}
+
+.quest-progress {
+    color: rgba(0, 0, 0, 0.875);
+    font-size: 11px;
+    margin-top: 2px;
+    white-space: normal;
+}
