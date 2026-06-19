@@ -170,7 +170,7 @@ public class DialogController : MonoBehaviour, IPointerBlocker
 
     private void ShowCurrentLine()
     {
-        _speakerLabel.text = _currentData.SpeakerName;
+        _speakerLabel.text = _npcTransform != null ? _npcTransform.gameObject.name : string.Empty;
         _lineLabel.text = _currentData.Lines[_currentLineIndex];
     }
 
