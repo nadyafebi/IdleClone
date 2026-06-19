@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     #region Public Properties
 
     public static GameManager Instance { get; private set; }
+    public HUDController HudController => _hudController;
     public DialogController DialogController => _dialogController;
     public ClickRouter ClickRouter => _clickRouter;
     public PlayerInventory PlayerInventory => _playerInventory;

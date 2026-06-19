@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="CraftingMenu.uss"/>
+    <ui:VisualElement name="crafting-panel" class="crafting-panel">
+        <ui:Label text="Crafting" class="crafting-label"/>
+        <ui:ScrollView name="recipe-list" class="recipe-list" horizontal-scroller-visibility="Hidden"/>
+    </ui:VisualElement>
+</ui:UXML>

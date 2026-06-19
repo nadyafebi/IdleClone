@@ -11,6 +11,9 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     [SerializeField]
     private InventoryMenu _inventoryMenu;
 
+    [SerializeField]
+    private CraftingMenu _craftingMenu;
+
     #endregion
 
     #region Private Fields
@@ -103,6 +106,14 @@ public class HUDController : MonoBehaviour, IPointerBlocker
         }
 
         _clickRouter.AddSpatialBlocker(this);
+    }
+
+    public void OpenCraftingUI(System.Collections.Generic.IReadOnlyList<RecipeData> recipes)
+    {
+        if (_craftingMenu != null)
+            _craftingMenu.Open(recipes);
+        if (_inventoryMenu != null && !_inventoryMenu.IsVisible)
+            _inventoryMenu.Show();
     }
 
     public bool ContainsScreenPoint(Vector2 screenPos)

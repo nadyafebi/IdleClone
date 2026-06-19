@@ -256,12 +256,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6323312787546107904}
   - {fileID: 5181884789521112057}
   - {fileID: 2373544722580283313}
-  - {fileID: 6323312787546107904}
   - {fileID: 7985688867562154149}
   - {fileID: 6083986346499041083}
   - {fileID: 1617548275721267118}
+  - {fileID: 4248928611455210220}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8767336109236545063
@@ -335,6 +336,7 @@ MonoBehaviour:
   _prefab: {fileID: 4171536207103201561, guid: 2ec5cd3c6ade59f42907d075c2c8b001, type: 3}
   _playerDamageColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   _enemyDamageColor: {r: 1, g: 0, b: 0, a: 1}
+  _levelRequiredColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &3831874744845938819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HUDController
   _document: {fileID: 8512095664225728988}
   _inventoryMenu: {fileID: 7179458480576263740}
+  _craftingMenu: {fileID: 5718937061726304254}
 --- !u!114 &8243217604302649360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,3 +580,77 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   _maxHealth: 100
+--- !u!1 &6578491096982048195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4248928611455210220}
+  - component: {fileID: 5718937061726304254}
+  - component: {fileID: 8297511317760834177}
+  m_Layer: 0
+  m_Name: Crafting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4248928611455210220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6578491096982048195}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6756787219872152073}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5718937061726304254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6578491096982048195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c70d25b4bd165104f904987243ed10a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingMenu
+  _document: {fileID: 8297511317760834177}
+  _recipes:
+  - {fileID: 11400000, guid: 2c9b2129435488747adb42cbddb0d4ba, type: 2}
+  - {fileID: 11400000, guid: 1875d40b806d5bb49b49b71818fb15f4, type: 2}
+  - {fileID: 11400000, guid: 50f6b4ccb93d2ff4c8d91d44c6fb3231, type: 2}
+  - {fileID: 11400000, guid: 6b1865ce2cb5d9c498b6250c6c6eeca9, type: 2}
+--- !u!114 &8297511317760834177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6578491096982048195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 89e756f419cf942458c1302c6dce70bb, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 7e4eaae7c46bd0c478c8d565156c0402, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
