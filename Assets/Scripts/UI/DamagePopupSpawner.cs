@@ -16,11 +16,20 @@ public class DamagePopupSpawner : MonoBehaviour
     [Tooltip("Color for damage dealt by enemies to the player.")]
     private Color _enemyDamageColor = Color.red;
 
+    [SerializeField]
+    [Tooltip("Color for the level-requirement popup shown on resource nodes.")]
+    private Color _levelRequiredColor = Color.red;
+
     #endregion
 
     #region Public Methods
 
     public void Spawn(Vector2 worldPos, int amount, Color color)
+    {
+        SpawnText(worldPos, amount.ToString(), color);
+    }
+
+    public void SpawnText(Vector2 worldPos, string text, Color color)
     {
         if (_prefab == null)
         {
@@ -29,7 +38,7 @@ public class DamagePopupSpawner : MonoBehaviour
         }
 
         DamagePopup popup = Instantiate(_prefab, worldPos, Quaternion.identity);
-        popup.Initialize(amount, color);
+        popup.Initialize(text, color);
     }
 
     public static void TrySpawnPlayerDamage(Vector2 worldPos, int amount)
@@ -50,6 +59,16 @@ public class DamagePopupSpawner : MonoBehaviour
         DamagePopupSpawner spawner = GameManager.Instance.DamagePopupSpawner;
         if (spawner != null)
             spawner.Spawn(worldPos, amount, spawner._enemyDamageColor);
+    }
+
+    public static void TrySpawnLevelRequired(Vector2 worldPos, int level)
+    {
+        if (GameManager.Instance == null)
+            return;
+
+        DamagePopupSpawner spawner = GameManager.Instance.DamagePopupSpawner;
+        if (spawner != null)
+            spawner.SpawnText(worldPos, $"Lv. {level} required", spawner._levelRequiredColor);
     }
 
     #endregion

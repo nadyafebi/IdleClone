@@ -25,7 +25,9 @@ public class DamagePopup : MonoBehaviour
 
     #region Public Methods
 
-    public void Initialize(int amount, Color color)
+    public void Initialize(int amount, Color color) => Initialize(amount.ToString(), color);
+
+    public void Initialize(string text, Color color)
     {
         if (_text == null)
         {
@@ -34,7 +36,7 @@ public class DamagePopup : MonoBehaviour
             return;
         }
 
-        _text.text = amount.ToString();
+        _text.text = text;
         _text.color = color;
         StartCoroutine(Animate(color));
     }

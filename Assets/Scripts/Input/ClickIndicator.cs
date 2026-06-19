@@ -30,6 +30,12 @@ public class ClickIndicator : MonoBehaviour
     [SerializeField]
     private Sprite _enemySprite;
 
+    [SerializeField]
+    private Sprite _miningSprite;
+
+    [SerializeField]
+    private Sprite _woodcuttingSprite;
+
     #endregion
 
     #region Private Fields
@@ -122,6 +128,20 @@ public class ClickIndicator : MonoBehaviour
         _trackedTarget = enemy;
         _trackedOffset = _interactableCursorOffset;
         ShowCursor(_enemySprite, (Vector2)enemy.position + _interactableCursorOffset);
+    }
+
+    public void ShowMiningCursor(Transform node)
+    {
+        _trackedTarget = node;
+        _trackedOffset = _interactableCursorOffset;
+        ShowCursor(_miningSprite, (Vector2)node.position + _interactableCursorOffset);
+    }
+
+    public void ShowWoodcuttingCursor(Transform node)
+    {
+        _trackedTarget = node;
+        _trackedOffset = _interactableCursorOffset;
+        ShowCursor(_woodcuttingSprite, (Vector2)node.position + _interactableCursorOffset);
     }
 
     public void HideCursor()
