@@ -44,22 +44,22 @@
     margin: 4px;
     background-color: rgba(255, 255, 255, 0);
     background-image: url("project://database/Assets/Sprites/ui.png?fileID=5707218116961789024&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_0");
+    align-items: center;
+    justify-content: center;
 }
 
 .slot-icon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    width: 32px;
+    height: 32px;
+    background-size: contain;
 }
 
 .slot-quantity {
     position: absolute;
-    bottom: 6px;
+    top: 6px;
     right: 6px;
     font-size: 12px;
-    -unity-text-align: lower-right;
+    -unity-text-align: upper-right;
     -unity-font-style: bold;
 }
 
