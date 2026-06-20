@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Fly
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   _enemyName: Fly
-  _maxHealth: 1
   _sprite: {fileID: 4920321868862412396, guid: a8c5ab4cc4d9c6647a7e65a84fef8fc9, type: 3}
   _animatorController: {fileID: 9100000, guid: 753a905a0463acb4f9e84074be49a69e, type: 2}
+  _maxHealth: 10
+  _attackDamage: 5
   _respawnCooldown: 10
   _colliderSize: {x: 1, y: 1}
   _colliderOffset: {x: 0, y: 0}
   _xpReward: 10
-  _attackDamage: 0
   _dropTable: []

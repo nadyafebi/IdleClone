@@ -38,6 +38,18 @@ public class PlayerHealth : MonoBehaviour
 
     #region Public Methods
 
+    public int Heal(int amount)
+    {
+        if (_isDead || amount <= 0)
+            return 0;
+        int actual = Mathf.Min(amount, _maxHealth - CurrentHealth);
+        if (actual <= 0)
+            return 0;
+        CurrentHealth += actual;
+        OnHealthChanged?.Invoke(CurrentHealth, _maxHealth);
+        return actual;
+    }
+
     public void TakeDamage(int amount)
     {
         if (_isDead || amount <= 0)

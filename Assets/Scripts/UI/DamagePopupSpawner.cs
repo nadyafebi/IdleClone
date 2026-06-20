@@ -20,6 +20,10 @@ public class DamagePopupSpawner : MonoBehaviour
     [Tooltip("Color for the level-requirement popup shown on resource nodes.")]
     private Color _levelRequiredColor = Color.red;
 
+    [SerializeField]
+    [Tooltip("Color for heal popups.")]
+    private Color _healColor = Color.green;
+
     #endregion
 
     #region Public Methods
@@ -59,6 +63,16 @@ public class DamagePopupSpawner : MonoBehaviour
         DamagePopupSpawner spawner = GameManager.Instance.DamagePopupSpawner;
         if (spawner != null)
             spawner.Spawn(worldPos, amount, spawner._enemyDamageColor);
+    }
+
+    public static void TrySpawnHeal(Vector2 worldPos, int amount)
+    {
+        if (GameManager.Instance == null)
+            return;
+
+        DamagePopupSpawner spawner = GameManager.Instance.DamagePopupSpawner;
+        if (spawner != null)
+            spawner.Spawn(worldPos, amount, spawner._healColor);
     }
 
     public static void TrySpawnLevelRequired(Vector2 worldPos, int level)

@@ -171,6 +171,13 @@ public class InventoryMenu : GameMenu
         // Register hover on the freshly-created icon so callbacks don't accumulate on the slot.
         GameManager.Instance.ItemTooltip.RegisterHover(icon, item);
         slot.Add(icon);
+
+        if (item.Category == ItemCategory.Potion)
+        {
+            var qty = new Label(_equipment.PotionSlotQuantity.ToString());
+            qty.AddToClassList("slot-quantity");
+            slot.Add(qty);
+        }
     }
 
     private void RegisterEquipSlotClick(VisualElement slot, ItemCategory category)
@@ -181,14 +188,30 @@ public class InventoryMenu : GameMenu
             if (equipped == null)
                 return;
             GameManager.Instance.ItemTooltip.Hide();
+            int qty = category == ItemCategory.Potion ? _equipment.PotionSlotQuantity : 1;
+            _inventory.AddItem(equipped, qty);
             _equipment.Unequip(category);
-            _inventory.AddItem(equipped, 1);
         });
     }
 
     private void EquipItem(ItemData item)
     {
         GameManager.Instance.ItemTooltip.Hide();
+
+        if (item.Category == ItemCategory.Potion)
+        {
+            ItemData currentPotion = _equipment.PotionSlot;
+            if (currentPotion != null && currentPotion != item)
+                _inventory.AddItem(currentPotion, _equipment.PotionSlotQuantity);
+
+            int qty = _inventory.GetQuantity(item);
+            if (qty <= 0)
+                return;
+            _inventory.RemoveItem(item, qty);
+            _equipment.EquipPotion(item, qty);
+            return;
+        }
+
         ItemData currentlyEquipped = _equipment.GetSlot(item.Category);
         if (currentlyEquipped != null)
             _inventory.AddItem(currentlyEquipped, 1);

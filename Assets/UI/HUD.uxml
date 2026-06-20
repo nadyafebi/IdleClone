@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/HUD.uss?fileID=7433441132597879392&amp;guid=bdaf38c3c5249904ab9cc57a843d936c&amp;type=3#HUD"/>
-    <ui:VisualElement name="item-pickup-container" class="item-pickup-container" picking-mode="Ignore"/>
+    <ui:VisualElement name="item-pickup-container" picking-mode="Ignore" class="item-pickup-container"/>
     <ui:VisualElement name="hud-panel" class="hud-area">
         <ui:VisualElement name="player-panel" class="hud-panel">
             <ui:Label name="player-class-label" text="Beginner" class="player-class-label"/>
@@ -28,21 +28,16 @@
             <ui:VisualElement class="skill-slot"/>
             <ui:VisualElement class="skill-slot"/>
             <ui:VisualElement class="skill-slot"/>
-            <ui:VisualElement class="skill-slot"/>
-            <ui:VisualElement class="skill-slot"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="potion-panel" class="hud-panel">
+            <ui:VisualElement name="potion-slot" class="skill-slot"/>
         </ui:VisualElement>
         <ui:VisualElement name="menu-panel" class="hud-panel">
             <ui:VisualElement name="btn-items" class="menu-item">
                 <ui:Label text="Items" class="menu-item-label"/>
             </ui:VisualElement>
             <ui:VisualElement class="menu-item">
-                <ui:Label text="Skills" class="menu-item-label"/>
-            </ui:VisualElement>
-            <ui:VisualElement class="menu-item">
-                <ui:Label text="Cards" class="menu-item-label"/>
-            </ui:VisualElement>
-            <ui:VisualElement class="menu-item">
-                <ui:Label text="Cheat" class="menu-item-label"/>
+                <ui:Label text="Upgrades" class="menu-item-label"/>
             </ui:VisualElement>
             <ui:VisualElement class="menu-item">
                 <ui:Label text="Menu" class="menu-item-label"/>

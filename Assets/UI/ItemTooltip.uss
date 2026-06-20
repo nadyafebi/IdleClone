@@ -32,5 +32,5 @@
     font-size: 13px;
     -unity-font-style: bold;
     margin-top: 4px;
-    color: rgb(244, 180, 27);
+    color: #c58747;
 }

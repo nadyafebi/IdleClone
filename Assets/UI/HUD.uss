@@ -44,10 +44,17 @@
 }
 
 #skills-panel {
-    width: 30%;
+    width: 25%;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+}
+
+#potion-panel {
+    width: 10%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .skill-slot {
@@ -61,6 +68,23 @@
     -unity-slice-right: 10;
     -unity-slice-bottom: 10;
     background-image: url("project://database/Assets/Sprites/ui.png?fileID=230389703&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_9");
+    align-items: center;
+    justify-content: center;
+}
+
+.potion-slot-quantity {
+    position: absolute;
+    bottom: 2px;
+    right: 3px;
+    font-size: 11px;
+    -unity-text-align: lower-right;
+    -unity-font-style: bold;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+}
+
+.skill-slot--usable:hover {
+    scale: 1.05 1.05;
 }
 
 .skill-slot__active {
@@ -68,14 +92,14 @@
 }
 
 #menu-panel {
-    width: 30%;
+    width: 35%;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
 
 .menu-item {
-    width: 48px;
+    width: 87.5px;
     height: 48px;
     flex-shrink: 0;
     -unity-slice-type: tiled;

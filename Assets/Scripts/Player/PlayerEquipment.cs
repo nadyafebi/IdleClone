@@ -8,6 +8,7 @@ public class PlayerEquipment : MonoBehaviour
     public ItemData WeaponSlot { get; private set; }
     public ItemData ShieldSlot { get; private set; }
     public ItemData PotionSlot { get; private set; }
+    public int PotionSlotQuantity { get; private set; }
 
     public int TotalAttackBonus => WeaponSlot != null ? WeaponSlot.AttackBonus : 0;
     public int TotalDefenseBonus => ShieldSlot != null ? ShieldSlot.DefenseBonus : 0;
@@ -24,8 +25,34 @@ public class PlayerEquipment : MonoBehaviour
         {
             case ItemCategory.Weapon: WeaponSlot = item; break;
             case ItemCategory.Shield: ShieldSlot = item; break;
-            case ItemCategory.Potion: PotionSlot = item; break;
             default: return;
+        }
+        OnEquipmentChanged?.Invoke();
+    }
+
+    // Stacks onto existing slot if same item, replaces otherwise.
+    public void EquipPotion(ItemData item, int quantity)
+    {
+        if (PotionSlot == item)
+            PotionSlotQuantity += quantity;
+        else
+        {
+            PotionSlot = item;
+            PotionSlotQuantity = quantity;
+        }
+        OnEquipmentChanged?.Invoke();
+    }
+
+    // Decrements quantity by 1; clears the slot when it reaches 0.
+    public void ConsumePotion()
+    {
+        if (PotionSlot == null)
+            return;
+        PotionSlotQuantity--;
+        if (PotionSlotQuantity <= 0)
+        {
+            PotionSlot = null;
+            PotionSlotQuantity = 0;
         }
         OnEquipmentChanged?.Invoke();
     }
@@ -36,7 +63,10 @@ public class PlayerEquipment : MonoBehaviour
         {
             case ItemCategory.Weapon: WeaponSlot = null; break;
             case ItemCategory.Shield: ShieldSlot = null; break;
-            case ItemCategory.Potion: PotionSlot = null; break;
+            case ItemCategory.Potion:
+                PotionSlot = null;
+                PotionSlotQuantity = 0;
+                break;
             default: return;
         }
         OnEquipmentChanged?.Invoke();

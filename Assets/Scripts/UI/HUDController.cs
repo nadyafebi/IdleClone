@@ -35,6 +35,9 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     private Label _hpAmountLabel;
     private PlayerHealth _playerHealth;
 
+    private VisualElement _potionSlot;
+    private PlayerEquipment _playerEquipment;
+
     #endregion
 
     #region Unity Lifecycle
@@ -76,6 +79,17 @@ public class HUDController : MonoBehaviour, IPointerBlocker
         {
             Debug.LogWarning("[HUDController] No PlayerHealth found on GameManager.");
         }
+
+        _potionSlot = _document.rootVisualElement.Q("potion-slot");
+        if (_potionSlot != null)
+            _potionSlot.RegisterCallback<ClickEvent>(_ => UsePotion());
+
+        _playerEquipment = GameManager.Instance?.PlayerEquipment;
+        if (_playerEquipment != null)
+        {
+            _playerEquipment.OnEquipmentChanged += RefreshPotionSlot;
+            RefreshPotionSlot();
+        }
     }
 
     private void OnDestroy()
@@ -91,6 +105,9 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
         if (_playerHealth != null)
             _playerHealth.OnHealthChanged -= HandleHealthChanged;
+
+        if (_playerEquipment != null)
+            _playerEquipment.OnEquipmentChanged -= RefreshPotionSlot;
     }
 
     #endregion
@@ -156,7 +173,6 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     {
         if (menu == null) return;
 
-        // Close whatever is open if it's a different menu
         if (_openMenu != null && _openMenu != menu)
         {
             _openMenu.Hide();
@@ -165,6 +181,47 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
         menu.Toggle();
         _openMenu = menu.IsVisible ? menu : null;
+    }
+
+    private void RefreshPotionSlot()
+    {
+        if (_potionSlot == null)
+            return;
+
+        _potionSlot.Clear();
+        ItemData potion = _playerEquipment?.PotionSlot;
+        _potionSlot.EnableInClassList("skill-slot--usable", potion != null);
+        if (potion == null)
+            return;
+
+        var icon = new VisualElement();
+        icon.style.backgroundImage = new StyleBackground(potion.Icon);
+        icon.style.width = new StyleLength(32f);
+        icon.style.height = new StyleLength(32f);
+        icon.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(BackgroundSizeType.Contain));
+        icon.pickingMode = PickingMode.Ignore;
+        _potionSlot.Add(icon);
+
+    }
+
+    private void UsePotion()
+    {
+        if (_playerEquipment == null || _playerHealth == null)
+            return;
+
+        ItemData potion = _playerEquipment.PotionSlot;
+        if (potion == null || potion.HealAmount <= 0)
+            return;
+
+        int actualHeal = _playerHealth.Heal(potion.HealAmount);
+        _playerEquipment.ConsumePotion();
+
+        if (actualHeal > 0)
+        {
+            PlayerMovement player = FindFirstObjectByType<PlayerMovement>();
+            if (player != null)
+                DamagePopupSpawner.TrySpawnHeal(player.transform.position, actualHeal);
+        }
     }
 
     private void HandleHealthChanged(int current, int max) => RefreshHpBar(current, max);
