@@ -1,0 +1,59 @@
+.player-stats-panel {
+    position: absolute;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=3556181715638617739&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_1");
+    background-color: rgba(0, 0, 0, 0);
+    -unity-slice-type: tiled;
+    -unity-slice-left: 4;
+    -unity-slice-top: 4;
+    -unity-slice-right: 4;
+    -unity-slice-bottom: 4;
+    -unity-slice-scale: 0.5px;
+    left: 32px;
+    top: 32px;
+    bottom: 112px;
+    width: 32.5%;
+}
+
+.player-stats-title {
+    font-size: 24px;
+    -unity-font-style: bold;
+    margin-top: 16px;
+    margin-right: 16px;
+    margin-bottom: 8px;
+    margin-left: 16px;
+}
+
+.stat-section {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.stat-row {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.stat-row-name {
+    flex-grow: 1;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.stat-row-value {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.stat-divider {
+    height: 2px;
+    background-color: #6D4B27;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 12px;
+    margin-right: 12px;
+}

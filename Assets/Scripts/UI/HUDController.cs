@@ -9,14 +9,19 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     [SerializeField]
     private UIDocument _document;
 
+    [Header("Left Menus")]
     [SerializeField]
-    private InventoryMenu _inventoryMenu;
+    private PlayerStatsMenu _playerStatsMenu;
 
     [SerializeField]
     private CraftingMenu _craftingMenu;
 
     [SerializeField]
     private ShopMenu _shopMenu;
+
+    [Header("Right Menus")]
+    [SerializeField]
+    private InventoryMenu _inventoryMenu;
 
     [SerializeField]
     private UpgradeMenu _upgradeMenu;
@@ -27,7 +32,6 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
     private VisualElement _hudPanel;
     private ClickRouter _clickRouter;
-    private GameMenu _openMenu;
 
     private Label _levelLabel;
     private VisualElement _xpBarFill;
@@ -50,10 +54,10 @@ public class HUDController : MonoBehaviour, IPointerBlocker
         _hudPanel = _document.rootVisualElement.Q("hud-panel");
 
         _document.rootVisualElement.Q("btn-items")
-            ?.RegisterCallback<ClickEvent>(_ => ToggleMenu(_inventoryMenu));
+            ?.RegisterCallback<ClickEvent>(_ => OnItemsButtonClicked());
 
         _document.rootVisualElement.Q("btn-upgrades")
-            ?.RegisterCallback<ClickEvent>(_ => ToggleMenu(_upgradeMenu));
+            ?.RegisterCallback<ClickEvent>(_ => OnUpgradesButtonClicked());
 
         _levelLabel = _document.rootVisualElement.Q<Label>("player-level-label");
         _xpBarFill = _document.rootVisualElement.Q("xp-bar-fill");
@@ -137,22 +141,16 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
     public void OpenCraftingUI(IReadOnlyList<RecipeData> recipes)
     {
-        if (_shopMenu != null && _shopMenu.IsVisible)
-            _shopMenu.Hide();
-        if (_craftingMenu != null)
-            _craftingMenu.Open(recipes);
-        if (_inventoryMenu != null && !_inventoryMenu.IsVisible)
-            _inventoryMenu.Show();
+        CloseAll();
+        _craftingMenu?.Open(recipes);
+        _inventoryMenu?.Show();
     }
 
     public void OpenShopUI(string shopName, ItemData currency, IReadOnlyList<ShopItemEntry> entries)
     {
-        if (_craftingMenu != null && _craftingMenu.IsVisible)
-            _craftingMenu.Hide();
-        if (_shopMenu != null)
-            _shopMenu.Open(shopName, currency, entries);
-        if (_inventoryMenu != null && !_inventoryMenu.IsVisible)
-            _inventoryMenu.Show();
+        CloseAll();
+        _shopMenu?.Open(shopName, currency, entries);
+        _inventoryMenu?.Show();
     }
 
     public bool ContainsScreenPoint(Vector2 screenPos)
@@ -175,18 +173,43 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
     #region Private Methods
 
-    private void ToggleMenu(GameMenu menu)
+    private void OnItemsButtonClicked()
     {
-        if (menu == null) return;
+        if (_inventoryMenu != null && _inventoryMenu.IsVisible)
+            CloseAll();
+        else
+            OpenRightMenu(_inventoryMenu);
+    }
 
-        if (_openMenu != null && _openMenu != menu)
-        {
-            _openMenu.Hide();
-            _openMenu = null;
-        }
+    private void OnUpgradesButtonClicked()
+    {
+        if (_upgradeMenu != null && _upgradeMenu.IsVisible)
+            CloseAll();
+        else
+            OpenRightMenu(_upgradeMenu);
+    }
 
-        menu.Toggle();
-        _openMenu = menu.IsVisible ? menu : null;
+    // Opens player stats on the left alongside the given right menu.
+    private void OpenRightMenu(GameMenu rightMenu)
+    {
+        CloseAll();
+        _playerStatsMenu?.Show();
+        rightMenu?.Show();
+    }
+
+    private void CloseAll()
+    {
+        HideIfVisible(_playerStatsMenu);
+        HideIfVisible(_craftingMenu);
+        HideIfVisible(_shopMenu);
+        HideIfVisible(_inventoryMenu);
+        HideIfVisible(_upgradeMenu);
+    }
+
+    private static void HideIfVisible(GameMenu menu)
+    {
+        if (menu != null && menu.IsVisible)
+            menu.Hide();
     }
 
     private void RefreshPotionSlot()
@@ -207,7 +230,6 @@ public class HUDController : MonoBehaviour, IPointerBlocker
         icon.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(BackgroundSizeType.Contain));
         icon.pickingMode = PickingMode.Ignore;
         _potionSlot.Add(icon);
-
     }
 
     private void UsePotion()

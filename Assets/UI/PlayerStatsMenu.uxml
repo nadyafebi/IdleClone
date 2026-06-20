@@ -1,0 +1,47 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="PlayerStatsMenu.uss"/>
+    <ui:VisualElement name="player-stats-panel" class="player-stats-panel">
+        <ui:Label text="Stats" class="player-stats-title"/>
+
+        <ui:VisualElement class="stat-section">
+            <ui:VisualElement class="stat-row">
+                <ui:Label text="Level" class="stat-row-name"/>
+                <ui:Label name="stat-level" text="1" class="stat-row-value"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement class="stat-divider"/>
+
+        <ui:VisualElement class="stat-section">
+            <ui:VisualElement class="stat-row">
+                <ui:Label text="Max HP" class="stat-row-name"/>
+                <ui:Label name="stat-hp" text="100" class="stat-row-value"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="stat-row">
+                <ui:Label text="Attack" class="stat-row-name"/>
+                <ui:Label name="stat-attack" text="1" class="stat-row-value"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="stat-row">
+                <ui:Label text="Defense" class="stat-row-name"/>
+                <ui:Label name="stat-defense" text="0" class="stat-row-value"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="stat-row">
+                <ui:Label text="Atk Speed" class="stat-row-name"/>
+                <ui:Label name="stat-atk-speed" text="1.0s" class="stat-row-value"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement class="stat-divider"/>
+
+        <ui:VisualElement class="stat-section">
+            <ui:VisualElement class="stat-row">
+                <ui:Label text="Gather Dmg" class="stat-row-name"/>
+                <ui:Label name="stat-gather-dmg" text="1" class="stat-row-value"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="stat-row">
+                <ui:Label text="Gather Speed" class="stat-row-name"/>
+                <ui:Label name="stat-gather-spd" text="1.0s" class="stat-row-value"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
