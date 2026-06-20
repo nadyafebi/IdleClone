@@ -1,6 +1,20 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/InventoryMenu.uss?fileID=7433441132597879392&amp;guid=d46f09362cb288b438b6da7c23cfdb35&amp;type=3#InventoryMenu"/>
     <ui:VisualElement name="inventory-panel" class="inventory-panel">
+        <ui:VisualElement name="equipment-panel" class="equipment-panel">
+            <ui:VisualElement class="equip-slot-group">
+                <ui:Label text="Weapon" class="equip-slot-label"/>
+                <ui:VisualElement name="slot-weapon" class="equip-slot"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="equip-slot-group">
+                <ui:Label text="Shield" class="equip-slot-label"/>
+                <ui:VisualElement name="slot-shield" class="equip-slot"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="equip-slot-group">
+                <ui:Label text="Potion" class="equip-slot-label"/>
+                <ui:VisualElement name="slot-potion" class="equip-slot"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
         <ui:Label text="Items" class="inventory-label"/>
         <ui:VisualElement name="tab-bar" class="tab-bar"/>
         <ui:VisualElement name="inventory-grid" class="inventory-grid"/>

@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour
     private EnemyProgressTracker _enemyProgressTracker;
 
     [SerializeField]
+    private PlayerEquipment _playerEquipment;
+
+    [SerializeField]
     private ItemTooltip _itemTooltip;
 
     [Header("Respawn")]
@@ -71,6 +74,7 @@ public class GameManager : MonoBehaviour
     public ItemPickupNotifier ItemPickupNotifier => _itemPickupNotifier;
     public QuestManager QuestManager => _questManager;
     public EnemyProgressTracker EnemyProgressTracker => _enemyProgressTracker;
+    public PlayerEquipment PlayerEquipment => _playerEquipment;
     public ItemTooltip ItemTooltip => _itemTooltip;
 
     #endregion

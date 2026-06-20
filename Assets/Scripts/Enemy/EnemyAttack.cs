@@ -97,10 +97,17 @@ public class EnemyAttack : MonoBehaviour
 
         PlayerHealth playerHealth = GameManager.Instance.PlayerHealth;
         if (playerHealth != null)
-            playerHealth.TakeDamage(_data.AttackDamage);
+        {
+            int defense = GameManager.Instance.PlayerEquipment.TotalDefenseBonus;
+            int finalDamage = Mathf.Max(0, _data.AttackDamage - defense);
+            playerHealth.TakeDamage(finalDamage);
 
-        if (_playerMovement != null)
-            DamagePopupSpawner.TrySpawnEnemyDamage(_playerMovement.transform.position, _data.AttackDamage);
+            if (_playerMovement != null)
+                DamagePopupSpawner.TrySpawnEnemyDamage(
+                    _playerMovement.transform.position,
+                    finalDamage
+                );
+        }
     }
 
     #endregion

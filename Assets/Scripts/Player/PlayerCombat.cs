@@ -107,7 +107,10 @@ public class PlayerCombat : MonoBehaviour
                 yield break;
             }
 
-            _target.TakeDamage(_attackDamage);
+            int weaponBonus = GameManager.Instance != null
+                ? GameManager.Instance.PlayerEquipment.TotalAttackBonus
+                : 0;
+            _target.TakeDamage(_attackDamage + weaponBonus);
             yield return new WaitForSeconds(_attackCooldown);
         }
     }

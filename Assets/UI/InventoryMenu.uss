@@ -12,6 +12,7 @@
     top: 32px;
     bottom: 112px;
     width: 32.5%;
+    overflow: visible;
 }
 
 .inventory-label {
@@ -88,4 +89,48 @@
 
 .tab-button--active {
     background-image: url("project://database/Assets/Sprites/ui.png?fileID=1387578008&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_5");
+}
+
+.equipment-panel {
+    position: absolute;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=3556181715638617739&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_1");
+    background-color: rgba(0, 0, 0, 0);
+    -unity-slice-type: tiled;
+    -unity-slice-left: 4;
+    -unity-slice-top: 4;
+    -unity-slice-right: 4;
+    -unity-slice-bottom: 4;
+    -unity-slice-scale: 0.5px;
+    right: 100%;
+    margin-right: 8px;
+    top: 0;
+    width: 88px;
+    padding: 8px;
+    align-items: center;
+}
+
+.equip-slot-group {
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.equip-slot-label {
+    font-size: 11px;
+    -unity-font-style: bold;
+    margin-bottom: 3px;
+    -unity-text-align: upper-center;
+}
+
+.equip-slot {
+    width: 64px;
+    height: 64px;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=5707218116961789024&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_0");
+    align-items: center;
+    justify-content: center;
+}
+
+.equip-slot-icon {
+    width: 32px;
+    height: 32px;
+    background-size: contain;
 }

@@ -19,13 +19,18 @@ public class InventoryMenu : GameMenu
     private VisualElement _tabBar;
     private VisualElement _grid;
     private PlayerInventory _inventory;
+    private PlayerEquipment _equipment;
     private int _activeTab;
+
+    private VisualElement _equipmentPanel;
+    private VisualElement _slotWeapon;
+    private VisualElement _slotShield;
+    private VisualElement _slotPotion;
 
     #endregion
 
     #region Protected Properties
 
-    // Narrows blocking to the visible panel, not the full-screen document root.
     protected override VisualElement BlockingElement => _panel;
 
     #endregion
@@ -35,10 +40,34 @@ public class InventoryMenu : GameMenu
     private void Start()
     {
         _inventory = GameManager.Instance.PlayerInventory;
+        _equipment = GameManager.Instance.PlayerEquipment;
+
         _panel = Root.Q("inventory-panel");
         _tabBar = Root.Q("tab-bar");
         _grid = Root.Q("inventory-grid");
+
+        _equipmentPanel = Root.Q("equipment-panel");
+        _slotWeapon = Root.Q("slot-weapon");
+        _slotShield = Root.Q("slot-shield");
+        _slotPotion = Root.Q("slot-potion");
+
+        RegisterEquipSlotClick(_slotWeapon, ItemCategory.Weapon);
+        RegisterEquipSlotClick(_slotShield, ItemCategory.Shield);
+        RegisterEquipSlotClick(_slotPotion, ItemCategory.Potion);
+
         BuildTabs();
+    }
+
+    #endregion
+
+    #region Public Methods
+
+    public override bool ContainsScreenPoint(Vector2 screenPos)
+    {
+        if (!IsVisible)
+            return false;
+        return ElementContainsScreenPoint(_panel, screenPos)
+            || ElementContainsScreenPoint(_equipmentPanel, screenPos);
     }
 
     #endregion
@@ -48,12 +77,15 @@ public class InventoryMenu : GameMenu
     protected override void OnShow()
     {
         _inventory.OnChanged += Rebuild;
+        _equipment.OnEquipmentChanged += RefreshEquipmentSlots;
         Rebuild();
+        RefreshEquipmentSlots();
     }
 
     protected override void OnHide()
     {
         _inventory.OnChanged -= Rebuild;
+        _equipment.OnEquipmentChanged -= RefreshEquipmentSlots;
         GameManager.Instance.ItemTooltip.Hide();
     }
 
@@ -111,10 +143,57 @@ public class InventoryMenu : GameMenu
                 slot.Add(label);
 
                 GameManager.Instance.ItemTooltip.RegisterHover(slot, item);
+
+                if (item.Category != ItemCategory.Material)
+                    slot.RegisterCallback<ClickEvent>(_ => EquipItem(item));
             }
 
             _grid.Add(slot);
         }
+    }
+
+    private void RefreshEquipmentSlots()
+    {
+        UpdateEquipSlot(_slotWeapon, _equipment.WeaponSlot);
+        UpdateEquipSlot(_slotShield, _equipment.ShieldSlot);
+        UpdateEquipSlot(_slotPotion, _equipment.PotionSlot);
+    }
+
+    private void UpdateEquipSlot(VisualElement slot, ItemData item)
+    {
+        slot.Clear();
+        if (item == null)
+            return;
+
+        var icon = new VisualElement();
+        icon.AddToClassList("equip-slot-icon");
+        icon.style.backgroundImage = new StyleBackground(item.Icon);
+        // Register hover on the freshly-created icon so callbacks don't accumulate on the slot.
+        GameManager.Instance.ItemTooltip.RegisterHover(icon, item);
+        slot.Add(icon);
+    }
+
+    private void RegisterEquipSlotClick(VisualElement slot, ItemCategory category)
+    {
+        slot.RegisterCallback<ClickEvent>(_ =>
+        {
+            ItemData equipped = _equipment.GetSlot(category);
+            if (equipped == null)
+                return;
+            GameManager.Instance.ItemTooltip.Hide();
+            _equipment.Unequip(category);
+            _inventory.AddItem(equipped, 1);
+        });
+    }
+
+    private void EquipItem(ItemData item)
+    {
+        GameManager.Instance.ItemTooltip.Hide();
+        ItemData currentlyEquipped = _equipment.GetSlot(item.Category);
+        if (currentlyEquipped != null)
+            _inventory.AddItem(currentlyEquipped, 1);
+        _inventory.RemoveItem(item, 1);
+        _equipment.Equip(item);
     }
 
     private static string FormatQuantity(int qty)

@@ -75,13 +75,28 @@ public abstract class GameMenu : MonoBehaviour, IPointerBlocker
             Show();
     }
 
-    public bool ContainsScreenPoint(Vector2 screenPos)
+    public virtual bool ContainsScreenPoint(Vector2 screenPos)
     {
-        if (!IsVisible || BlockingElement.panel == null)
+        if (!IsVisible)
+            return false;
+        return ElementContainsScreenPoint(BlockingElement, screenPos);
+    }
+
+    #endregion
+
+    #region Protected Methods
+
+    protected virtual void OnShow() { }
+
+    protected virtual void OnHide() { }
+
+    protected bool ElementContainsScreenPoint(VisualElement element, Vector2 screenPos)
+    {
+        if (element?.panel == null)
             return false;
 
-        Rect wb = BlockingElement.worldBound;
-        float dpi = BlockingElement.panel.scaledPixelsPerPoint;
+        Rect wb = element.worldBound;
+        float dpi = element.panel.scaledPixelsPerPoint;
 
         float xMin = wb.xMin * dpi;
         float xMax = wb.xMax * dpi;
@@ -93,14 +108,6 @@ public abstract class GameMenu : MonoBehaviour, IPointerBlocker
             && screenPos.y >= yMin
             && screenPos.y <= yMax;
     }
-
-    #endregion
-
-    #region Protected Methods
-
-    protected virtual void OnShow() { }
-
-    protected virtual void OnHide() { }
 
     #endregion
 }
