@@ -16,7 +16,7 @@ public class DialogController : MonoBehaviour, IPointerBlocker
 
     [Tooltip("Seconds of inactivity before the dialog fades out.")]
     [SerializeField]
-    private float _dismissDelay = 5f;
+    private float _dismissDelay = 10f;
 
     [Tooltip("Duration of the fade-out animation in seconds.")]
     [SerializeField]
@@ -160,8 +160,11 @@ public class DialogController : MonoBehaviour, IPointerBlocker
         _isOpen = false;
         _panel.style.display = DisplayStyle.None;
 
-        _onClosed?.Invoke();
+        // Null before invoking so a re-entrant Open() call (e.g. auto-chaining quests)
+        // can set its own _onClosed without it being cleared when we return here.
+        Action onClosed = _onClosed;
         _onClosed = null;
+        onClosed?.Invoke();
     }
 
     #endregion

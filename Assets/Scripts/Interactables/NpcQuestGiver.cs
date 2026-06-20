@@ -74,20 +74,33 @@ public class NpcQuestGiver : MonoBehaviour
         return _idleDialog;
     }
 
-    public void OnDialogClosed()
+    // Returns true when a quest was just completed and the next quest is immediately offerable.
+    public bool OnDialogClosed()
     {
         QuestData quest = GetCurrentQuest();
         if (quest == null || !_questManager.IsDependencyMet(quest))
-            return;
+            return false;
 
         QuestState state = _questManager.GetState(quest);
+        bool questJustCompleted = false;
 
         if (state == QuestState.NotStarted)
             _questManager.StartQuest(quest);
         else if (state == QuestState.Active && _questManager.IsObjectiveMet(quest))
+        {
             _questManager.CompleteQuest(quest);
+            questJustCompleted = true;
+        }
 
         RefreshIndicator();
+
+        if (!questJustCompleted)
+            return false;
+
+        QuestData nextQuest = GetCurrentQuest();
+        return nextQuest != null
+            && _questManager.IsDependencyMet(nextQuest)
+            && _questManager.GetState(nextQuest) == QuestState.NotStarted;
     }
 
     public QuestIndicatorState GetIndicatorState()

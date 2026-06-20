@@ -111,8 +111,10 @@ public class NpcInteraction : Interactable
         _dialogOpen = true;
         _dialogController.Open(dialog, transform, () =>
         {
-            _questGiver.OnDialogClosed();
+            bool openNextQuest = _questGiver.OnDialogClosed();
             _dialogOpen = false;
+            if (openNextQuest)
+                OpenDialog();
         });
     }
 
