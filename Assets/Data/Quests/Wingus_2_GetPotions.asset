@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ffd6c26ac59ad44cbf2c72ae52595f8, type: 3}
+  m_Name: Wingus_2_GetPotions
+  m_EditorClassIdentifier: Assembly-CSharp::QuestData
+  QuestName: Stay Safe
+  Type: 1
+  TargetEnemy: {fileID: 0}
+  TargetItem: {fileID: 11400000, guid: 415db32bf78664b46aa29e8e59141ede, type: 2}
+  RequiredCount: 3
+  OfferDialog: {fileID: 11400000, guid: bed0647e9dc347f4fa00ad60d5c2b5da, type: 2}
+  ActiveDialog: {fileID: 11400000, guid: c5ab8aaf50ba5924ca6d9d3c0e585252, type: 2}
+  CompleteDialog: {fileID: 11400000, guid: 5ec8ede105bb2204198e8035d0899f1b, type: 2}
+  LockedDialog: {fileID: 0}
+  ItemRewards: []
+  XpReward: 0
+  Dependency: {fileID: 0}
