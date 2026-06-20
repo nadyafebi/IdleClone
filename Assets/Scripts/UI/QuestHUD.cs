@@ -124,12 +124,13 @@ public class QuestHUD : MonoBehaviour, IPointerBlocker
             int current = Mathf.Min(_questManager.GetCurrentCount(quest), quest.RequiredCount);
             bool met = _questManager.IsObjectiveMet(quest);
 
-            string targetName = quest.Type == QuestType.Kill
-                ? quest.TargetEnemy?.EnemyName ?? "?"
-                : quest.TargetItem?.DisplayName ?? "?";
-
-            string verb = quest.Type == QuestType.Kill ? "Kill" : "Collect";
-            string progressText = $"{verb} {targetName}: {current}/{quest.RequiredCount}";
+            string progressText = quest.Type switch
+            {
+                QuestType.Kill => $"Kill {quest.TargetEnemy?.EnemyName ?? "?"}: {current}/{quest.RequiredCount}",
+                QuestType.Collect => $"Collect {quest.TargetItem?.DisplayName ?? "?"}: {current}/{quest.RequiredCount}",
+                QuestType.Upgrade => $"{quest.TargetUpgradeType} upgrade tier: {current}/{quest.RequiredCount}",
+                _ => $"{current}/{quest.RequiredCount}",
+            };
 
             var entry = new VisualElement();
             entry.AddToClassList("quest-entry");

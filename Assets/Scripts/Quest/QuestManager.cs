@@ -41,6 +41,10 @@ public class QuestManager : MonoBehaviour
         PlayerInventory inventory = GameManager.Instance?.PlayerInventory;
         if (inventory != null)
             inventory.OnChanged += HandleInventoryChanged;
+
+        PlayerUpgrades upgrades = GameManager.Instance?.PlayerUpgrades;
+        if (upgrades != null)
+            upgrades.OnUpgraded += HandleUpgraded;
     }
 
     private void OnDestroy()
@@ -48,6 +52,10 @@ public class QuestManager : MonoBehaviour
         PlayerInventory inventory = GameManager.Instance?.PlayerInventory;
         if (inventory != null)
             inventory.OnChanged -= HandleInventoryChanged;
+
+        PlayerUpgrades upgrades = GameManager.Instance?.PlayerUpgrades;
+        if (upgrades != null)
+            upgrades.OnUpgraded -= HandleUpgraded;
     }
 
     #endregion
@@ -72,6 +80,7 @@ public class QuestManager : MonoBehaviour
         {
             QuestType.Kill => GetKillCount(quest) >= quest.RequiredCount,
             QuestType.Collect => GetCollectCount(quest) >= quest.RequiredCount,
+            QuestType.Upgrade => GetUpgradeTier(quest) >= quest.RequiredCount,
             _ => false,
         };
     }
@@ -85,6 +94,7 @@ public class QuestManager : MonoBehaviour
         {
             QuestType.Kill => GetKillCount(quest),
             QuestType.Collect => GetCollectCount(quest),
+            QuestType.Upgrade => GetUpgradeTier(quest),
             _ => 0,
         };
     }
@@ -169,6 +179,24 @@ public class QuestManager : MonoBehaviour
         {
             QuestData quest = kvp.Key;
             if (kvp.Value != QuestState.Active || quest.Type != QuestType.Collect)
+                continue;
+
+            OnQuestUpdated?.Invoke(quest);
+        }
+    }
+
+    private int GetUpgradeTier(QuestData quest)
+    {
+        PlayerUpgrades upgrades = GameManager.Instance?.PlayerUpgrades;
+        return upgrades != null ? upgrades.GetTier(quest.TargetUpgradeType) : 0;
+    }
+
+    private void HandleUpgraded()
+    {
+        foreach (var kvp in _states)
+        {
+            QuestData quest = kvp.Key;
+            if (kvp.Value != QuestState.Active || quest.Type != QuestType.Upgrade)
                 continue;
 
             OnQuestUpdated?.Invoke(quest);

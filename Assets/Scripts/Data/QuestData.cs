@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum QuestType { Kill, Collect }
+public enum QuestType { Kill, Collect, Upgrade }
 
 [Serializable]
 public class ItemReward
@@ -36,6 +36,11 @@ public class QuestData : ScriptableObject
     [SerializeField]
     public ItemData TargetItem;
 
+    [Tooltip("Upgrade type to track (Upgrade type only).")]
+    [SerializeField]
+    public UpgradeType TargetUpgradeType;
+
+    [Tooltip("Required count for Kill/Collect, or target tier for Upgrade.")]
     [SerializeField]
     [Min(1)]
     public int RequiredCount = 1;

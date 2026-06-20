@@ -10,12 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9024d1781799b6f4b9de84bc0207d71a, type: 3}
-  m_Name: Wingus_3_Offer
+  m_Name: Wingus_4_Active
   m_EditorClassIdentifier: Assembly-CSharp::DialogData
   Lines:
-  - The next thing you would want to do to progress faster is to get better equpment.
-  - You can craft them by talking to the blue crafting bot on the left.
-  - Each recipe will consume some materials. But, hey, it's worth it!
-  - Equiping a sword and shield will unlock useful skills that you can use during
-    combat.
-  - Go craft a copper sword for starter and come back.
+  - You still seem weak to me. Did you upgrade yet?
