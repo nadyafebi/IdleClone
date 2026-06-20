@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerUpgrades _playerUpgrades;
 
+    [SerializeField]
+    private PlayerProgression _playerProgression;
+
     [Header("UI")]
     [SerializeField]
     private ScreenFader _screenFader;
@@ -83,6 +86,7 @@ public class GameManager : MonoBehaviour
     public ItemPickupNotifier ItemPickupNotifier => _itemPickupNotifier;
     public QuestManager QuestManager => _questManager;
     public EnemyProgressTracker EnemyProgressTracker => _enemyProgressTracker;
+    public PlayerProgression PlayerProgression => _playerProgression;
     public PlayerEquipment PlayerEquipment => _playerEquipment;
     public PlayerStats PlayerStats => _playerStats;
     public PlayerUpgrades PlayerUpgrades => _playerUpgrades;

@@ -49,6 +49,7 @@ MonoBehaviour:
   _movement: {fileID: 5891749161220573694}
   _spriteRenderer: {fileID: 3172042461032273902}
   _animator: {fileID: 243079437839530988}
+  _awakenedAnimatorController: {fileID: 9100000, guid: fa626f8544f53df41a5e5901a9e27ce7, type: 2}
 --- !u!212 &3172042461032273902
 SpriteRenderer:
   serializedVersion: 2
@@ -179,9 +180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc703e4ff87f38b49a9edc7ac2d75af6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  _walkSpeed: 4
-  _climbSpeed: 3
-  _jumpArcHeight: 2
   _drawPathGizmos: 1
   _pathColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!114 &6449026688105973347
@@ -196,9 +194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a8b6277ba8a21340a861898e0693583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
-  _attackDamage: 1
-  _attackCooldown: 1
-  _attackRange: 1
 --- !u!114 &122896568108127867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,9 +218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f1c367df8c0f94990b74e40fa72d7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGathering
-  _gatheringDamage: 1
-  _gatherCooldown: 1
-  _gatherRange: 2
 --- !u!61 &8027483119133804015
 BoxCollider2D:
   m_ObjectHideFlags: 0

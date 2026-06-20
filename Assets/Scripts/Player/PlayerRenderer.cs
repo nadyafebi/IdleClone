@@ -13,12 +13,17 @@ public class PlayerRenderer : MonoBehaviour
     [SerializeField]
     private Animator _animator;
 
+    [SerializeField]
+    private RuntimeAnimatorController _awakenedAnimatorController;
+
     #endregion
 
     #region Private Fields
 
     private static readonly int IsWalkingHash = Animator.StringToHash("IsWalking");
     private float _baseWalkSpeed;
+    private RuntimeAnimatorController _beginnerAnimatorController;
+    private PlayerProgression _playerProgression;
 
     #endregion
 
@@ -42,6 +47,9 @@ public class PlayerRenderer : MonoBehaviour
         _movement.OnMovementStarted -= HandleMovementStarted;
         _movement.OnMovementStopped -= HandleMovementStopped;
         _movement.OnWalkSpeedChanged -= HandleWalkSpeedChanged;
+
+        if (_playerProgression != null)
+            _playerProgression.OnClassChanged -= ApplyClassAnimator;
     }
 
     private void Start()
@@ -66,11 +74,29 @@ public class PlayerRenderer : MonoBehaviour
         }
 
         _baseWalkSpeed = _movement.WalkSpeed;
+        _beginnerAnimatorController = _animator.runtimeAnimatorController;
+
+        _playerProgression = GameManager.Instance != null ? GameManager.Instance.PlayerProgression : null;
+        if (_playerProgression != null)
+        {
+            _playerProgression.OnClassChanged += ApplyClassAnimator;
+            ApplyClassAnimator(_playerProgression.CurrentClass);
+        }
     }
 
     #endregion
 
     #region Event Handlers
+
+    private void ApplyClassAnimator(PlayerClass playerClass)
+    {
+        RuntimeAnimatorController controller = playerClass == PlayerClass.Awakened && _awakenedAnimatorController != null
+            ? _awakenedAnimatorController
+            : _beginnerAnimatorController;
+
+        if (_animator.runtimeAnimatorController != controller)
+            _animator.runtimeAnimatorController = controller;
+    }
 
     private void HandleFacingChanged(bool faceRight)
     {

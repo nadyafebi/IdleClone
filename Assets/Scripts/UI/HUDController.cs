@@ -45,6 +45,9 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     private VisualElement _potionSlot;
     private PlayerEquipment _playerEquipment;
 
+    private Label _classLabel;
+    private PlayerProgression _playerProgression;
+
     #endregion
 
     #region Unity Lifecycle
@@ -74,6 +77,14 @@ public class HUDController : MonoBehaviour, IPointerBlocker
         else
         {
             Debug.LogWarning("[HUDController] No PlayerLevel found on GameManager.");
+        }
+
+        _classLabel = _document.rootVisualElement.Q<Label>("player-class-label");
+        _playerProgression = GameManager.Instance?.PlayerProgression;
+        if (_playerProgression != null)
+        {
+            _playerProgression.OnClassChanged += RefreshClassLabel;
+            RefreshClassLabel(_playerProgression.CurrentClass);
         }
 
         _hpBarFill = _document.rootVisualElement.Q("hp-bar-fill");
@@ -118,6 +129,9 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
         if (_playerEquipment != null)
             _playerEquipment.OnEquipmentChanged -= RefreshPotionSlot;
+
+        if (_playerProgression != null)
+            _playerProgression.OnClassChanged -= RefreshClassLabel;
     }
 
     #endregion
@@ -250,6 +264,12 @@ public class HUDController : MonoBehaviour, IPointerBlocker
             if (player != null)
                 DamagePopupSpawner.TrySpawnHeal(player.transform.position, actualHeal);
         }
+    }
+
+    private void RefreshClassLabel(PlayerClass playerClass)
+    {
+        if (_classLabel != null)
+            _classLabel.text = playerClass.ToString();
     }
 
     private void HandleHealthChanged(int current, int max) => RefreshHpBar(current, max);

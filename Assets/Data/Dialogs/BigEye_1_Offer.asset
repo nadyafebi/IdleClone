@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9024d1781799b6f4b9de84bc0207d71a, type: 3}
+  m_Name: BigEye_1_Offer
+  m_EditorClassIdentifier: Assembly-CSharp::DialogData
+  Lines:
+  - I used to be a beginner like you, then I learned the secret of this world.
+  - I unlocked my third eye and now I can use powerful magic.
+  - As a fellow adventurer, I'm willing to teach you, for a price of course.
+  - Go get some furs from the bunnies around here. I need 10 of them for the ritual.

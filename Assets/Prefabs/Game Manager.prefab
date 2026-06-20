@@ -343,6 +343,7 @@ MonoBehaviour:
   _clickRouter: {fileID: 842414625112250478}
   _questManager: {fileID: 3831874744845938819}
   _enemyProgressTracker: {fileID: 1650594566442791155}
+  _playerProgression: {fileID: 2363169669139838927}
   _townScene: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
   _townSceneName: Town
   _transitionFadeDuration: 1
@@ -773,6 +774,7 @@ GameObject:
   - component: {fileID: 1909252742353544859}
   - component: {fileID: 943586800798948116}
   - component: {fileID: 6220442773529276198}
+  - component: {fileID: 2363169669139838927}
   m_Layer: 0
   m_Name: Player Systems
   m_TagString: Untagged
@@ -877,6 +879,18 @@ MonoBehaviour:
   _resilienceData: {fileID: 11400000, guid: d03715c53d02f3d49adb0cd139db69a3, type: 2}
   _vitalityData: {fileID: 11400000, guid: 8b1042da4db195c4c9e379768eac2363, type: 2}
   _yieldData: {fileID: 11400000, guid: 6ac6facc6aa9d854680f7daea9973b6f, type: 2}
+--- !u!114 &2363169669139838927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7104586640413842275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 714fbe54c6ce7944681390be42dac4e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerProgression
 --- !u!1 &7884755522946722548
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,13 @@ using UnityEngine.UIElements;
 
 public class DialogController : MonoBehaviour, IPointerBlocker
 {
+    #region Public Properties
+
+    // Fires with the 0-based index of the newly visible line each time the player advances.
+    public event Action<int> OnLineAdvanced;
+
+    #endregion
+
     #region Serialized Fields
 
     [SerializeField]
@@ -126,6 +133,7 @@ public class DialogController : MonoBehaviour, IPointerBlocker
 
         _panel.style.opacity = 1f;
         ShowCurrentLine();
+        OnLineAdvanced?.Invoke(_currentLineIndex);
         ResetDismissTimer();
     }
 

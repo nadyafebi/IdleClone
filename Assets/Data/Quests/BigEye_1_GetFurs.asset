@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ffd6c26ac59ad44cbf2c72ae52595f8, type: 3}
+  m_Name: BigEye_1_GetFurs
+  m_EditorClassIdentifier: Assembly-CSharp::QuestData
+  QuestName: Awakening
+  Type: 1
+  TargetEnemy: {fileID: 0}
+  TargetItem: {fileID: 11400000, guid: 6a76254985d9122428ddc2c67ca8c71f, type: 2}
+  TargetUpgradeType: 0
+  RequiredCount: 10
+  OfferDialog: {fileID: 11400000, guid: 5a78e7883d4728e4ba82e003fc5e2f89, type: 2}
+  ActiveDialog: {fileID: 11400000, guid: 55958345bd5480740ab2285bb987cbd7, type: 2}
+  CompleteDialog: {fileID: 11400000, guid: b58037b00581a7745aa69ed476923272, type: 2}
+  LockedDialog: {fileID: 0}
+  ItemRewards:
+  - Item: {fileID: 11400000, guid: cf441f95aaaf89144ad75db94ba78e00, type: 2}
+    Quantity: 150
+  XpReward: 300
+  Dependency: {fileID: 0}
