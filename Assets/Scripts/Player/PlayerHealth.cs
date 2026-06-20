@@ -23,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
     #region Private Fields
 
     private bool _isDead;
+    private int _previousMaxHealth;
 
     #endregion
 
@@ -30,7 +31,18 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        CurrentHealth = _stats.MaxHealth;
+        _previousMaxHealth = _stats.MaxHealth;
+        CurrentHealth = _previousMaxHealth;
+    }
+
+    private void Start()
+    {
+        _stats.OnMaxHealthChanged += HandleMaxHealthChanged;
+    }
+
+    private void OnDestroy()
+    {
+        _stats.OnMaxHealthChanged -= HandleMaxHealthChanged;
     }
 
     #endregion
@@ -64,13 +76,23 @@ public class PlayerHealth : MonoBehaviour
     public void ResetHealth()
     {
         _isDead = false;
-        CurrentHealth = _stats.MaxHealth;
+        _previousMaxHealth = _stats.MaxHealth;
+        CurrentHealth = _previousMaxHealth;
         OnHealthChanged?.Invoke(CurrentHealth, _stats.MaxHealth);
     }
 
     #endregion
 
     #region Private Methods
+
+    private void HandleMaxHealthChanged()
+    {
+        int gain = _stats.MaxHealth - _previousMaxHealth;
+        _previousMaxHealth = _stats.MaxHealth;
+        if (gain > 0)
+            CurrentHealth = Mathf.Min(CurrentHealth + gain, _stats.MaxHealth);
+        OnHealthChanged?.Invoke(CurrentHealth, _stats.MaxHealth);
+    }
 
     private void Die()
     {

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -32,6 +33,8 @@ public class PlayerStats : MonoBehaviour
     public float ClimbSpeed => _data.ClimbSpeed;
     public float JumpArcHeight => _data.JumpArcHeight;
 
+    public event Action OnMaxHealthChanged;
+
     #endregion
 
     #region Unity Lifecycle
@@ -54,7 +57,10 @@ public class PlayerStats : MonoBehaviour
         {
             Debug.LogError("[PlayerStats] PlayerEquipment reference is not assigned!");
             enabled = false;
+            return;
         }
+
+        _playerLevel.OnLevelChanged += _ => OnMaxHealthChanged?.Invoke();
     }
 
     #endregion
