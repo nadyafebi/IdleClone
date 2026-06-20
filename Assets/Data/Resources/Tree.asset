@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6a147f249d86144b6556344d36bbe5, type: 3}
   m_Name: Tree
   m_EditorClassIdentifier: Assembly-CSharp::ResourceData
-  _resourceName: Resource
+  _resourceName: Tree
   _nodeType: 1
   _sprite: {fileID: -1161885816, guid: ec4e8aaa32033734a95279b46be9df73, type: 3}
   _maxHealth: 5

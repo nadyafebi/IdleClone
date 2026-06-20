@@ -15,7 +15,7 @@ MonoBehaviour:
   _resourceName: Iron
   _nodeType: 0
   _sprite: {fileID: 8032301891362702160, guid: 157826d5c5950d3469fa846c88b9bdac, type: 3}
-  _maxHealth: 5
+  _maxHealth: 10
   _requiredLevel: 5
   _dropItem: {fileID: 11400000, guid: c489c798fc86fe64691ebb3aedf3589a, type: 2}
   _dropQuantity: 1

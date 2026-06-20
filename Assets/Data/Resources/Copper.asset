@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6a147f249d86144b6556344d36bbe5, type: 3}
   m_Name: Copper
   m_EditorClassIdentifier: Assembly-CSharp::ResourceData
-  _resourceName: Resource
+  _resourceName: Copper
   _nodeType: 0
   _sprite: {fileID: -2705597995764985619, guid: 157826d5c5950d3469fa846c88b9bdac, type: 3}
   _maxHealth: 5
