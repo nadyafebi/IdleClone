@@ -79,6 +79,11 @@ public class DialogController : MonoBehaviour, IPointerBlocker
 
     #region Public Methods
 
+    public void SetVisible(bool visible)
+    {
+        if (!visible) Close();
+    }
+
     // Called by GameManager after each scene load to rewire per-scene dependencies.
     public void OnSceneLoaded()
     {

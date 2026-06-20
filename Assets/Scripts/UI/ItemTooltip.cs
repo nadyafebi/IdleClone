@@ -53,8 +53,14 @@ public class ItemTooltip : MonoBehaviour
         element.RegisterCallback<PointerLeaveEvent>(_ => Hide());
     }
 
+    public void SetVisible(bool visible)
+    {
+        if (!visible) Hide();
+    }
+
     public void Hide()
     {
+        if (_panel == null) return;
         _panel.style.display = DisplayStyle.None;
     }
 

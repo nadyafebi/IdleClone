@@ -101,6 +101,9 @@ public class ClickRouter : MonoBehaviour
 
         OnClickedOutside?.Invoke();
 
+        if (_mainCamera == null)
+            return;
+
         Vector2 worldPos = _mainCamera.ScreenToWorldPoint(screenPos);
 
         Collider2D interactableHit = Physics2D.OverlapPoint(worldPos, _interactableLayer);

@@ -28,6 +28,8 @@ public class DamagePopupSpawner : MonoBehaviour
 
     #region Public Methods
 
+    public void SetVisible(bool visible) => enabled = visible;
+
     public void Spawn(Vector2 worldPos, int amount, Color color)
     {
         SpawnText(worldPos, amount.ToString(), color);

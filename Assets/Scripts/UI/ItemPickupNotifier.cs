@@ -48,6 +48,8 @@ public class ItemPickupNotifier : MonoBehaviour
 
     #region Public Methods
 
+    public void SetVisible(bool visible) => enabled = visible;
+
     public void Spawn(string itemName, int quantity)
     {
         if (_container == null) return;

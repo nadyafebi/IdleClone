@@ -59,7 +59,16 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private EnemyProgressTracker _enemyProgressTracker;
 
-    [Header("Respawn")]
+    [Header("Scenes")]
+#if UNITY_EDITOR
+    [SerializeField]
+    private UnityEditor.SceneAsset _startScene;
+#endif
+
+    [HideInInspector]
+    [SerializeField]
+    private string _startSceneName;
+
 #if UNITY_EDITOR
     [SerializeField]
     private UnityEditor.SceneAsset _townScene;
@@ -109,7 +118,11 @@ public class GameManager : MonoBehaviour
     #region Unity Lifecycle
 
 #if UNITY_EDITOR
-    private void OnValidate() => _townSceneName = _townScene != null ? _townScene.name : "";
+    private void OnValidate()
+    {
+        _startSceneName = _startScene != null ? _startScene.name : "";
+        _townSceneName = _townScene != null ? _townScene.name : "";
+    }
 #endif
 
     private void Awake()
@@ -124,6 +137,11 @@ public class GameManager : MonoBehaviour
 
         if (_playerHealth != null)
             _playerHealth.OnDied += RespawnPlayer;
+    }
+
+    private void Start()
+    {
+        SetGameUIVisible(SceneManager.GetActiveScene().name != _startSceneName);
     }
 
     private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
@@ -142,6 +160,10 @@ public class GameManager : MonoBehaviour
         _screenFader.FadeOut(_transitionFadeDuration, () => SceneManager.LoadScene(sceneName));
     }
 
+    public void TransitionToTownScene() => TransitionToScene(_townSceneName);
+
+    public void TransitionToStartScene() => TransitionToScene(_startSceneName);
+
     public void RespawnPlayer()
     {
         _isRespawning = true;
@@ -156,6 +178,22 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        bool isStartScene = scene.name == _startSceneName;
+        SetGameUIVisible(!isStartScene);
+
+        if (isStartScene)
+        {
+            Time.timeScale = 1f;
+            _clickRouter.RewireCamera();
+            _screenFader.RewireClickRouter(_clickRouter);
+            if (_isTransitioning)
+            {
+                _isTransitioning = false;
+                _screenFader.FadeIn(_transitionFadeDuration);
+            }
+            return;
+        }
+
         if (_isRespawning)
         {
             _isRespawning = false;
@@ -191,6 +229,15 @@ public class GameManager : MonoBehaviour
             _isTransitioning = false;
             _screenFader.FadeIn(_transitionFadeDuration);
         }
+    }
+
+    private void SetGameUIVisible(bool visible)
+    {
+        _hudController.SetVisible(visible);
+        _dialogController.SetVisible(visible);
+        _damagePopupSpawner.SetVisible(visible);
+        _itemPickupNotifier.SetVisible(visible);
+        _itemTooltip.SetVisible(visible);
     }
 
     #endregion

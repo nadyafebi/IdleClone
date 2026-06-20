@@ -1,0 +1,25 @@
+.start-menu {
+    flex-grow: 1;
+    align-items: center;
+}
+
+.btn-start {
+    width: 150px;
+    background-color: rgba(188, 188, 188, 0);
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    -unity-font-style: bold;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=-309200935&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_17");
+    -unity-slice-left: 12;
+    -unity-slice-top: 12;
+    -unity-slice-right: 12;
+    -unity-slice-bottom: 12;
+    -unity-slice-type: tiled;
+    -unity-slice-scale: 0.4px;
+}
+
+.btn-start:hover {
+    scale: 1.25 1.25;
+}

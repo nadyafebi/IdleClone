@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="StartMenu.uss"/>
+    <ui:VisualElement class="start-menu">
+        <ui:Image source="project://database/Assets/Sprites/idleclone-logo.png?fileID=2800000&amp;guid=f257296a832aa8b4ea6a48bcc218ba52&amp;type=3#idleclone-logo" class="logo"/>
+        <ui:Image source="project://database/Assets/Sprites/characters1.png?fileID=-6757302299522597624&amp;guid=ecf17e38a25bbf94eb27fd09cf7c2545&amp;type=3#characters1_1" class="player"/>
+        <ui:Button name="btn-start" text="New Game" class="btn-start"/>
+    </ui:VisualElement>
+</ui:UXML>

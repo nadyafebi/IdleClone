@@ -68,6 +68,10 @@ public class HUDController : MonoBehaviour, IPointerBlocker
             .rootVisualElement.Q("btn-upgrades")
             ?.RegisterCallback<ClickEvent>(_ => OnUpgradesButtonClicked());
 
+        _document
+            .rootVisualElement.Q("btn-menu")
+            ?.RegisterCallback<ClickEvent>(_ => GameManager.Instance.TransitionToStartScene());
+
         _levelLabel = _document.rootVisualElement.Q<Label>("player-level-label");
         _xpBarFill = _document.rootVisualElement.Q("xp-bar-fill");
         _xpAmountLabel = _document.rootVisualElement.Q<Label>("xp-amount");
@@ -174,6 +178,11 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     #endregion
 
     #region Public Methods
+
+    public void SetVisible(bool visible)
+    {
+        _document.rootVisualElement.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+    }
 
     public void OnSceneLoaded()
     {

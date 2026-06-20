@@ -289,7 +289,6 @@ GameObject:
   - component: {fileID: 8767336109236545063}
   - component: {fileID: 842414625112250478}
   - component: {fileID: 8252955786503460730}
-  - component: {fileID: 4568240914605413369}
   - component: {fileID: 3831874744845938819}
   - component: {fileID: 1650594566442791155}
   m_Layer: 0
@@ -339,12 +338,14 @@ MonoBehaviour:
   _screenFader: {fileID: 1368889432775808645}
   _dialogController: {fileID: 7591245712636952950}
   _hudController: {fileID: 8850692712998546788}
-  _damagePopupSpawner: {fileID: 4568240914605413369}
+  _damagePopupSpawner: {fileID: 455306880816346197}
   _itemPickupNotifier: {fileID: 8243217604302649360}
   _itemTooltip: {fileID: 1518089326389621466}
   _clickRouter: {fileID: 842414625112250478}
   _questManager: {fileID: 3831874744845938819}
   _enemyProgressTracker: {fileID: 1650594566442791155}
+  _startScene: {fileID: 102900000, guid: cdfbf12bd83bd33469e8de29a27a2d56, type: 3}
+  _startSceneName: Start
   _townScene: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
   _townSceneName: Town
   _transitionFadeDuration: 1
@@ -378,23 +379,6 @@ MonoBehaviour:
   _lootLayer:
     serializedVersion: 2
     m_Bits: 128
---- !u!114 &4568240914605413369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3775220622017857759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79aea2bd23866c344b903f7ee7fd1869, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamagePopupSpawner
-  _prefab: {fileID: 4171536207103201561, guid: 2ec5cd3c6ade59f42907d075c2c8b001, type: 3}
-  _playerDamageColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  _enemyDamageColor: {r: 1, g: 0, b: 0, a: 1}
-  _levelRequiredColor: {r: 1, g: 0, b: 0, a: 1}
-  _healColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &3831874744845938819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -758,6 +742,7 @@ Transform:
   - {fileID: 8250606880795250076}
   - {fileID: 1355634499126120904}
   - {fileID: 1601534872919355418}
+  - {fileID: 6027917658113227652}
   m_Father: {fileID: 6756787219872152073}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7104586640413842275
@@ -916,6 +901,55 @@ MonoBehaviour:
   _fireballCooldown: 10
   _slashAoeOffset: 2.5
   _slashAoeRadius: 2.5
+--- !u!1 &7726993670112422882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6027917658113227652}
+  - component: {fileID: 455306880816346197}
+  m_Layer: 0
+  m_Name: Damage Popup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6027917658113227652
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7726993670112422882}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1334704147566818239}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &455306880816346197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7726993670112422882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79aea2bd23866c344b903f7ee7fd1869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamagePopupSpawner
+  _prefab: {fileID: 4171536207103201561, guid: 2ec5cd3c6ade59f42907d075c2c8b001, type: 3}
+  _playerDamageColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _enemyDamageColor: {r: 1, g: 0, b: 0, a: 1}
+  _levelRequiredColor: {r: 1, g: 0, b: 0, a: 1}
+  _healColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &7884755522946722548
 GameObject:
   m_ObjectHideFlags: 0
