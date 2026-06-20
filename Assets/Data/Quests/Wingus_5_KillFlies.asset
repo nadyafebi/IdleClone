@@ -10,20 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ffd6c26ac59ad44cbf2c72ae52595f8, type: 3}
-  m_Name: Wingus_4_Upgrade
+  m_Name: Wingus_5_KillFlies
   m_EditorClassIdentifier: Assembly-CSharp::QuestData
-  QuestName: Idle Game Staple
-  Type: 2
-  TargetEnemy: {fileID: 0}
+  QuestName: Just Keep Progressing
+  Type: 0
+  TargetEnemy: {fileID: 11400000, guid: 2c4005073ba97d445a1145c017962aee, type: 2}
   TargetItem: {fileID: 0}
   TargetUpgradeType: 0
-  RequiredCount: 1
-  OfferDialog: {fileID: 11400000, guid: 8ec527458fa2401498c49b0c1cdadfe5, type: 2}
-  ActiveDialog: {fileID: 11400000, guid: 75164d13b9012fb45bb703f085440429, type: 2}
-  CompleteDialog: {fileID: 11400000, guid: 97a655c0bc3672c4283c1b60187013b4, type: 2}
+  RequiredCount: 99
+  OfferDialog: {fileID: 11400000, guid: cc4c21096ad33434eac01933843eac4f, type: 2}
+  ActiveDialog: {fileID: 11400000, guid: c393149d6dcdd31438f3dfa1bd24a718, type: 2}
+  CompleteDialog: {fileID: 11400000, guid: 8ca64c9d511a7964eb87e0e9f0d6a81e, type: 2}
   LockedDialog: {fileID: 0}
   ItemRewards:
   - Item: {fileID: 11400000, guid: cf441f95aaaf89144ad75db94ba78e00, type: 2}
-    Quantity: 75
-  XpReward: 150
+    Quantity: 150
+  - Item: {fileID: 11400000, guid: 58f4d3f86426c8246823b57356c81917, type: 2}
+    Quantity: 3
+  XpReward: 200
   Dependency: {fileID: 0}

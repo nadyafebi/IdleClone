@@ -16,11 +16,14 @@ MonoBehaviour:
   Type: 1
   TargetEnemy: {fileID: 0}
   TargetItem: {fileID: 11400000, guid: 415db32bf78664b46aa29e8e59141ede, type: 2}
+  TargetUpgradeType: 0
   RequiredCount: 3
   OfferDialog: {fileID: 11400000, guid: bed0647e9dc347f4fa00ad60d5c2b5da, type: 2}
   ActiveDialog: {fileID: 11400000, guid: c5ab8aaf50ba5924ca6d9d3c0e585252, type: 2}
   CompleteDialog: {fileID: 11400000, guid: 5ec8ede105bb2204198e8035d0899f1b, type: 2}
   LockedDialog: {fileID: 0}
-  ItemRewards: []
-  XpReward: 0
+  ItemRewards:
+  - Item: {fileID: 11400000, guid: 58f4d3f86426c8246823b57356c81917, type: 2}
+    Quantity: 1
+  XpReward: 75
   Dependency: {fileID: 0}
