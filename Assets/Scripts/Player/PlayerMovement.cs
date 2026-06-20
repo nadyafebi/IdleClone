@@ -7,16 +7,6 @@ public class PlayerMovement : MonoBehaviour
 {
     #region Serialized Fields
 
-    [Header("Movement")]
-    [SerializeField]
-    private float _walkSpeed = 4f;
-
-    [SerializeField]
-    private float _climbSpeed = 3f;
-
-    [SerializeField]
-    private float _jumpArcHeight = 2f;
-
     [Header("Debug")]
     [SerializeField]
     private bool _drawPathGizmos = true;
@@ -70,6 +60,9 @@ public class PlayerMovement : MonoBehaviour
 
     #region Private Fields
 
+    private float _walkSpeed;
+    private float _climbSpeed;
+    private float _jumpArcHeight;
     private ClickRouter _clickRouter;
     private PlatformGraphBuilder _graphBuilder;
     private PlatformNode _currentNode;
@@ -100,13 +93,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        _clickRouter = GameManager.Instance != null ? GameManager.Instance.ClickRouter : null;
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("[PlayerMovement] No GameManager found!");
+            enabled = false;
+            return;
+        }
+
+        _clickRouter = GameManager.Instance.ClickRouter;
         if (_clickRouter == null)
         {
             Debug.LogError("[PlayerMovement] No ClickRouter found on GameManager!");
             enabled = false;
             return;
         }
+
+        PlayerStats stats = GameManager.Instance.PlayerStats;
+        if (stats == null)
+        {
+            Debug.LogError("[PlayerMovement] No PlayerStats found on GameManager!");
+            enabled = false;
+            return;
+        }
+        _walkSpeed = stats.WalkSpeed;
+        _climbSpeed = stats.ClimbSpeed;
+        _jumpArcHeight = stats.JumpArcHeight;
         // OnEnable fired before Start so _clickRouter was null then; subscribe now.
         _clickRouter.OnGroundClicked += HandleGroundClicked;
 

@@ -5,6 +5,23 @@ public class GameManager : MonoBehaviour
 {
     #region Serialized Fields
 
+    [Header("Player")]
+    [SerializeField]
+    private PlayerStats _playerStats;
+
+    [SerializeField]
+    private PlayerLevel _playerLevel;
+
+    [SerializeField]
+    private PlayerHealth _playerHealth;
+
+    [SerializeField]
+    private PlayerInventory _playerInventory;
+
+    [SerializeField]
+    private PlayerEquipment _playerEquipment;
+
+    [Header("UI")]
     [SerializeField]
     private ScreenFader _screenFader;
 
@@ -15,34 +32,23 @@ public class GameManager : MonoBehaviour
     private HUDController _hudController;
 
     [SerializeField]
-    private ClickRouter _clickRouter;
-
-    [SerializeField]
-    private PlayerInventory _playerInventory;
-
-    [SerializeField]
-    private PlayerLevel _playerLevel;
-
-    [SerializeField]
-    private PlayerHealth _playerHealth;
-
-    [SerializeField]
     private DamagePopupSpawner _damagePopupSpawner;
 
     [SerializeField]
     private ItemPickupNotifier _itemPickupNotifier;
 
     [SerializeField]
+    private ItemTooltip _itemTooltip;
+
+    [Header("Systems")]
+    [SerializeField]
+    private ClickRouter _clickRouter;
+
+    [SerializeField]
     private QuestManager _questManager;
 
     [SerializeField]
     private EnemyProgressTracker _enemyProgressTracker;
-
-    [SerializeField]
-    private PlayerEquipment _playerEquipment;
-
-    [SerializeField]
-    private ItemTooltip _itemTooltip;
 
     [Header("Respawn")]
 #if UNITY_EDITOR
@@ -75,6 +81,7 @@ public class GameManager : MonoBehaviour
     public QuestManager QuestManager => _questManager;
     public EnemyProgressTracker EnemyProgressTracker => _enemyProgressTracker;
     public PlayerEquipment PlayerEquipment => _playerEquipment;
+    public PlayerStats PlayerStats => _playerStats;
     public ItemTooltip ItemTooltip => _itemTooltip;
 
     #endregion
@@ -90,8 +97,7 @@ public class GameManager : MonoBehaviour
     #region Unity Lifecycle
 
 #if UNITY_EDITOR
-    private void OnValidate() =>
-        _townSceneName = _townScene != null ? _townScene.name : "";
+    private void OnValidate() => _townSceneName = _townScene != null ? _townScene.name : "";
 #endif
 
     private void Awake()

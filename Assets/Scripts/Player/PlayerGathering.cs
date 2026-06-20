@@ -5,27 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerGathering : MonoBehaviour
 {
-    #region Serialized Fields
-
-    [Header("Gathering")]
-    [SerializeField]
-    [Min(1)]
-    private int _gatheringDamage = 1;
-
-    [SerializeField]
-    [Tooltip("Seconds between gathering hits.")]
-    private float _gatherCooldown = 1f;
-
-    [SerializeField]
-    [Tooltip("Maximum distance to the resource node to keep gathering.")]
-    private float _gatherRange = 2f;
-
-    #endregion
-
     #region Public Properties
 
     public bool IsGathering => _gatherCoroutine != null;
-    public float GatherRange => _gatherRange;
+    public float GatherRange => _stats != null ? _stats.GatherRange : 0f;
 
     public event Action OnTargetOutOfRange;
 
@@ -36,6 +19,7 @@ public class PlayerGathering : MonoBehaviour
     private ResourceNodeHealth _target;
     private Coroutine _gatherCoroutine;
     private PlayerMovement _playerMovement;
+    private PlayerStats _stats;
 
     #endregion
 
@@ -47,6 +31,22 @@ public class PlayerGathering : MonoBehaviour
         if (_playerMovement == null)
         {
             Debug.LogError("[PlayerGathering] No PlayerMovement found on this GameObject.");
+            enabled = false;
+        }
+    }
+
+    private void Start()
+    {
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("[PlayerGathering] No GameManager found!");
+            enabled = false;
+            return;
+        }
+        _stats = GameManager.Instance.PlayerStats;
+        if (_stats == null)
+        {
+            Debug.LogError("[PlayerGathering] No PlayerStats found on GameManager!");
             enabled = false;
         }
     }
@@ -83,14 +83,14 @@ public class PlayerGathering : MonoBehaviour
     {
         while (_target != null)
         {
-            if (Vector2.Distance(transform.position, _target.transform.position) > _gatherRange)
+            if (Vector2.Distance(transform.position, _target.transform.position) > GatherRange)
             {
                 OnTargetOutOfRange?.Invoke();
                 yield break;
             }
 
-            _target.TakeHit(_gatheringDamage);
-            yield return new WaitForSeconds(_gatherCooldown);
+            _target.TakeHit(_stats.GatheringDamage);
+            yield return new WaitForSeconds(_stats.GatherCooldown);
         }
     }
 

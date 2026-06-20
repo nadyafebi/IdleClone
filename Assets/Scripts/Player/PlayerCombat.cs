@@ -5,26 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerCombat : MonoBehaviour
 {
-    #region Serialized Fields
-
-    [Header("Combat")]
-    [SerializeField]
-    private int _attackDamage = 1;
-
-    [SerializeField]
-    [Tooltip("Seconds between attacks.")]
-    private float _attackCooldown = 1f;
-
-    [SerializeField]
-    [Tooltip("Maximum distance to the enemy for attacks to land.")]
-    private float _attackRange = 2f;
-
-    #endregion
-
     #region Public Properties
 
     public bool IsAttacking => _attackCoroutine != null;
-    public float AttackRange => _attackRange;
+    public float AttackRange => _stats != null ? _stats.AttackRange : 0f;
 
     public event Action OnTargetOutOfRange;
     public event Action OnTargetKilled;
@@ -36,6 +20,7 @@ public class PlayerCombat : MonoBehaviour
     private EnemyHealth _target;
     private Coroutine _attackCoroutine;
     private PlayerMovement _playerMovement;
+    private PlayerStats _stats;
 
     #endregion
 
@@ -47,6 +32,22 @@ public class PlayerCombat : MonoBehaviour
         if (_playerMovement == null)
         {
             Debug.LogError("[PlayerCombat] No PlayerMovement found on this GameObject!");
+            enabled = false;
+        }
+    }
+
+    private void Start()
+    {
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("[PlayerCombat] No GameManager found!");
+            enabled = false;
+            return;
+        }
+        _stats = GameManager.Instance.PlayerStats;
+        if (_stats == null)
+        {
+            Debug.LogError("[PlayerCombat] No PlayerStats found on GameManager!");
             enabled = false;
         }
     }
@@ -96,7 +97,7 @@ public class PlayerCombat : MonoBehaviour
         {
             float dirX = _target.transform.position.x - transform.position.x;
             bool outOfRange =
-                Vector2.Distance(transform.position, _target.transform.position) > _attackRange;
+                Vector2.Distance(transform.position, _target.transform.position) > AttackRange;
             // 0.1f dead zone prevents re-follow flicker when the enemy is almost directly above/below.
             bool enemyBehind =
                 Mathf.Abs(dirX) > 0.1f && (_playerMovement.FacingRight != (dirX > 0f));
@@ -107,11 +108,8 @@ public class PlayerCombat : MonoBehaviour
                 yield break;
             }
 
-            int weaponBonus = GameManager.Instance != null
-                ? GameManager.Instance.PlayerEquipment.TotalAttackBonus
-                : 0;
-            _target.TakeDamage(_attackDamage + weaponBonus);
-            yield return new WaitForSeconds(_attackCooldown);
+            _target.TakeDamage(_stats.TotalAttack);
+            yield return new WaitForSeconds(_stats.AttackCooldown);
         }
     }
 
