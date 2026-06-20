@@ -13,15 +13,18 @@ MonoBehaviour:
   m_Name: Worm
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   _enemyName: Worm
-  _maxHealth: 1
   _sprite: {fileID: -8643118696297500109, guid: a8c5ab4cc4d9c6647a7e65a84fef8fc9, type: 3}
   _animatorController: {fileID: 9100000, guid: 3afc7ba654e0c3a4687271d28c91863c, type: 2}
+  _maxHealth: 3
+  _attackDamage: 0
   _respawnCooldown: 10
   _colliderSize: {x: 1, y: 0.5}
   _colliderOffset: {x: 0, y: 0.25}
   _xpReward: 10
-  _attackDamage: 0
   _dropTable:
   - _item: {fileID: 11400000, guid: cf441f95aaaf89144ad75db94ba78e00, type: 2}
-    _quantity: 5
+    _quantity: 2
+    _chance: 1
+  - _item: {fileID: 11400000, guid: e8447b71b6cf8b64eba1f4f15f36b546, type: 2}
+    _quantity: 1
     _chance: 2

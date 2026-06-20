@@ -13,12 +13,21 @@ MonoBehaviour:
   m_Name: Bunny
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   _enemyName: Bunny
-  _maxHealth: 1
   _sprite: {fileID: -7031021643315683800, guid: a8c5ab4cc4d9c6647a7e65a84fef8fc9, type: 3}
   _animatorController: {fileID: 9100000, guid: a9591d013076010459ed4f2417e50197, type: 2}
+  _maxHealth: 25
+  _attackDamage: 10
   _respawnCooldown: 10
   _colliderSize: {x: 1, y: 1}
   _colliderOffset: {x: 0, y: 0}
   _xpReward: 10
-  _attackDamage: 0
-  _dropTable: []
+  _dropTable:
+  - _item: {fileID: 11400000, guid: cf441f95aaaf89144ad75db94ba78e00, type: 2}
+    _quantity: 12
+    _chance: 1
+  - _item: {fileID: 11400000, guid: 6a76254985d9122428ddc2c67ca8c71f, type: 2}
+    _quantity: 1
+    _chance: 2
+  - _item: {fileID: 11400000, guid: 385c8b01e24a7774d803c29740a49495, type: 2}
+    _quantity: 1
+    _chance: 15

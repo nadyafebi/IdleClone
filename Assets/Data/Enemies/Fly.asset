@@ -15,10 +15,16 @@ MonoBehaviour:
   _enemyName: Fly
   _sprite: {fileID: 4920321868862412396, guid: a8c5ab4cc4d9c6647a7e65a84fef8fc9, type: 3}
   _animatorController: {fileID: 9100000, guid: 753a905a0463acb4f9e84074be49a69e, type: 2}
-  _maxHealth: 10
-  _attackDamage: 5
+  _maxHealth: 12
+  _attackDamage: 6
   _respawnCooldown: 10
   _colliderSize: {x: 1, y: 1}
   _colliderOffset: {x: 0, y: 0}
   _xpReward: 10
-  _dropTable: []
+  _dropTable:
+  - _item: {fileID: 11400000, guid: cf441f95aaaf89144ad75db94ba78e00, type: 2}
+    _quantity: 5
+    _chance: 1
+  - _item: {fileID: 11400000, guid: cdb8f085425b9794899c5e6055f01a0d, type: 2}
+    _quantity: 1
+    _chance: 2
