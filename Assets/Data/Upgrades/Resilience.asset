@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f96c73c83654824a8eac3eb65ddb0ca, type: 3}
+  m_Name: Resilience
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
+  _displayName: Resilience
+  _tiers:
+  - Costs:
+    - Item: {fileID: 11400000, guid: e8447b71b6cf8b64eba1f4f15f36b546, type: 2}
+      Quantity: 8
+    - Item: {fileID: 11400000, guid: 0ab0b66947a7bf648a2efa001c9bffc0, type: 2}
+      Quantity: 8
+    EffectDescription: +10% Defense
+  - Costs:
+    - Item: {fileID: 11400000, guid: cdb8f085425b9794899c5e6055f01a0d, type: 2}
+      Quantity: 12
+    - Item: {fileID: 11400000, guid: 3b42ac8c9ea16b54cbc49bb413c2c002, type: 2}
+      Quantity: 10
+    EffectDescription: +20% Defense
+  - Costs:
+    - Item: {fileID: 11400000, guid: cdb8f085425b9794899c5e6055f01a0d, type: 2}
+      Quantity: 15
+    - Item: {fileID: 11400000, guid: c489c798fc86fe64691ebb3aedf3589a, type: 2}
+      Quantity: 12
+    EffectDescription: +30% Defense
+  - Costs:
+    - Item: {fileID: 11400000, guid: 6a76254985d9122428ddc2c67ca8c71f, type: 2}
+      Quantity: 18
+    - Item: {fileID: 11400000, guid: 0ab0b66947a7bf648a2efa001c9bffc0, type: 2}
+      Quantity: 15
+    EffectDescription: +40% Defense
+  - Costs:
+    - Item: {fileID: 11400000, guid: 6a76254985d9122428ddc2c67ca8c71f, type: 2}
+      Quantity: 22
+    - Item: {fileID: 11400000, guid: c489c798fc86fe64691ebb3aedf3589a, type: 2}
+      Quantity: 20
+    EffectDescription: +50% Defense

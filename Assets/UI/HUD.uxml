@@ -36,7 +36,7 @@
             <ui:VisualElement name="btn-items" class="menu-item">
                 <ui:Label text="Items" class="menu-item-label"/>
             </ui:VisualElement>
-            <ui:VisualElement class="menu-item">
+            <ui:VisualElement name="btn-upgrades" class="menu-item">
                 <ui:Label text="Upgrades" class="menu-item-label"/>
             </ui:VisualElement>
             <ui:VisualElement class="menu-item">

@@ -18,6 +18,9 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     [SerializeField]
     private ShopMenu _shopMenu;
 
+    [SerializeField]
+    private UpgradeMenu _upgradeMenu;
+
     #endregion
 
     #region Private Fields
@@ -48,6 +51,9 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
         _document.rootVisualElement.Q("btn-items")
             ?.RegisterCallback<ClickEvent>(_ => ToggleMenu(_inventoryMenu));
+
+        _document.rootVisualElement.Q("btn-upgrades")
+            ?.RegisterCallback<ClickEvent>(_ => ToggleMenu(_upgradeMenu));
 
         _levelLabel = _document.rootVisualElement.Q<Label>("player-level-label");
         _xpBarFill = _document.rootVisualElement.Q("xp-bar-fill");

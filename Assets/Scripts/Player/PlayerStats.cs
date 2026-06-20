@@ -14,19 +14,30 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private PlayerEquipment _playerEquipment;
 
+    [SerializeField]
+    private PlayerUpgrades _playerUpgrades;
+
     #endregion
 
     #region Public Properties
 
-    public int MaxHealth => _data.BaseMaxHealth + (_playerLevel.Level - 1) * _data.HealthPerLevel;
+    public int MaxHealth => Mathf.RoundToInt(
+        (_data.BaseMaxHealth + (_playerLevel.Level - 1) * _data.HealthPerLevel)
+        * (1f + VitalityTier * 0.1f));
 
-    public int TotalAttack => _data.BaseAttackDamage + _playerEquipment.TotalAttackBonus;
-    public int TotalDefense => _playerEquipment.TotalDefenseBonus;
+    public int TotalAttack => Mathf.RoundToInt(
+        (_data.BaseAttackDamage + _playerEquipment.TotalAttackBonus)
+        * (1f + StrengthTier * 0.1f));
+
+    public int TotalDefense => Mathf.RoundToInt(
+        _playerEquipment.TotalDefenseBonus
+        * (1f + ResilienceTier * 0.1f));
+
     public float AttackCooldown => _data.AttackCooldown;
     public float AttackRange => _data.AttackRange;
 
-    public int GatheringDamage => _data.BaseGatheringDamage;
-    public float GatherCooldown => _data.GatherCooldown;
+    public int GatheringDamage => _data.BaseGatheringDamage + Mathf.Min(YieldTier, 4);
+    public float GatherCooldown => _data.GatherCooldown * (YieldTier >= 5 ? 0.8f : 1f);
     public float GatherRange => _data.GatherRange;
 
     public float WalkSpeed => _data.WalkSpeed;
@@ -34,6 +45,15 @@ public class PlayerStats : MonoBehaviour
     public float JumpArcHeight => _data.JumpArcHeight;
 
     public event Action OnMaxHealthChanged;
+
+    #endregion
+
+    #region Private Properties
+
+    private int StrengthTier   => _playerUpgrades != null ? _playerUpgrades.StrengthTier   : 0;
+    private int ResilienceTier => _playerUpgrades != null ? _playerUpgrades.ResilienceTier : 0;
+    private int VitalityTier   => _playerUpgrades != null ? _playerUpgrades.VitalityTier   : 0;
+    private int YieldTier      => _playerUpgrades != null ? _playerUpgrades.YieldTier      : 0;
 
     #endregion
 
@@ -61,6 +81,9 @@ public class PlayerStats : MonoBehaviour
         }
 
         _playerLevel.OnLevelChanged += _ => OnMaxHealthChanged?.Invoke();
+
+        if (_playerUpgrades != null)
+            _playerUpgrades.OnUpgraded += () => OnMaxHealthChanged?.Invoke();
     }
 
     #endregion

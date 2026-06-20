@@ -1,0 +1,91 @@
+.upgrade-panel {
+    position: absolute;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=3556181715638617739&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_1");
+    background-color: rgba(0, 0, 0, 0);
+    -unity-slice-type: tiled;
+    -unity-slice-left: 4;
+    -unity-slice-top: 4;
+    -unity-slice-right: 4;
+    -unity-slice-bottom: 4;
+    -unity-slice-scale: 0.5px;
+    right: 32px;
+    top: 32px;
+    bottom: 112px;
+    width: 32.5%;
+}
+
+.upgrade-label {
+    font-size: 24px;
+    -unity-font-style: bold;
+    margin-top: 16px;
+    margin-right: 16px;
+    margin-bottom: 8px;
+    margin-left: 16px;
+}
+
+.upgrade-list {
+    flex-grow: 1;
+}
+
+.upgrade-row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-bottom-width: 2px;
+    border-color: rgb(109, 75, 39);
+}
+
+.upgrade-row--last {
+    border-bottom-width: 0;
+}
+
+.upgrade-row-header {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 3px;
+}
+
+.upgrade-name {
+    flex-grow: 1;
+    font-size: 16px;
+    -unity-font-style: bold;
+}
+
+.upgrade-tier {
+    font-size: 13px;
+    color: rgb(200, 167, 110);
+    -unity-font-style: bold;
+}
+
+.upgrade-effect {
+    font-size: 13px;
+    margin-bottom: 2px;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.upgrade-effect--next {
+    color: rgb(200, 167, 110);
+}
+
+.upgrade-effect--last {
+    margin-bottom: 8px;
+}
+
+.upgrade-costs-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.upgrade-chips {
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    align-items: center;
+}
+
+.test {
+    width: 64px;
+    height: 64px;
+    background-image: url("project://database/Assets/Sprites/ui_small.png?fileID=4889408916709912118&guid=9f472bb881c86834792be008a14b7fbe&type=3#ui_small_107");
+}

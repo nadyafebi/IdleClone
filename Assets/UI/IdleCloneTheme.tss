@@ -3,3 +3,37 @@
 * {
   -unity-font-definition: url("project://database/Assets/Fonts/Play-Regular.ttf?fileID=12800000&guid=45ae1a7299bdcd8488d895f6b08c3bc5&type=3#Play-Regular");
 }
+
+#unity-low-button.unity-repeat-button.unity-scroller__low-button,
+#unity-high-button.unity-repeat-button.unity-scroller__high-button {
+  background-image: url("project://database/Assets/Sprites/ui_small.png?fileID=4889408916709912118&guid=9f472bb881c86834792be008a14b7fbe&type=3#ui_small_107");
+  background-color: rgba(0, 0, 0, 0);
+  border-width: 0px;
+}
+
+#unity-low-button.unity-repeat-button.unity-scroller__low-button:hover,
+#unity-high-button.unity-repeat-button.unity-scroller__high-button:hover {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-slider.unity-scroller__slider {
+  background-color: rgba(0, 0, 0, 0);
+  border-width: 0px;
+}
+
+#unity-tracker.unity-base-slider__tracker {
+  background-color: rgba(0, 0, 0, 0);
+  border-width: 0px;
+}
+
+#unity-dragger.unity-base-slider__dragger {
+  background-image: url("project://database/Assets/Sprites/ui_small.png?fileID=4889408916709912118&guid=9f472bb881c86834792be008a14b7fbe&type=3#ui_small_107");
+  background-color: rgba(0, 0, 0, 0);
+  border-width: 0px;
+  -unity-slice-type: tiled;
+    -unity-slice-left: 8;
+    -unity-slice-top: 8;
+    -unity-slice-right: 8;
+    -unity-slice-bottom: 8;
+    -unity-slice-scale: 0.2px;
+}
