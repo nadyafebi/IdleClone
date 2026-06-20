@@ -2,7 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum QuestState { NotStarted, Active, Completed }
+public enum QuestState
+{
+    NotStarted,
+    Active,
+    Completed,
+}
 
 public class QuestManager : MonoBehaviour
 {
@@ -67,7 +72,7 @@ public class QuestManager : MonoBehaviour
         {
             QuestType.Kill => GetKillCount(quest) >= quest.RequiredCount,
             QuestType.Collect => GetCollectCount(quest) >= quest.RequiredCount,
-            _ => false
+            _ => false,
         };
     }
 
@@ -80,7 +85,7 @@ public class QuestManager : MonoBehaviour
         {
             QuestType.Kill => GetKillCount(quest),
             QuestType.Collect => GetCollectCount(quest),
-            _ => 0
+            _ => 0,
         };
     }
 
@@ -98,7 +103,19 @@ public class QuestManager : MonoBehaviour
             return;
 
         _states[quest] = QuestState.Active;
-        _killCounts[quest] = 0;
+
+        int initialKills = 0;
+        if (quest.Type == QuestType.Kill && quest.TargetEnemy != null)
+        {
+            EnemyProgressTracker tracker =
+                GameManager.Instance != null ? GameManager.Instance.EnemyProgressTracker : null;
+            if (tracker != null)
+                initialKills = Mathf.Min(
+                    tracker.GetKillCount(quest.TargetEnemy),
+                    quest.RequiredCount
+                );
+        }
+        _killCounts[quest] = initialKills;
 
         Debug.Log($"[QuestManager] Started: {quest.QuestName}");
         OnQuestUpdated?.Invoke(quest);
@@ -160,8 +177,6 @@ public class QuestManager : MonoBehaviour
 
     private void HandleEnemyKilled(EnemyData enemyData)
     {
-        bool anyUpdated = false;
-
         foreach (var kvp in _states)
         {
             QuestData quest = kvp.Key;
@@ -172,7 +187,6 @@ public class QuestManager : MonoBehaviour
 
             _killCounts.TryGetValue(quest, out int current);
             _killCounts[quest] = current + 1;
-            anyUpdated = true;
 
             OnQuestUpdated?.Invoke(quest);
         }
