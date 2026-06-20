@@ -69,6 +69,10 @@ public class QuestData : ScriptableObject
     [Min(0)]
     public int XpReward;
 
+    [Tooltip("Permanently unlocks the Fireball skill on quest completion.")]
+    [SerializeField]
+    public bool UnlockFireball;
+
     [Header("Dependency")]
     [Tooltip("This quest is locked until the referenced quest is completed.")]
     [SerializeField]

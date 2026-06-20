@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
 
     public int CurrentHealth { get; private set; }
     public int MaxHealth => _stats.MaxHealth;
+    public bool IsInvincible { get; set; }
 
     public event Action OnDied;
     public event Action<int, int> OnHealthChanged; // (current, max)
@@ -63,7 +64,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (_isDead || amount <= 0)
+        if (_isDead || IsInvincible || amount <= 0)
             return;
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);

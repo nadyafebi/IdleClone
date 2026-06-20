@@ -236,6 +236,9 @@ public class QuestManager : MonoBehaviour
 
         if (level != null && quest.XpReward > 0)
             level.AddXp(quest.XpReward);
+
+        if (quest.UnlockFireball && GameManager.Instance != null)
+            GameManager.Instance.PlayerSkills?.UnlockFireball();
     }
 
     #endregion

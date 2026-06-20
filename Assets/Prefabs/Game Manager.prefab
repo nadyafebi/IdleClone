@@ -334,6 +334,8 @@ MonoBehaviour:
   _playerInventory: {fileID: 943586800798948116}
   _playerEquipment: {fileID: 8230394633443679691}
   _playerUpgrades: {fileID: 6220442773529276198}
+  _playerProgression: {fileID: 2363169669139838927}
+  _playerSkills: {fileID: 6286953734571275318}
   _screenFader: {fileID: 1368889432775808645}
   _dialogController: {fileID: 7591245712636952950}
   _hudController: {fileID: 8850692712998546788}
@@ -343,7 +345,6 @@ MonoBehaviour:
   _clickRouter: {fileID: 842414625112250478}
   _questManager: {fileID: 3831874744845938819}
   _enemyProgressTracker: {fileID: 1650594566442791155}
-  _playerProgression: {fileID: 2363169669139838927}
   _townScene: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
   _townSceneName: Town
   _transitionFadeDuration: 1
@@ -775,6 +776,7 @@ GameObject:
   - component: {fileID: 943586800798948116}
   - component: {fileID: 6220442773529276198}
   - component: {fileID: 2363169669139838927}
+  - component: {fileID: 6286953734571275318}
   m_Layer: 0
   m_Name: Player Systems
   m_TagString: Untagged
@@ -891,6 +893,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 714fbe54c6ce7944681390be42dac4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerProgression
+--- !u!114 &6286953734571275318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7104586640413842275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa55fd7c4c4c0f44bac5e6d3e9062d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSkills
+  _slashEffectPrefab: {fileID: 2953795654421265936, guid: 1dff44c3023dad24f8391c45c89c9a1a, type: 3}
+  _barrierEffectPrefab: {fileID: 3783295673442576507, guid: 255cad64e0cfe56469c22f7222078c7f, type: 3}
+  _fireballPrefab: {fileID: 4268955033256355499, guid: 14c2f0fd6a4deae449b966e9e35e3fb5, type: 3}
+  _slashIcon: {fileID: 1056824385, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
+  _barrierIcon: {fileID: 1451023289, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
+  _fireballIcon: {fileID: -6521139076447802460, guid: 2b6e8e66f0f408e4a982f9f6890a8ae3, type: 3}
+  _slashCooldown: 8
+  _barrierCooldown: 25
+  _fireballCooldown: 10
+  _slashAoeOffset: 2.5
+  _slashAoeRadius: 2.5
 --- !u!1 &7884755522946722548
 GameObject:
   m_ObjectHideFlags: 0

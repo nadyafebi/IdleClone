@@ -87,6 +87,15 @@
     scale: 1.05 1.05;
 }
 
+.skill-slot__cooldown {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+}
+
 .skill-slot__active {
     background-image: url("project://database/Assets/Sprites/ui.png?fileID=-309200935&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_17");
 }

@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerProgression _playerProgression;
 
+    [SerializeField]
+    private PlayerSkills _playerSkills;
+
     [Header("UI")]
     [SerializeField]
     private ScreenFader _screenFader;
@@ -90,6 +93,7 @@ public class GameManager : MonoBehaviour
     public PlayerEquipment PlayerEquipment => _playerEquipment;
     public PlayerStats PlayerStats => _playerStats;
     public PlayerUpgrades PlayerUpgrades => _playerUpgrades;
+    public PlayerSkills PlayerSkills => _playerSkills;
     public ItemTooltip ItemTooltip => _itemTooltip;
 
     #endregion

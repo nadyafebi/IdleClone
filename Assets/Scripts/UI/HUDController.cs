@@ -48,6 +48,10 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     private Label _classLabel;
     private PlayerProgression _playerProgression;
 
+    private readonly VisualElement[] _skillSlotRoots = new VisualElement[3];
+    private readonly Label[] _skillCooldownLabels = new Label[3];
+    private PlayerSkills _playerSkills;
+
     #endregion
 
     #region Unity Lifecycle
@@ -56,10 +60,12 @@ public class HUDController : MonoBehaviour, IPointerBlocker
     {
         _hudPanel = _document.rootVisualElement.Q("hud-panel");
 
-        _document.rootVisualElement.Q("btn-items")
+        _document
+            .rootVisualElement.Q("btn-items")
             ?.RegisterCallback<ClickEvent>(_ => OnItemsButtonClicked());
 
-        _document.rootVisualElement.Q("btn-upgrades")
+        _document
+            .rootVisualElement.Q("btn-upgrades")
             ?.RegisterCallback<ClickEvent>(_ => OnUpgradesButtonClicked());
 
         _levelLabel = _document.rootVisualElement.Q<Label>("player-level-label");
@@ -111,6 +117,24 @@ public class HUDController : MonoBehaviour, IPointerBlocker
             _playerEquipment.OnEquipmentChanged += RefreshPotionSlot;
             RefreshPotionSlot();
         }
+
+        _skillSlotRoots[0] = _document.rootVisualElement.Q("skill-slot-slash");
+        _skillSlotRoots[1] = _document.rootVisualElement.Q("skill-slot-barrier");
+        _skillSlotRoots[2] = _document.rootVisualElement.Q("skill-slot-fireball");
+
+        _playerSkills = GameManager.Instance?.PlayerSkills;
+        if (_playerSkills != null)
+        {
+            _skillSlotRoots[0]?.RegisterCallback<ClickEvent>(_ => _playerSkills.TryCastSlash());
+            _skillSlotRoots[1]?.RegisterCallback<ClickEvent>(_ => _playerSkills.TryCastBarrier());
+            _skillSlotRoots[2]?.RegisterCallback<ClickEvent>(_ => _playerSkills.TryCastFireball());
+            _playerSkills.OnSkillStateChanged += RefreshSkillSlots;
+            RefreshSkillSlots();
+        }
+        else
+        {
+            Debug.LogWarning("[HUDController] No PlayerSkills found on GameManager.");
+        }
     }
 
     private void OnDestroy()
@@ -132,6 +156,19 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
         if (_playerProgression != null)
             _playerProgression.OnClassChanged -= RefreshClassLabel;
+
+        if (_playerSkills != null)
+            _playerSkills.OnSkillStateChanged -= RefreshSkillSlots;
+    }
+
+    private void Update()
+    {
+        if (_playerSkills == null)
+            return;
+
+        UpdateCooldownLabel(0, _playerSkills.SlashCooldownRemaining);
+        UpdateCooldownLabel(1, _playerSkills.BarrierCooldownRemaining);
+        UpdateCooldownLabel(2, _playerSkills.FireballCooldownRemaining);
     }
 
     #endregion
@@ -241,7 +278,9 @@ public class HUDController : MonoBehaviour, IPointerBlocker
         icon.style.backgroundImage = new StyleBackground(potion.Icon);
         icon.style.width = new StyleLength(32f);
         icon.style.height = new StyleLength(32f);
-        icon.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(BackgroundSizeType.Contain));
+        icon.style.backgroundSize = new StyleBackgroundSize(
+            new BackgroundSize(BackgroundSizeType.Contain)
+        );
         icon.pickingMode = PickingMode.Ignore;
         _potionSlot.Add(icon);
     }
@@ -307,6 +346,82 @@ public class HUDController : MonoBehaviour, IPointerBlocker
 
         if (_xpAmountLabel != null)
             _xpAmountLabel.text = $"{currentXp} / {xpToNextLevel}";
+    }
+
+    private void RefreshSkillSlots()
+    {
+        if (_playerSkills == null)
+            return;
+
+        RefreshSkillSlot(
+            0,
+            _playerSkills.SlashUnlocked,
+            _playerSkills.SlashReady,
+            _playerSkills.SlashCooldownRemaining,
+            _playerSkills.SlashIcon
+        );
+        RefreshSkillSlot(
+            1,
+            _playerSkills.BarrierUnlocked,
+            _playerSkills.BarrierReady,
+            _playerSkills.BarrierCooldownRemaining,
+            _playerSkills.BarrierIcon
+        );
+        RefreshSkillSlot(
+            2,
+            _playerSkills.FireballUnlocked,
+            _playerSkills.FireballReady,
+            _playerSkills.FireballCooldownRemaining,
+            _playerSkills.FireballIcon
+        );
+    }
+
+    private void RefreshSkillSlot(
+        int index,
+        bool unlocked,
+        bool ready,
+        float cooldownRemaining,
+        Sprite icon
+    )
+    {
+        VisualElement slot = _skillSlotRoots[index];
+        if (slot == null)
+            return;
+
+        slot.Clear();
+        _skillCooldownLabels[index] = null;
+        slot.EnableInClassList("skill-slot--usable", unlocked && ready);
+
+        if (!unlocked)
+            return;
+
+        if (ready)
+        {
+            var iconEl = new VisualElement();
+            iconEl.style.backgroundImage = new StyleBackground(icon);
+            iconEl.style.width = new StyleLength(32f);
+            iconEl.style.height = new StyleLength(32f);
+            iconEl.style.backgroundSize = new StyleBackgroundSize(
+                new BackgroundSize(BackgroundSizeType.Contain)
+            );
+            iconEl.pickingMode = PickingMode.Ignore;
+            slot.Add(iconEl);
+        }
+        else
+        {
+            var label = new Label(Mathf.CeilToInt(cooldownRemaining).ToString());
+            label.AddToClassList("skill-slot__cooldown");
+            label.pickingMode = PickingMode.Ignore;
+            slot.Add(label);
+            _skillCooldownLabels[index] = label;
+        }
+    }
+
+    private void UpdateCooldownLabel(int index, float remaining)
+    {
+        if (_skillCooldownLabels[index] == null)
+            return;
+        _skillCooldownLabels[index].text = Mathf.CeilToInt(remaining) + "s";
     }
 
     #endregion

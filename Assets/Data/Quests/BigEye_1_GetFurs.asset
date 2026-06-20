@@ -26,4 +26,5 @@ MonoBehaviour:
   - Item: {fileID: 11400000, guid: cf441f95aaaf89144ad75db94ba78e00, type: 2}
     Quantity: 150
   XpReward: 300
+  UnlockFireball: 1
   Dependency: {fileID: 0}

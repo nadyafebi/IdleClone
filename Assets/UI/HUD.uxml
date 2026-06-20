@@ -25,9 +25,9 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="skills-panel" class="hud-panel">
-            <ui:VisualElement class="skill-slot"/>
-            <ui:VisualElement class="skill-slot"/>
-            <ui:VisualElement class="skill-slot"/>
+            <ui:VisualElement name="skill-slot-slash" class="skill-slot"/>
+            <ui:VisualElement name="skill-slot-barrier" class="skill-slot"/>
+            <ui:VisualElement name="skill-slot-fireball" class="skill-slot"/>
         </ui:VisualElement>
         <ui:VisualElement name="potion-panel" class="hud-panel">
             <ui:VisualElement name="potion-slot" class="skill-slot"/>
