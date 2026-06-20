@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9024d1781799b6f4b9de84bc0207d71a, type: 3}
+  m_Name: Wingus_3_Offer
+  m_EditorClassIdentifier: Assembly-CSharp::DialogData
+  Lines:
+  - The next thing you would want to do to progress faster is to get better equpment.
+  - You can craft them by talking to the blue crafting bot on the left.
+  - Each recipe will consume some materials. But, hey, it's worth it!
+  - Go craft a copper sword and come back.
