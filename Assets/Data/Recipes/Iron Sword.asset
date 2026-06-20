@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RecipeData
   _ingredients:
   - Item: {fileID: 11400000, guid: c489c798fc86fe64691ebb3aedf3589a, type: 2}
-    Quantity: 5
+    Quantity: 25
   - Item: {fileID: 11400000, guid: 3b42ac8c9ea16b54cbc49bb413c2c002, type: 2}
-    Quantity: 5
+    Quantity: 25
   _resultItem: {fileID: 11400000, guid: a3e1ff916d1a65549aa12b05f1c7a5af, type: 2}
   _resultQuantity: 1
