@@ -7,27 +7,48 @@ A 2D idle/platformer game built in Unity inspired by IdleOn. The goal is to crea
 - **Target Platform**: WebGL
 - **UI**: UI Toolkit
 
+## Scenes
+
+| Scene | Purpose |
+|---|---|
+| `Start` | Title screen — new game, load game, delete save, time cheat |
+| `Town` | Hub — NPCs, shop, crafting, quests, safe zone |
+| `Field1` | First combat/gathering zone |
+| `Field2` | Second combat/gathering zone |
+| `Field3` | Third combat/gathering zone; portal to BossArena |
+| `BossArena` | Final boss encounter |
+
 ## Scene Structure
 
 ### Global Game Manager (persistent, `DontDestroyOnLoad`)
 Lives in the first scene and survives all scene loads. Never put per-scene objects here.
 ```
-Game Manager       — GameManager, ClickRouter, LootDragCollector
-├── Dialog         — DialogController
-├── HUD            — HUDController
-├── Inventory      — PlayerInventory
-└── Screen Fader   — ScreenFader
+Game Manager       — GameManager, ClickRouter, LootDragCollector, QuestManager, EnemyProgressTracker
+└── Player Systems — PlayerStats, PlayerEquipment, PlayerLevel, PlayerHealth,
+                     PlayerInventory, PlayerUpgrades, PlayerProgression, PlayerSkills
+└── UI
+    ├── HUD            — HUDController, ItemPickupNotifier, OfflineProgressionUI, UIDocument
+    ├── Dialog         — DialogController, UIDocument
+    ├── Screen Fader   — ScreenFader
+    ├── Inventory      — InventoryMenu, UIDocument
+    ├── Quest          — QuestHUD, UIDocument
+    ├── Crafting       — CraftingMenu, UIDocument
+    ├── Shop           — ShopMenu, UIDocument
+    ├── Item Tooltip   — ItemTooltip, UIDocument
+    ├── Upgrade        — UpgradeMenu, UIDocument
+    ├── Player Stats   — PlayerStatsMenu, UIDocument
+    └── Damage Popup   — DamagePopupSpawner, UIDocument
 ```
 
 ### Per-Scene hierarchy
 Each scene has a local Map Manager root. Player, camera, and input indicator all live here and are recreated on every scene load.
 ```
-Map Manager        — MapManager
+Map Manager        — MapManager, PlatformGraphBuilder
 ├── Main Camera
 ├── Global Light 2D
 ├── Cursor         — ClickIndicator
-└── Player         — PlayerMovement
-    └── Player Sprite  — PlayerRenderer
+└── Player         — PlayerMovement, PlayerCombat, AutoAttackController, PlayerGathering
+    └── Player Sprite  — PlayerRenderer, SpriteRenderer
 ```
 
 ## C# Conventions
