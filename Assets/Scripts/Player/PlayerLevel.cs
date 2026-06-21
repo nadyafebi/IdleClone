@@ -43,7 +43,7 @@ public class PlayerLevel : MonoBehaviour
 
         CurrentXp += amount;
 
-        while (Level < _data.MaxLevel && CurrentXp >= XpToNextLevel)
+        while (CurrentXp >= XpToNextLevel)
         {
             CurrentXp -= XpToNextLevel;
             Level++;

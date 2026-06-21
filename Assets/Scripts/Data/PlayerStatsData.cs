@@ -14,10 +14,6 @@ public class PlayerStatsData : ScriptableObject
     [Min(0)]
     private int _healthPerLevel = 15;
 
-    [SerializeField]
-    [Min(1)]
-    private int _maxLevel = 12;
-
     [Header("Combat")]
     [SerializeField]
     [Min(1)]
@@ -72,7 +68,6 @@ public class PlayerStatsData : ScriptableObject
 
     public int BaseMaxHealth => _baseMaxHealth;
     public int HealthPerLevel => _healthPerLevel;
-    public int MaxLevel => _maxLevel;
 
     public int BaseAttackDamage => _baseAttackDamage;
     public float AttackCooldown => _attackCooldown;
