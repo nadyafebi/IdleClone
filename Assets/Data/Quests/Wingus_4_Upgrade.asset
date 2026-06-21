@@ -20,10 +20,11 @@ MonoBehaviour:
   RequiredCount: 1
   OfferDialog: {fileID: 11400000, guid: 8ec527458fa2401498c49b0c1cdadfe5, type: 2}
   ActiveDialog: {fileID: 11400000, guid: 75164d13b9012fb45bb703f085440429, type: 2}
-  CompleteDialog: {fileID: 11400000, guid: 97a655c0bc3672c4283c1b60187013b4, type: 2}
+  CompleteDialog: {fileID: 11400000, guid: c865c52c9b16b2a4f898e76bf95c6766, type: 2}
   LockedDialog: {fileID: 0}
   ItemRewards:
   - Item: {fileID: 11400000, guid: cf441f95aaaf89144ad75db94ba78e00, type: 2}
     Quantity: 75
   XpReward: 150
+  UnlockFireball: 0
   Dependency: {fileID: 0}
