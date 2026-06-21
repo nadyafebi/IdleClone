@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Field3.unity
     guid: 3347ef0647ba7824c866fc1c7b8e44ab
+  - enabled: 1
+    path: Assets/Scenes/BossArena.unity
+    guid: a9058ab4f4edfac4d8c87925ab5f5aab
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
