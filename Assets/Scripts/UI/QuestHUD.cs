@@ -18,6 +18,7 @@ public class QuestHUD : MonoBehaviour, IPointerBlocker
     private Button _toggleButton;
     private bool _expanded = true;
     private bool _panelVisible;
+    private bool _visible;
 
     private QuestManager _questManager;
     private PlayerInventory _playerInventory;
@@ -71,6 +72,15 @@ public class QuestHUD : MonoBehaviour, IPointerBlocker
 
     #region Public Methods
 
+    public void SetVisible(bool visible)
+    {
+        Debug.Log($"[QuestHUD] Set visible {visible}");
+        _visible = visible;
+        _document.rootVisualElement.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+        if (visible)
+            Refresh();
+    }
+
     public bool ContainsScreenPoint(Vector2 screenPos)
     {
         if (!_panelVisible || _panel == null)
@@ -109,6 +119,7 @@ public class QuestHUD : MonoBehaviour, IPointerBlocker
 
     private void Refresh()
     {
+        Debug.Log($"[QuestHUD] Refresh {_questList} {_panel}");
         if (_questList == null || _panel == null)
             return;
 
@@ -116,19 +127,24 @@ public class QuestHUD : MonoBehaviour, IPointerBlocker
 
         List<QuestData> activeQuests = _questManager.GetActiveQuests();
 
-        _panelVisible = activeQuests.Count > 0;
+        _panelVisible = _visible && activeQuests.Count > 0;
+        Debug.Log($"[QuestHUD] Visible {_visible}");
         _panel.style.display = _panelVisible ? DisplayStyle.Flex : DisplayStyle.None;
 
         foreach (QuestData quest in activeQuests)
         {
+            Debug.Log($"[QuestHUD] Add quest {quest.name}");
             int current = Mathf.Min(_questManager.GetCurrentCount(quest), quest.RequiredCount);
             bool met = _questManager.IsObjectiveMet(quest);
 
             string progressText = quest.Type switch
             {
-                QuestType.Kill => $"Kill {quest.TargetEnemy?.EnemyName ?? "?"}: {current}/{quest.RequiredCount}",
-                QuestType.Collect => $"Collect {quest.TargetItem?.DisplayName ?? "?"}: {current}/{quest.RequiredCount}",
-                QuestType.Upgrade => $"{quest.TargetUpgradeType} upgrade tier: {current}/{quest.RequiredCount}",
+                QuestType.Kill =>
+                    $"Kill {quest.TargetEnemy?.EnemyName ?? "?"}: {current}/{quest.RequiredCount}",
+                QuestType.Collect =>
+                    $"Collect {quest.TargetItem?.DisplayName ?? "?"}: {current}/{quest.RequiredCount}",
+                QuestType.Upgrade =>
+                    $"{quest.TargetUpgradeType} upgrade tier: {current}/{quest.RequiredCount}",
                 _ => $"{current}/{quest.RequiredCount}",
             };
 

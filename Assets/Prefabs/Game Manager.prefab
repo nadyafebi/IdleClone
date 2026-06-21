@@ -344,6 +344,7 @@ MonoBehaviour:
   _clickRouter: {fileID: 842414625112250478}
   _questManager: {fileID: 3831874744845938819}
   _enemyProgressTracker: {fileID: 1650594566442791155}
+  _questHud: {fileID: 2918841495526936213}
   _startScene: {fileID: 102900000, guid: cdfbf12bd83bd33469e8de29a27a2d56, type: 3}
   _startSceneName: Start
   _townScene: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}

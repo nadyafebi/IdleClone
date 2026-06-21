@@ -61,6 +61,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private EnemyProgressTracker _enemyProgressTracker;
 
+    [SerializeField]
+    private QuestHUD _questHud;
+
     [Header("Scenes")]
 #if UNITY_EDITOR
     [SerializeField]
@@ -252,6 +255,7 @@ public class GameManager : MonoBehaviour
         _damagePopupSpawner.SetVisible(visible);
         _itemPickupNotifier.SetVisible(visible);
         _itemTooltip.SetVisible(visible);
+        _questHud?.SetVisible(visible);
     }
 
     #endregion

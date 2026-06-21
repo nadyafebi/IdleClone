@@ -173,6 +173,7 @@ public class QuestManager : MonoBehaviour
             if (entry.killCount > 0)
                 _killCounts[quest] = entry.killCount;
         }
+        OnQuestUpdated?.Invoke(null);
     }
 
     #endregion
