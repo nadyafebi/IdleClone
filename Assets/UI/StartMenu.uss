@@ -93,9 +93,9 @@
 
 .menu-panel {
     flex-grow: 1;
-    justify-content: center;
     align-items: center;
-    margin-top: 75px;
+    justify-content: flex-start;
+    margin-top: 100px;
 }
 
 .cheat-container {
