@@ -1,8 +1,20 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="StartMenu.uss"/>
+    <Style src="project://database/Assets/UI/StartMenu.uss?fileID=7433441132597879392&amp;guid=fddf374f421e95e4296fc54cd6a020c0&amp;type=3#StartMenu"/>
     <ui:VisualElement class="start-menu">
         <ui:Image source="project://database/Assets/Sprites/idleclone-logo.png?fileID=2800000&amp;guid=f257296a832aa8b4ea6a48bcc218ba52&amp;type=3#idleclone-logo" class="logo"/>
-        <ui:Image source="project://database/Assets/Sprites/characters1.png?fileID=-6757302299522597624&amp;guid=ecf17e38a25bbf94eb27fd09cf7c2545&amp;type=3#characters1_1" class="player"/>
-        <ui:Button name="btn-start" text="New Game" class="btn-start"/>
+        <ui:VisualElement class="menu-panel">
+            <ui:Button name="btn-new-game" text="New Game" class="btn-start"/>
+            <ui:VisualElement name="save-panel" class="save-panel">
+                <ui:VisualElement name="info-panel" class="info-panel">
+                    <ui:Label name="lbl-level" text="Level 1" class="lbl-level"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="save-actions">
+                    <ui:Button name="btn-load" text="Load Game" class="btn-start"/>
+                    <ui:Button name="btn-delete" class="btn-delete">
+                        <ui:Image style="background-image: url(&quot;project://database/Assets/Sprites/cursors.png?fileID=1014377576&amp;guid=2b6e8e66f0f408e4a982f9f6890a8ae3&amp;type=3#cursors_109&quot;); width: 24px; height: 24px;"/>
+                    </ui:Button>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
