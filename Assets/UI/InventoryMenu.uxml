@@ -16,7 +16,6 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:Label text="Items" class="inventory-label"/>
-        <ui:VisualElement name="tab-bar" class="tab-bar"/>
         <ui:VisualElement name="inventory-grid" class="inventory-grid"/>
     </ui:VisualElement>
 </ui:UXML>

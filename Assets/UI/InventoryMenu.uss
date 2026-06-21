@@ -64,33 +64,6 @@
     -unity-font-style: bold;
 }
 
-.tab-bar {
-    flex-direction: row;
-    padding: 0 12px 8px 12px;
-}
-
-.tab-button {
-    width: 48px;
-    height: 32px;
-    margin-right: 4px;
-    padding: 0;
-    font-size: 16px;
-    border-width: 0;
-    background-color: rgba(255, 255, 255, 0);
-    -unity-font-style: bold;
-    -unity-slice-left: 12;
-    -unity-slice-top: 12;
-    -unity-slice-right: 12;
-    -unity-slice-bottom: 12;
-    -unity-slice-scale: 0.5px;
-    -unity-slice-type: tiled;
-    background-image: url("project://database/Assets/Sprites/ui.png?fileID=2035392382&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_14");
-}
-
-.tab-button--active {
-    background-image: url("project://database/Assets/Sprites/ui.png?fileID=1387578008&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_5");
-}
-
 .equipment-panel {
     position: absolute;
     background-image: url("project://database/Assets/Sprites/ui.png?fileID=3556181715638617739&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_1");

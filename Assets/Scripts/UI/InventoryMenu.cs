@@ -4,23 +4,14 @@ using UnityEngine.UIElements;
 
 public class InventoryMenu : GameMenu
 {
-    #region Serialized Fields
-
-    [SerializeField]
-    private int _tabCount = 1;
-
-    #endregion
-
     #region Private Fields
 
-    private const int SlotsPerTab = 16;
+    private const int SlotCount = 16;
 
     private VisualElement _panel;
-    private VisualElement _tabBar;
     private VisualElement _grid;
     private PlayerInventory _inventory;
     private PlayerEquipment _equipment;
-    private int _activeTab;
 
     private VisualElement _equipmentPanel;
     private VisualElement _slotWeapon;
@@ -43,7 +34,6 @@ public class InventoryMenu : GameMenu
         _equipment = GameManager.Instance.PlayerEquipment;
 
         _panel = Root.Q("inventory-panel");
-        _tabBar = Root.Q("tab-bar");
         _grid = Root.Q("inventory-grid");
 
         _equipmentPanel = Root.Q("equipment-panel");
@@ -54,8 +44,6 @@ public class InventoryMenu : GameMenu
         RegisterEquipSlotClick(_slotWeapon, ItemCategory.Weapon);
         RegisterEquipSlotClick(_slotShield, ItemCategory.Shield);
         RegisterEquipSlotClick(_slotPotion, ItemCategory.Potion);
-
-        BuildTabs();
     }
 
     #endregion
@@ -93,50 +81,25 @@ public class InventoryMenu : GameMenu
 
     #region Private Helpers
 
-    private void BuildTabs()
-    {
-        _tabBar.Clear();
-        for (int i = 0; i < _tabCount; i++)
-        {
-            int tabIndex = i;
-            var btn = new Button(() => SelectTab(tabIndex));
-            btn.AddToClassList("tab-button");
-            btn.text = (i + 1).ToString();
-            btn.EnableInClassList("tab-button--active", i == _activeTab);
-            _tabBar.Add(btn);
-        }
-    }
-
-    private void SelectTab(int index)
-    {
-        _activeTab = index;
-        int i = 0;
-        foreach (VisualElement child in _tabBar.Children())
-            child.EnableInClassList("tab-button--active", i++ == _activeTab);
-        Rebuild();
-    }
-
     private void Rebuild()
     {
         _grid.Clear();
         var items = new List<KeyValuePair<ItemData, int>>(_inventory.Items);
-        int startIndex = _activeTab * SlotsPerTab;
 
-        for (int i = 0; i < SlotsPerTab; i++)
+        for (int i = 0; i < SlotCount; i++)
         {
             var slot = new VisualElement();
             slot.AddToClassList("inventory-slot");
 
-            int itemIndex = startIndex + i;
-            if (itemIndex < items.Count)
+            if (i < items.Count)
             {
-                ItemData item = items[itemIndex].Key;
+                ItemData item = items[i].Key;
 
                 var icon = new VisualElement();
                 icon.AddToClassList("slot-icon");
                 icon.style.backgroundImage = new StyleBackground(item.Icon);
 
-                var label = new Label(FormatQuantity(items[itemIndex].Value));
+                var label = new Label(FormatQuantity(items[i].Value));
                 label.AddToClassList("slot-quantity");
 
                 slot.Add(icon);
