@@ -2,6 +2,8 @@
 
 A 2D idle/platformer game inspired by [IdleOn](https://www.idleon.info/). Built as a demo featuring the core gameplay loop: explore platformer zones, fight enemies and gather resources, complete quests, upgrade your character, and progress toward a final boss — all while earning progress even when you're offline.
 
+*This game was made in ~1 week for a game studio's application process. I went above and beyond to make a fully complete game. Includes AI-generated code (Claude Code) as part of the project requirements, but no AI-generated art.*
+
 ---
 
 ## Features
@@ -104,8 +106,6 @@ Assets/
 ---
 
 ## Third-Party Credits
-
-> *Fill in as needed.*
 
 | Asset | Author / Source | License | Notes |
 |---|---|---|---|
