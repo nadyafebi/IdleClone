@@ -269,6 +269,12 @@ public class GameManager : MonoBehaviour
         SaveSystem.Save(BuildSaveData());
     }
 
+    public void DeleteSave()
+    {
+        SaveSystem.DeleteSave();
+        ResetPlayerState();
+    }
+
     private void LoadGame()
     {
         SaveData data = SaveSystem.Load();
@@ -316,6 +322,19 @@ public class GameManager : MonoBehaviour
             data.enemyKills.Add(new EnemyKillEntry { enemyName = kvp.Key.name, killCount = kvp.Value });
 
         return data;
+    }
+
+    private void ResetPlayerState()
+    {
+        _playerLevel.LoadLevel(1, 0);
+        _playerUpgrades.LoadTiers(0, 0, 0, 0);
+        _playerHealth.ResetHealth();
+        _playerEquipment.LoadEquipment(null, null, null, 0);
+        _playerInventory.LoadItems(new List<ItemSaveEntry>(), _saveRegistry);
+        _playerProgression.LoadClass(PlayerClass.Beginner);
+        _playerSkills.LoadFireball(false);
+        _questManager.LoadQuests(new List<QuestSaveEntry>(), _saveRegistry);
+        _enemyProgressTracker.LoadKills(new List<EnemyKillEntry>(), _saveRegistry);
     }
 
     private void ApplySaveData(SaveData data)

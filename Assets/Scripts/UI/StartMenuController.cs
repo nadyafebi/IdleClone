@@ -43,7 +43,7 @@ public class StartMenuController : MonoBehaviour
 
     private void DeleteSave(VisualElement root)
     {
-        SaveSystem.DeleteSave();
+        GameManager.Instance.DeleteSave();
         root.Q("btn-new-game").style.display = DisplayStyle.Flex;
         root.Q("save-panel").style.display = DisplayStyle.None;
     }

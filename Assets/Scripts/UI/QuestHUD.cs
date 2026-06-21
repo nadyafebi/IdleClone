@@ -74,7 +74,6 @@ public class QuestHUD : MonoBehaviour, IPointerBlocker
 
     public void SetVisible(bool visible)
     {
-        Debug.Log($"[QuestHUD] Set visible {visible}");
         _visible = visible;
         _document.rootVisualElement.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
         if (visible)
@@ -119,7 +118,6 @@ public class QuestHUD : MonoBehaviour, IPointerBlocker
 
     private void Refresh()
     {
-        Debug.Log($"[QuestHUD] Refresh {_questList} {_panel}");
         if (_questList == null || _panel == null)
             return;
 
@@ -128,12 +126,10 @@ public class QuestHUD : MonoBehaviour, IPointerBlocker
         List<QuestData> activeQuests = _questManager.GetActiveQuests();
 
         _panelVisible = _visible && activeQuests.Count > 0;
-        Debug.Log($"[QuestHUD] Visible {_visible}");
         _panel.style.display = _panelVisible ? DisplayStyle.Flex : DisplayStyle.None;
 
         foreach (QuestData quest in activeQuests)
         {
-            Debug.Log($"[QuestHUD] Add quest {quest.name}");
             int current = Mathf.Min(_questManager.GetCurrentCount(quest), quest.RequiredCount);
             bool met = _questManager.IsObjectiveMet(quest);
 
