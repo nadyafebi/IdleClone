@@ -84,6 +84,24 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private string _townSceneName;
 
+#if UNITY_EDITOR
+    [SerializeField]
+    private UnityEditor.SceneAsset _bossArenaScene;
+#endif
+
+    [HideInInspector]
+    [SerializeField]
+    private string _bossArenaSceneName;
+
+#if UNITY_EDITOR
+    [SerializeField]
+    private UnityEditor.SceneAsset _field3Scene;
+#endif
+
+    [HideInInspector]
+    [SerializeField]
+    private string _field3SceneName;
+
     [Header("Transitions")]
     [Tooltip("Fade duration used for all scene transitions.")]
     [SerializeField]
@@ -135,8 +153,10 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        _startSceneName = _startScene != null ? _startScene.name : "";
-        _townSceneName = _townScene != null ? _townScene.name : "";
+        _startSceneName     = _startScene     != null ? _startScene.name     : "";
+        _townSceneName      = _townScene      != null ? _townScene.name      : "";
+        _bossArenaSceneName = _bossArenaScene != null ? _bossArenaScene.name : "";
+        _field3SceneName    = _field3Scene    != null ? _field3Scene.name    : "";
     }
 #endif
 
@@ -214,7 +234,13 @@ public class GameManager : MonoBehaviour
         _isRespawning = true;
         _isTransitioning = true;
         Time.timeScale = 0f;
-        _screenFader.FadeOut(_transitionFadeDuration, () => SceneManager.LoadScene(_townSceneName));
+
+        // Dying in the boss arena sends the player back to Field3, not Town
+        string target = SceneManager.GetActiveScene().name == _bossArenaSceneName
+            ? _field3SceneName
+            : _townSceneName;
+
+        _screenFader.FadeOut(_transitionFadeDuration, () => SceneManager.LoadScene(target));
     }
 
     #endregion
@@ -390,6 +416,16 @@ public class GameManager : MonoBehaviour
         data.enemyKills = new List<EnemyKillEntry>();
         foreach (var kvp in _enemyProgressTracker.KillCounts)
             data.enemyKills.Add(new EnemyKillEntry { enemyName = kvp.Key.name, killCount = kvp.Value });
+
+        // Never save the boss arena as the last scene — always redirect to Field3 so the
+        // player resumes there on next load, and offline progression is suppressed.
+        if (SceneManager.GetActiveScene().name == _bossArenaSceneName)
+        {
+            data.lastScene             = _field3SceneName;
+            data.lastTargetType        = "none";
+            data.lastTargetName        = "";
+            data.lastTargetDisplayName = "";
+        }
 
         return data;
     }

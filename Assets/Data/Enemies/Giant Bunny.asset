@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34cf45b7b163cfc41874e3f5975e1d29, type: 3}
+  m_Name: Giant Bunny
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  _enemyName: Giant Bunny
+  _sprite: {fileID: 5466307135065357261, guid: a8c5ab4cc4d9c6647a7e65a84fef8fc9, type: 3}
+  _animatorController: {fileID: 0}
+  _maxHealth: 5000
+  _attackDamage: 0
+  _attackCooldown: 1
+  _respawnCooldown: 0
+  _colliderSize: {x: 4, y: 5}
+  _colliderOffset: {x: 0, y: 2.5}
+  _xpReward: 500
+  _dropTable:
+  - _item: {fileID: 11400000, guid: cf441f95aaaf89144ad75db94ba78e00, type: 2}
+    _quantity: 500
+    _chance: 1

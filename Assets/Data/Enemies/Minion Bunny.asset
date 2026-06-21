@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34cf45b7b163cfc41874e3f5975e1d29, type: 3}
+  m_Name: Minion Bunny
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  _enemyName: Minion Bunny
+  _sprite: {fileID: -7031021643315683800, guid: a8c5ab4cc4d9c6647a7e65a84fef8fc9, type: 3}
+  _animatorController: {fileID: 9100000, guid: a9591d013076010459ed4f2417e50197, type: 2}
+  _maxHealth: 25
+  _attackDamage: 10
+  _attackCooldown: 1.2
+  _respawnCooldown: 10
+  _colliderSize: {x: 1, y: 1}
+  _colliderOffset: {x: 0, y: 0}
+  _xpReward: 0
+  _dropTable: []

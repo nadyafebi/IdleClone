@@ -184,7 +184,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryMenu
   _document: {fileID: 8455398037843512376}
-  _tabCount: 1
 --- !u!114 &8455398037843512376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +348,10 @@ MonoBehaviour:
   _startSceneName: Start
   _townScene: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
   _townSceneName: Town
+  _bossArenaScene: {fileID: 102900000, guid: a9058ab4f4edfac4d8c87925ab5f5aab, type: 3}
+  _bossArenaSceneName: BossArena
+  _field3Scene: {fileID: 102900000, guid: 3347ef0647ba7824c866fc1c7b8e44ab, type: 3}
+  _field3SceneName: Field3
   _transitionFadeDuration: 1
   _saveRegistry: {fileID: 11400000, guid: 766c9a1f9b022a2438c36eedfc991afe, type: 2}
 --- !u!114 &842414625112250478

@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="BossHUD.uss"/>
+    <ui:VisualElement name="boss-hp-root" class="boss-hp-root" picking-mode="Ignore">
+        <ui:VisualElement class="boss-hp-panel">
+            <ui:Label name="boss-name-label" text="???" class="boss-name-label"/>
+            <ui:VisualElement class="boss-bar-track">
+                <ui:VisualElement class="boss-bar-frame"/>
+                <ui:VisualElement name="boss-hp-fill" class="boss-hp-fill"/>
+                <ui:Label name="boss-hp-amount" text="5000 / 5000" class="boss-hp-amount"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

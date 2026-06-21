@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
 
     public int CurrentHealth { get; private set; }
     public int MaxHealth => _maxHealth;
+    public bool IsInvulnerable { get; set; }
 
     public event Action OnDied;
     public event Action OnTookDamage;
@@ -39,7 +40,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (_isDead)
+        if (_isDead || IsInvulnerable)
             return;
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);

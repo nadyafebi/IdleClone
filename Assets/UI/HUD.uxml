@@ -9,7 +9,7 @@
             <ui:Button name="btn-offline-claim" text="Claim" class="offline-claim-btn"/>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="item-pickup-container" picking-mode="Ignore" class="item-pickup-container"/>
+<ui:VisualElement name="item-pickup-container" picking-mode="Ignore" class="item-pickup-container"/>
     <ui:VisualElement name="hud-panel" class="hud-area">
         <ui:VisualElement name="player-panel" class="hud-panel">
             <ui:Label name="player-class-label" text="Beginner" class="player-class-label"/>
