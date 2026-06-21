@@ -349,6 +349,7 @@ MonoBehaviour:
   _townScene: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
   _townSceneName: Town
   _transitionFadeDuration: 1
+  _saveRegistry: {fileID: 11400000, guid: 766c9a1f9b022a2438c36eedfc991afe, type: 2}
 --- !u!114 &842414625112250478
 MonoBehaviour:
   m_ObjectHideFlags: 0

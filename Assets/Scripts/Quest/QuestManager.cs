@@ -15,6 +15,9 @@ public class QuestManager : MonoBehaviour
 
     public event Action<QuestData> OnQuestUpdated;
 
+    public IReadOnlyDictionary<QuestData, QuestState> States        => _states;
+    public IReadOnlyDictionary<QuestData, int>        QuestKillCounts => _killCounts;
+
     #endregion
 
     #region Private Fields
@@ -152,6 +155,24 @@ public class QuestManager : MonoBehaviour
                 result.Add(kvp.Key);
         }
         return result;
+    }
+
+    public void LoadQuests(List<QuestSaveEntry> entries, SaveRegistry registry)
+    {
+        _states.Clear();
+        _killCounts.Clear();
+        foreach (QuestSaveEntry entry in entries)
+        {
+            QuestData quest = registry.FindQuest(entry.questName);
+            if (quest == null)
+            {
+                Debug.LogWarning($"[QuestManager] Unknown quest '{entry.questName}' in save — skipped.");
+                continue;
+            }
+            _states[quest] = (QuestState)entry.state;
+            if (entry.killCount > 0)
+                _killCounts[quest] = entry.killCount;
+        }
     }
 
     #endregion

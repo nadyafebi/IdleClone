@@ -17,7 +17,7 @@ public class PlayerProgression : MonoBehaviour
 
     private void Awake()
     {
-        CurrentClass = (PlayerClass)PlayerPrefs.GetInt("PlayerClass", (int)PlayerClass.Beginner);
+        CurrentClass = PlayerClass.Beginner;
     }
 
     #endregion
@@ -30,7 +30,6 @@ public class PlayerProgression : MonoBehaviour
             return;
 
         CurrentClass = newClass;
-        PlayerPrefs.SetInt("PlayerClass", (int)newClass);
         Debug.Log($"[PlayerProgression] Class changed to {newClass}");
         OnClassChanged?.Invoke(newClass);
     }

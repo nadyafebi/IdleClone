@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -83,6 +85,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float _transitionFadeDuration = 1f;
 
+    [Header("Save System")]
+    [SerializeField]
+    private SaveRegistry _saveRegistry;
+
     #endregion
 
     #region Public Properties
@@ -104,6 +110,7 @@ public class GameManager : MonoBehaviour
     public PlayerUpgrades PlayerUpgrades => _playerUpgrades;
     public PlayerSkills PlayerSkills => _playerSkills;
     public ItemTooltip ItemTooltip => _itemTooltip;
+    public SaveRegistry SaveRegistry => _saveRegistry;
 
     #endregion
 
@@ -112,6 +119,7 @@ public class GameManager : MonoBehaviour
     private string _previousSceneName;
     private bool _isTransitioning;
     private bool _isRespawning;
+    private bool _saveLoaded;
 
     #endregion
 
@@ -139,9 +147,14 @@ public class GameManager : MonoBehaviour
             _playerHealth.OnDied += RespawnPlayer;
     }
 
-    private void Start()
+    // IEnumerator Start lets us yield one frame so all other Start() calls finish
+    // before we restore save data on top of freshly initialized systems.
+    private IEnumerator Start()
     {
         SetGameUIVisible(SceneManager.GetActiveScene().name != _startSceneName);
+        yield return null;
+        LoadGame();
+        StartCoroutine(AutoSaveCoroutine());
     }
 
     private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
@@ -154,6 +167,7 @@ public class GameManager : MonoBehaviour
 
     public void TransitionToScene(string sceneName)
     {
+        SaveGame();
         _previousSceneName = SceneManager.GetActiveScene().name;
         _isTransitioning = true;
         Time.timeScale = 0f;
@@ -238,6 +252,101 @@ public class GameManager : MonoBehaviour
         _damagePopupSpawner.SetVisible(visible);
         _itemPickupNotifier.SetVisible(visible);
         _itemTooltip.SetVisible(visible);
+    }
+
+    #endregion
+
+    #region Save System
+
+    public void SaveGame()
+    {
+        if (!_saveLoaded)
+            return;
+        SaveSystem.Save(BuildSaveData());
+    }
+
+    private void LoadGame()
+    {
+        SaveData data = SaveSystem.Load();
+        if (data != null)
+            ApplySaveData(data);
+        _saveLoaded = true;
+    }
+
+    private void OnApplicationQuit() => SaveGame();
+
+    private SaveData BuildSaveData()
+    {
+        var data = new SaveData
+        {
+            level             = _playerLevel.Level,
+            currentXp         = _playerLevel.CurrentXp,
+            currentHealth     = _playerHealth.CurrentHealth,
+            playerClass       = (int)_playerProgression.CurrentClass,
+            strengthTier      = _playerUpgrades.StrengthTier,
+            resilienceTier    = _playerUpgrades.ResilienceTier,
+            vitalityTier      = _playerUpgrades.VitalityTier,
+            yieldTier         = _playerUpgrades.YieldTier,
+            fireballUnlocked  = _playerSkills.FireballUnlocked,
+            equippedWeapon    = _playerEquipment.WeaponSlot  != null ? _playerEquipment.WeaponSlot.name  : "",
+            equippedShield    = _playerEquipment.ShieldSlot  != null ? _playerEquipment.ShieldSlot.name  : "",
+            equippedPotion    = _playerEquipment.PotionSlot  != null ? _playerEquipment.PotionSlot.name  : "",
+            equippedPotionQty = _playerEquipment.PotionSlotQuantity,
+        };
+
+        data.inventory = new List<ItemSaveEntry>();
+        foreach (var kvp in _playerInventory.Items)
+            data.inventory.Add(new ItemSaveEntry { itemName = kvp.Key.name, quantity = kvp.Value });
+
+        data.quests = new List<QuestSaveEntry>();
+        foreach (var kvp in _questManager.States)
+            data.quests.Add(new QuestSaveEntry
+            {
+                questName = kvp.Key.name,
+                state     = (int)kvp.Value,
+                killCount = _questManager.QuestKillCounts.TryGetValue(kvp.Key, out int kills) ? kills : 0,
+            });
+
+        data.enemyKills = new List<EnemyKillEntry>();
+        foreach (var kvp in _enemyProgressTracker.KillCounts)
+            data.enemyKills.Add(new EnemyKillEntry { enemyName = kvp.Key.name, killCount = kvp.Value });
+
+        return data;
+    }
+
+    private void ApplySaveData(SaveData data)
+    {
+        if (_saveRegistry == null)
+        {
+            Debug.LogError("[GameManager] SaveRegistry is not assigned — save data cannot be loaded.");
+            return;
+        }
+
+        // Order matters: level and upgrades must be applied before health so MaxHealth is correct.
+        _playerLevel.LoadLevel(data.level, data.currentXp);
+        _playerUpgrades.LoadTiers(data.strengthTier, data.resilienceTier, data.vitalityTier, data.yieldTier);
+        _playerHealth.LoadHealth(data.currentHealth);
+        _playerEquipment.LoadEquipment(
+            _saveRegistry.FindItem(data.equippedWeapon),
+            _saveRegistry.FindItem(data.equippedShield),
+            _saveRegistry.FindItem(data.equippedPotion),
+            data.equippedPotionQty
+        );
+        _playerInventory.LoadItems(data.inventory, _saveRegistry);
+        _playerProgression.LoadClass((PlayerClass)data.playerClass);
+        _playerSkills.LoadFireball(data.fireballUnlocked);
+        _questManager.LoadQuests(data.quests, _saveRegistry);
+        _enemyProgressTracker.LoadKills(data.enemyKills, _saveRegistry);
+    }
+
+    private IEnumerator AutoSaveCoroutine()
+    {
+        var wait = new WaitForSeconds(60f);
+        while (true)
+        {
+            yield return wait;
+            SaveGame();
+        }
     }
 
     #endregion

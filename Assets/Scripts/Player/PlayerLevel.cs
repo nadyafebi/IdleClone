@@ -53,5 +53,13 @@ public class PlayerLevel : MonoBehaviour
         OnXpChanged?.Invoke(CurrentXp, XpToNextLevel);
     }
 
+    public void LoadLevel(int level, int xp)
+    {
+        Level     = level;
+        CurrentXp = xp;
+        OnLevelChanged?.Invoke(Level);
+        OnXpChanged?.Invoke(CurrentXp, XpToNextLevel);
+    }
+
     #endregion
 }

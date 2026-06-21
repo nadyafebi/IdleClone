@@ -80,5 +80,15 @@ public class PlayerEquipment : MonoBehaviour
         _ => null,
     };
 
+    public void LoadEquipment(ItemData weapon, ItemData shield, ItemData potion, int potionQty)
+    {
+        WeaponSlot = weapon;
+        ShieldSlot = shield;
+        bool validPotion = potion != null && potionQty > 0;
+        PotionSlot         = validPotion ? potion   : null;
+        PotionSlotQuantity = validPotion ? potionQty : 0;
+        OnEquipmentChanged?.Invoke();
+    }
+
     #endregion
 }

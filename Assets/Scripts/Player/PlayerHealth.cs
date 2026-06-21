@@ -82,6 +82,14 @@ public class PlayerHealth : MonoBehaviour
         OnHealthChanged?.Invoke(CurrentHealth, _stats.MaxHealth);
     }
 
+    public void LoadHealth(int health)
+    {
+        _isDead = false;
+        _previousMaxHealth = _stats.MaxHealth;
+        CurrentHealth = Mathf.Clamp(health, 1, _stats.MaxHealth);
+        OnHealthChanged?.Invoke(CurrentHealth, _stats.MaxHealth);
+    }
+
     #endregion
 
     #region Private Methods

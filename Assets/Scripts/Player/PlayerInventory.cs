@@ -49,5 +49,23 @@ public class PlayerInventory : MonoBehaviour
         return true;
     }
 
+    public void LoadItems(List<ItemSaveEntry> entries, SaveRegistry registry)
+    {
+        _items.Clear();
+        foreach (ItemSaveEntry entry in entries)
+        {
+            if (entry.quantity <= 0)
+                continue;
+            ItemData item = registry.FindItem(entry.itemName);
+            if (item == null)
+            {
+                Debug.LogWarning($"[PlayerInventory] Unknown item '{entry.itemName}' in save — skipped.");
+                continue;
+            }
+            _items[item] = entry.quantity;
+        }
+        OnChanged?.Invoke();
+    }
+
     #endregion
 }

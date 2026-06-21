@@ -77,8 +77,6 @@ public class PlayerSkills : MonoBehaviour
     private float _barrierCooldownRemaining;
     private float _fireballCooldownRemaining;
 
-    private const string FireballUnlockedKey = "FireballUnlocked";
-
     #endregion
 
     #region Unity Lifecycle
@@ -96,7 +94,6 @@ public class PlayerSkills : MonoBehaviour
         }
 
         _playerEquipment.OnEquipmentChanged += HandleEquipmentChanged;
-        FireballUnlocked = PlayerPrefs.GetInt(FireballUnlockedKey, 0) == 1;
         OnSkillStateChanged?.Invoke();
     }
 
@@ -229,9 +226,13 @@ public class PlayerSkills : MonoBehaviour
             return;
 
         FireballUnlocked = true;
-        PlayerPrefs.SetInt(FireballUnlockedKey, 1);
-        PlayerPrefs.Save();
         Debug.Log("[PlayerSkills] Fireball unlocked.");
+        OnSkillStateChanged?.Invoke();
+    }
+
+    public void LoadFireball(bool unlocked)
+    {
+        FireballUnlocked = unlocked;
         OnSkillStateChanged?.Invoke();
     }
 

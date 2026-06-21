@@ -8,6 +8,8 @@ public class EnemyProgressTracker : MonoBehaviour
 
     public event Action<EnemyData> OnKillCountUpdated;
 
+    public IReadOnlyDictionary<EnemyData, int> KillCounts => _killCounts;
+
     #endregion
 
     #region Private Fields
@@ -32,6 +34,22 @@ public class EnemyProgressTracker : MonoBehaviour
             return 0;
         _killCounts.TryGetValue(enemy, out int count);
         return count;
+    }
+
+    public void LoadKills(List<EnemyKillEntry> entries, SaveRegistry registry)
+    {
+        _killCounts.Clear();
+        foreach (EnemyKillEntry entry in entries)
+        {
+            EnemyData enemy = registry.FindEnemy(entry.enemyName);
+            if (enemy == null)
+            {
+                Debug.LogWarning($"[EnemyProgressTracker] Unknown enemy '{entry.enemyName}' in save — skipped.");
+                continue;
+            }
+            if (entry.killCount > 0)
+                _killCounts[enemy] = entry.killCount;
+        }
     }
 
     #endregion
