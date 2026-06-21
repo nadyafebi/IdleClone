@@ -10,7 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9024d1781799b6f4b9de84bc0207d71a, type: 3}
-  m_Name: Wingus_CompleteAll
+  m_Name: Wingus_6_Offer
   m_EditorClassIdentifier: Assembly-CSharp::DialogData
   Lines:
-  - You finished everything! You can move on with your life now.
+  - 'I think you''re ready for the final quest: defeat the final boss!'
+  - Yeah, yeah, this game is short and only has 1 boss. So what?
+  - To get to the boss, you need to use the key you get from the bunnies.
+  - I heard he's pretty strong though, so good luck, have fun.

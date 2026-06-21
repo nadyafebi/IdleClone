@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9024d1781799b6f4b9de84bc0207d71a, type: 3}
-  m_Name: Wingus_CompleteAll
+  m_Name: Wingus_6_Active
   m_EditorClassIdentifier: Assembly-CSharp::DialogData
   Lines:
-  - You finished everything! You can move on with your life now.
+  - Did you get your teeth kicked in by the final boss?

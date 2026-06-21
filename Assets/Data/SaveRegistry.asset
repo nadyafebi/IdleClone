@@ -35,10 +35,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e43d2d092ad7a347b04a4e67f67e896, type: 2}
   - {fileID: 11400000, guid: ad855cf3368d2bd49a16c6f72d021c2f, type: 2}
   - {fileID: 11400000, guid: bd9b47a51e2215147a714ceeda6c5c80, type: 2}
+  - {fileID: 11400000, guid: d77ff697d480fd34bb607b96c6b20a4d, type: 2}
   _enemies:
   - {fileID: 11400000, guid: e657342593934e4468d7354ab2ecf4d4, type: 2}
   - {fileID: 11400000, guid: 2c4005073ba97d445a1145c017962aee, type: 2}
   - {fileID: 11400000, guid: 5157f3b5f7db07549be1da11f91998c7, type: 2}
+  - {fileID: 11400000, guid: cd43903bdc743b64e90362ee2534df97, type: 2}
   _resources:
   - {fileID: 11400000, guid: 7a19ebd35d89e684d9c5516eb4026619, type: 2}
   - {fileID: 11400000, guid: 7dc957fe37e0c734b8697719f153009d, type: 2}

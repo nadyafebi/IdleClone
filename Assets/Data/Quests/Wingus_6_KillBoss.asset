@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ffd6c26ac59ad44cbf2c72ae52595f8, type: 3}
+  m_Name: Wingus_6_KillBoss
+  m_EditorClassIdentifier: Assembly-CSharp::QuestData
+  QuestName: The Final Boss
+  Type: 0
+  TargetEnemy: {fileID: 11400000, guid: cd43903bdc743b64e90362ee2534df97, type: 2}
+  TargetItem: {fileID: 0}
+  TargetUpgradeType: 0
+  RequiredCount: 1
+  OfferDialog: {fileID: 11400000, guid: 064147a2acf90474c815df34731a15fb, type: 2}
+  ActiveDialog: {fileID: 11400000, guid: b0c276ad7f144304a9edb2eaac8bd691, type: 2}
+  CompleteDialog: {fileID: 11400000, guid: 50d2b138036c967438af5335f347a587, type: 2}
+  LockedDialog: {fileID: 0}
+  ItemRewards: []
+  XpReward: 1000
+  UnlockFireball: 0
+  Dependency: {fileID: 0}
