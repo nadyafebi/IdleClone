@@ -288,7 +288,11 @@ public class BossController : MonoBehaviour
 
         enemy.SetData(_minionData);
         health.ResetHealth();
-        health.OnDied += HandleMinionDied;
+        health.OnDied += () =>
+        {
+            _minionDeathCount++;
+            Destroy(go);
+        };
 
         PlatformNode node = _graphBuilder.FindNearestNode(position, groundOnly: true);
         if (node != null)
@@ -296,8 +300,6 @@ public class BossController : MonoBehaviour
 
         return true;
     }
-
-    private void HandleMinionDied() => _minionDeathCount++;
 
     private void HandleBossDied()
     {
@@ -308,6 +310,7 @@ public class BossController : MonoBehaviour
 
         // Enemy.HandleDied() is also subscribed to OnDied and fires OnAnyEnemyKilled,
         // so EnemyProgressTracker and Quest 8 are notified automatically.
+        Destroy(gameObject);
     }
 
     private bool CheckAndTriggerDefense()

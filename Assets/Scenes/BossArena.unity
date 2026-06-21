@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossController
   _bossData: {fileID: 11400000, guid: cd43903bdc743b64e90362ee2534df97, type: 2}
   _exitPortal: {fileID: 1438726671}
-  _minionPrefab: {fileID: 149283150}
+  _minionPrefab: {fileID: 8436414018492821479, guid: 39269b4d5bb0d7b4882c195ad9df28eb, type: 3}
   _minionData: {fileID: 11400000, guid: 2abdbb18ed785414da81eaf8fe1c893d, type: 2}
   _minionSpawnPoints:
   - {fileID: 1423680079}
