@@ -2105,10 +2105,10 @@ PrefabInstance:
     - target: {fileID: 8727123454206855361, guid: 0ed85a081554b0d4eb66723cda6623a0, type: 3}
       propertyPath: _targetScene
       value: 
-      objectReference: {fileID: 102900000, guid: 8f7a5fa1eff212a42b18fe031010e035, type: 3}
+      objectReference: {fileID: 102900000, guid: a9058ab4f4edfac4d8c87925ab5f5aab, type: 3}
     - target: {fileID: 8727123454206855361, guid: 0ed85a081554b0d4eb66723cda6623a0, type: 3}
       propertyPath: _targetSceneName
-      value: Field2
+      value: BossArena
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

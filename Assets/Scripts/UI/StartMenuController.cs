@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,6 +9,13 @@ public class StartMenuController : MonoBehaviour
 
     [SerializeField]
     private UIDocument _document;
+
+    #endregion
+
+    #region Private Fields
+
+    private Label _afkLabel;
+    private long _saveTimestamp;
 
     #endregion
 
@@ -33,9 +41,9 @@ public class StartMenuController : MonoBehaviour
                 cheatPanel.style.display = visible ? DisplayStyle.None : DisplayStyle.Flex;
             });
 
-        root.Q<Button>("btn-add-5m") ?.RegisterCallback<ClickEvent>(_ => SubtractTimestamp(root, 5  * 60));
-        root.Q<Button>("btn-add-30m")?.RegisterCallback<ClickEvent>(_ => SubtractTimestamp(root, 30 * 60));
-        root.Q<Button>("btn-add-1h") ?.RegisterCallback<ClickEvent>(_ => SubtractTimestamp(root, 60 * 60));
+        root.Q<Button>("btn-add-5m") ?.RegisterCallback<ClickEvent>(_ => SubtractTimestamp(5  * 60));
+        root.Q<Button>("btn-add-30m")?.RegisterCallback<ClickEvent>(_ => SubtractTimestamp(30 * 60));
+        root.Q<Button>("btn-add-1h") ?.RegisterCallback<ClickEvent>(_ => SubtractTimestamp(60 * 60));
 
         if (!hasSave)
             return;
@@ -77,8 +85,10 @@ public class StartMenuController : MonoBehaviour
 
         if (data.saveTimestamp > 0)
         {
-            long secondsAgo = DateTimeOffset.UtcNow.ToUnixTimeSeconds() - data.saveTimestamp;
-            root.Q<Label>("lbl-afk").text = $"{FormatTime(secondsAgo)} AFK";
+            _saveTimestamp = data.saveTimestamp;
+            _afkLabel = root.Q<Label>("lbl-afk");
+            RefreshAfkLabel();
+            StartCoroutine(TickAfkLabel());
         }
     }
 
@@ -93,7 +103,24 @@ public class StartMenuController : MonoBehaviour
         return $"{minutes}m";
     }
 
-    private void SubtractTimestamp(VisualElement root, long seconds)
+    private void RefreshAfkLabel()
+    {
+        if (_afkLabel == null) return;
+        long secondsAgo = DateTimeOffset.UtcNow.ToUnixTimeSeconds() - _saveTimestamp;
+        _afkLabel.text = $"{FormatTime(secondsAgo)} AFK";
+    }
+
+    private IEnumerator TickAfkLabel()
+    {
+        var wait = new WaitForSeconds(60f);
+        while (true)
+        {
+            yield return wait;
+            RefreshAfkLabel();
+        }
+    }
+
+    private void SubtractTimestamp(long seconds)
     {
         SaveData data = SaveSystem.Load();
         if (data == null || data.saveTimestamp <= 0) return;
@@ -103,8 +130,8 @@ public class StartMenuController : MonoBehaviour
 
         GameManager.Instance.RecomputeOfflineResult();
 
-        long secondsAgo = DateTimeOffset.UtcNow.ToUnixTimeSeconds() - data.saveTimestamp;
-        root.Q<Label>("lbl-afk").text = $"{FormatTime(secondsAgo)} AFK";
+        _saveTimestamp = data.saveTimestamp;
+        RefreshAfkLabel();
     }
 
     private void DeleteSave(VisualElement root)

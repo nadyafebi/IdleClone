@@ -10,6 +10,8 @@ public class PlayerCombat : MonoBehaviour
     public bool IsAttacking => _attackCoroutine != null;
     public float AttackRange => _stats != null ? _stats.AttackRange : 0f;
     public EnemyData CurrentTargetData => _target != null ? _target.GetComponent<Enemy>()?.Data : null;
+    // Persists after enemy death so the save system can record the intended AFK target.
+    public EnemyData LastKnownTargetData => CurrentTargetData ?? _lastKnownTargetData;
 
     public event Action OnTargetOutOfRange;
     public event Action OnTargetKilled;
@@ -19,6 +21,7 @@ public class PlayerCombat : MonoBehaviour
     #region Private Fields
 
     private EnemyHealth _target;
+    private EnemyData _lastKnownTargetData;
     private Coroutine _attackCoroutine;
     private PlayerMovement _playerMovement;
     private PlayerStats _stats;
@@ -64,6 +67,7 @@ public class PlayerCombat : MonoBehaviour
 
         StopAttacking();
         _target = target;
+        _lastKnownTargetData = target.GetComponent<Enemy>()?.Data;
         _target.OnDied += HandleTargetDied;
         _attackCoroutine = StartCoroutine(AttackLoop());
     }
@@ -80,6 +84,11 @@ public class PlayerCombat : MonoBehaviour
             _target.OnDied -= HandleTargetDied;
             _target = null;
         }
+    }
+
+    public void ClearLastTarget()
+    {
+        _lastKnownTargetData = null;
     }
 
     #endregion

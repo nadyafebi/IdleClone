@@ -188,6 +188,8 @@ public class EnemyInteraction : Interactable
 
         // Don't hide the cursor here — PlayerMovement's handler will show the ground cursor.
         CancelState();
+        if (_playerCombat != null)
+            _playerCombat.ClearLastTarget();
     }
 
     private void HandlePlayerMovedAway()
@@ -195,6 +197,8 @@ public class EnemyInteraction : Interactable
         // Player started moving toward something else — cancel without hiding cursor since the
         // new target manages its own cursor.
         CancelState();
+        if (_playerCombat != null)
+            _playerCombat.ClearLastTarget();
     }
 
     private void HandleEnemyMovedAway()

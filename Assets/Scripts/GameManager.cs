@@ -378,7 +378,7 @@ public class GameManager : MonoBehaviour
         // Capture current combat/gathering target for offline progression
         var combat    = FindFirstObjectByType<PlayerCombat>();
         var gathering = FindFirstObjectByType<PlayerGathering>();
-        EnemyData    enemyTarget    = combat?.CurrentTargetData;
+        EnemyData    enemyTarget    = combat?.LastKnownTargetData;
         ResourceData resourceTarget = gathering?.CurrentTargetData;
 
         if (enemyTarget != null)
