@@ -87,5 +87,15 @@ public class DamagePopupSpawner : MonoBehaviour
             spawner.SpawnText(worldPos, $"Lv. {level} required", spawner._levelRequiredColor);
     }
 
+    public static void TrySpawnKeyRequired(Vector2 worldPos)
+    {
+        if (GameManager.Instance == null)
+            return;
+
+        DamagePopupSpawner spawner = GameManager.Instance.DamagePopupSpawner;
+        if (spawner != null)
+            spawner.SpawnText(worldPos, "Key required", spawner._levelRequiredColor);
+    }
+
     #endregion
 }

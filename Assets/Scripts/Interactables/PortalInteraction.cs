@@ -131,6 +131,8 @@ public class PortalInteraction : Interactable
 
         if (IsLocked())
         {
+            if (_lockType == PortalLockType.Key)
+                DamagePopupSpawner.TrySpawnKeyRequired(transform.position);
             Debug.Log($"[PortalInteraction] {gameObject.name} is locked.");
             return;
         }
@@ -190,7 +192,8 @@ public class PortalInteraction : Interactable
         GameObject iconObj = new GameObject("Icon");
         iconObj.transform.SetParent(_indicatorRoot.transform, false);
         iconObj.transform.localPosition = new(0.25f, 0f, 0f);
-        iconObj.transform.localScale = Vector3.one * _indicatorIconSize;
+        float iconScale = _lockType == PortalLockType.Key ? 0.5f : _indicatorIconSize;
+        iconObj.transform.localScale = Vector3.one * iconScale;
         SpriteRenderer iconRenderer = iconObj.AddComponent<SpriteRenderer>();
         iconRenderer.sprite = icon;
         iconRenderer.sortingOrder = 20;
