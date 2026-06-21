@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -114,15 +115,18 @@ public class GameManager : MonoBehaviour
     public PlayerSkills PlayerSkills => _playerSkills;
     public ItemTooltip ItemTooltip => _itemTooltip;
     public SaveRegistry SaveRegistry => _saveRegistry;
+    public string StartSceneName => _startSceneName;
+    public OfflineProgressionResult PendingOfflineResult { get; private set; }
 
     #endregion
 
     #region Private Fields
 
-    private string _previousSceneName;
-    private bool _isTransitioning;
-    private bool _isRespawning;
-    private bool _saveLoaded;
+    private string   _previousSceneName;
+    private bool     _isTransitioning;
+    private bool     _isRespawning;
+    private bool     _saveLoaded;
+    private SaveData _loadedSaveData;
 
     #endregion
 
@@ -180,6 +184,30 @@ public class GameManager : MonoBehaviour
     public void TransitionToTownScene() => TransitionToScene(_townSceneName);
 
     public void TransitionToStartScene() => TransitionToScene(_startSceneName);
+
+    public void TransitionToLastSavedScene()
+    {
+        string sceneName = _loadedSaveData != null
+            && !string.IsNullOrEmpty(_loadedSaveData.lastScene)
+            && _loadedSaveData.lastScene != _startSceneName
+                ? _loadedSaveData.lastScene
+                : _townSceneName;
+        TransitionToScene(sceneName);
+    }
+
+    public void ClearPendingOfflineResult() => PendingOfflineResult = null;
+
+    public void RecomputeOfflineResult()
+    {
+        SaveData data = SaveSystem.Load();
+        if (data == null || _playerStats == null || _playerStats.StatsData == null) return;
+        _loadedSaveData = data;
+        PendingOfflineResult = OfflineProgressionCalculator.Calculate(
+            data,
+            _saveRegistry,
+            _playerStats.StatsData,
+            DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+    }
 
     public void RespawnPlayer()
     {
@@ -266,7 +294,10 @@ public class GameManager : MonoBehaviour
     {
         if (!_saveLoaded)
             return;
-        SaveSystem.Save(BuildSaveData());
+        if (SceneManager.GetActiveScene().name == _startSceneName)
+            return;
+        _loadedSaveData = BuildSaveData();
+        SaveSystem.Save(_loadedSaveData);
     }
 
     public void DeleteSave()
@@ -279,7 +310,19 @@ public class GameManager : MonoBehaviour
     {
         SaveData data = SaveSystem.Load();
         if (data != null)
+        {
+            _loadedSaveData = data;
             ApplySaveData(data);
+
+            if (_playerStats != null && _playerStats.StatsData != null)
+            {
+                PendingOfflineResult = OfflineProgressionCalculator.Calculate(
+                    data,
+                    _saveRegistry,
+                    _playerStats.StatsData,
+                    DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+            }
+        }
         _saveLoaded = true;
     }
 
@@ -302,7 +345,34 @@ public class GameManager : MonoBehaviour
             equippedShield    = _playerEquipment.ShieldSlot  != null ? _playerEquipment.ShieldSlot.name  : "",
             equippedPotion    = _playerEquipment.PotionSlot  != null ? _playerEquipment.PotionSlot.name  : "",
             equippedPotionQty = _playerEquipment.PotionSlotQuantity,
+            lastScene         = SceneManager.GetActiveScene().name,
+            saveTimestamp     = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
         };
+
+        // Capture current combat/gathering target for offline progression
+        var combat    = FindFirstObjectByType<PlayerCombat>();
+        var gathering = FindFirstObjectByType<PlayerGathering>();
+        EnemyData    enemyTarget    = combat?.CurrentTargetData;
+        ResourceData resourceTarget = gathering?.CurrentTargetData;
+
+        if (enemyTarget != null)
+        {
+            data.lastTargetType        = "enemy";
+            data.lastTargetName        = enemyTarget.name;
+            data.lastTargetDisplayName = enemyTarget.EnemyName;
+        }
+        else if (resourceTarget != null)
+        {
+            data.lastTargetType        = "resource";
+            data.lastTargetName        = resourceTarget.name;
+            data.lastTargetDisplayName = resourceTarget.ResourceName;
+        }
+        else
+        {
+            data.lastTargetType        = "none";
+            data.lastTargetName        = "";
+            data.lastTargetDisplayName = "";
+        }
 
         data.inventory = new List<ItemSaveEntry>();
         foreach (var kvp in _playerInventory.Items)

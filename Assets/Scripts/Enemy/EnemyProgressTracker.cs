@@ -36,6 +36,14 @@ public class EnemyProgressTracker : MonoBehaviour
         return count;
     }
 
+    public void AddKills(EnemyData enemy, int count)
+    {
+        if (enemy == null || count <= 0) return;
+        _killCounts.TryGetValue(enemy, out int current);
+        _killCounts[enemy] = current + count;
+        OnKillCountUpdated?.Invoke(enemy);
+    }
+
     public void LoadKills(List<EnemyKillEntry> entries, SaveRegistry registry)
     {
         _killCounts.Clear();

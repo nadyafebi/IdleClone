@@ -17,6 +17,7 @@ MonoBehaviour:
   _animatorController: {fileID: 9100000, guid: 753a905a0463acb4f9e84074be49a69e, type: 2}
   _maxHealth: 12
   _attackDamage: 6
+  _attackCooldown: 1.5
   _respawnCooldown: 10
   _colliderSize: {x: 1, y: 1}
   _colliderOffset: {x: 0, y: 0}

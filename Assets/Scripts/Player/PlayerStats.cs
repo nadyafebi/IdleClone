@@ -44,6 +44,8 @@ public class PlayerStats : MonoBehaviour
     public float ClimbSpeed => _data.ClimbSpeed;
     public float JumpArcHeight => _data.JumpArcHeight;
 
+    public PlayerStatsData StatsData => _data;
+
     public event Action OnMaxHealthChanged;
 
     #endregion

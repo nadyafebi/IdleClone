@@ -55,6 +55,10 @@ public class EnemyData : ScriptableObject
     [Min(0)]
     private int _attackDamage = 5;
 
+    [SerializeField]
+    [Min(0.1f)]
+    private float _attackCooldown = 1f;
+
     [Header("Spawning")]
     [SerializeField]
     [Tooltip("Seconds before a dead enemy respawns.")]
@@ -82,13 +86,15 @@ public class EnemyData : ScriptableObject
 
     public string EnemyName => _enemyName;
     public int MaxHealth => _maxHealth;
+    public int AttackDamage => _attackDamage;
+    public float AttackCooldown => _attackCooldown;
     public Sprite Sprite => _sprite;
     public RuntimeAnimatorController AnimatorController => _animatorController;
     public float RespawnCooldown => _respawnCooldown;
     public Vector2 ColliderSize => _colliderSize;
     public Vector2 ColliderOffset => _colliderOffset;
     public int XpReward => _xpReward;
-    public int AttackDamage => _attackDamage;
+    public IReadOnlyList<DropTableEntry> DropTable => _dropTable;
 
     #endregion
 

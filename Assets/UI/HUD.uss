@@ -218,3 +218,88 @@
     font-size: 14px;
     color: rgb(0, 0, 0);
 }
+
+/* ── Offline Progression Panel ──────────────────────────────── */
+
+.offline-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.65);
+}
+
+.offline-panel {
+    width: 340px;
+    padding: 20px 24px;
+    align-items: center;
+    -unity-slice-scale: 0.5px;
+    -unity-slice-type: tiled;
+    -unity-slice-left: 8;
+    -unity-slice-top: 8;
+    -unity-slice-right: 8;
+    -unity-slice-bottom: 8;
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=5707218116961789024&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_0");
+}
+
+.offline-title {
+    font-size: 22px;
+    -unity-font-style: bold;
+    color: rgb(0, 0, 0);
+    margin-bottom: 6px;
+}
+
+.offline-title--died {
+    color: rgb(180, 0, 0);
+}
+
+.offline-subtitle {
+    font-size: 13px;
+    color: rgb(60, 60, 60);
+    white-space: normal;
+    -unity-text-align: upper-center;
+    margin-bottom: 4px;
+}
+
+.offline-activity {
+    font-size: 14px;
+    color: rgb(0, 60, 120);
+    -unity-font-style: bold;
+    margin-bottom: 12px;
+}
+
+.offline-rewards-list {
+    align-self: stretch;
+    margin-bottom: 16px;
+}
+
+.offline-reward-row {
+    font-size: 14px;
+    color: rgb(30, 30, 30);
+    margin-bottom: 3px;
+    padding-left: 8px;
+}
+
+.offline-claim-btn {
+    width: 160px;
+    -unity-font-style: bold;
+    background-color: rgba(188, 188, 188, 0);
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+    background-image: url("project://database/Assets/Sprites/ui.png?fileID=-309200935&guid=4460c756e89c53a4388e8c384ea430b4&type=3#ui_17");
+    -unity-slice-left: 12;
+    -unity-slice-top: 12;
+    -unity-slice-right: 12;
+    -unity-slice-bottom: 12;
+    -unity-slice-type: tiled;
+    -unity-slice-scale: 0.4px;
+}
+
+.offline-claim-btn:hover {
+    scale: 1.05 1.05;
+}

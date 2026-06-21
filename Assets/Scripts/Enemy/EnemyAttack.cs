@@ -7,11 +7,6 @@ public class EnemyAttack : MonoBehaviour
     #region Serialized Fields
 
     [SerializeField]
-    [Min(0.1f)]
-    [Tooltip("Seconds between attacks.")]
-    private float _attackCooldown = 1.5f;
-
-    [SerializeField]
     [Tooltip("Layer mask for the player collider.")]
     private LayerMask _playerLayer;
 
@@ -90,7 +85,7 @@ public class EnemyAttack : MonoBehaviour
         if (Time.time < _nextAttackTime)
             return;
 
-        _nextAttackTime = Time.time + _attackCooldown;
+        _nextAttackTime = Time.time + _data.AttackCooldown;
 
         if (GameManager.Instance == null)
             return;

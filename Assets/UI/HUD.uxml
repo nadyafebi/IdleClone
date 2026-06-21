@@ -1,5 +1,14 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/HUD.uss?fileID=7433441132597879392&amp;guid=bdaf38c3c5249904ab9cc57a843d936c&amp;type=3#HUD"/>
+    <ui:VisualElement name="offline-overlay" class="offline-overlay" style="display: none;">
+        <ui:VisualElement class="offline-panel">
+            <ui:Label name="lbl-offline-title" text="AFK Gains" class="offline-title"/>
+            <ui:Label name="lbl-offline-time" text="" class="offline-subtitle"/>
+            <ui:Label name="lbl-offline-activity" text="" class="offline-activity"/>
+            <ui:VisualElement name="offline-rewards-list" class="offline-rewards-list"/>
+            <ui:Button name="btn-offline-claim" text="Claim" class="offline-claim-btn"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
     <ui:VisualElement name="item-pickup-container" picking-mode="Ignore" class="item-pickup-container"/>
     <ui:VisualElement name="hud-panel" class="hud-area">
         <ui:VisualElement name="player-panel" class="hud-panel">

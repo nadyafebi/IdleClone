@@ -15,13 +15,17 @@ public class SaveRegistry : ScriptableObject
     [SerializeField]
     private EnemyData[] _enemies;
 
+    [SerializeField]
+    private ResourceData[] _resources;
+
     #endregion
 
     #region Private Fields
 
-    private Dictionary<string, ItemData>  _itemLookup;
-    private Dictionary<string, QuestData> _questLookup;
-    private Dictionary<string, EnemyData> _enemyLookup;
+    private Dictionary<string, ItemData>     _itemLookup;
+    private Dictionary<string, QuestData>    _questLookup;
+    private Dictionary<string, EnemyData>    _enemyLookup;
+    private Dictionary<string, ResourceData> _resourceLookup;
 
     #endregion
 
@@ -30,18 +34,20 @@ public class SaveRegistry : ScriptableObject
     // Clear cached dictionaries when the SO is disabled (e.g. between Play-mode sessions in the Editor).
     private void OnDisable()
     {
-        _itemLookup  = null;
-        _questLookup = null;
-        _enemyLookup = null;
+        _itemLookup     = null;
+        _questLookup    = null;
+        _enemyLookup    = null;
+        _resourceLookup = null;
     }
 
     #endregion
 
     #region Public Methods
 
-    public ItemData  FindItem(string itemName)   => Find(ref _itemLookup,  _items,   itemName);
-    public QuestData FindQuest(string questName) => Find(ref _questLookup, _quests,  questName);
-    public EnemyData FindEnemy(string enemyName) => Find(ref _enemyLookup, _enemies, enemyName);
+    public ItemData     FindItem(string itemName)         => Find(ref _itemLookup,     _items,     itemName);
+    public QuestData    FindQuest(string questName)       => Find(ref _questLookup,    _quests,    questName);
+    public EnemyData    FindEnemy(string enemyName)       => Find(ref _enemyLookup,    _enemies,   enemyName);
+    public ResourceData FindResource(string resourceName) => Find(ref _resourceLookup, _resources, resourceName);
 
     #endregion
 

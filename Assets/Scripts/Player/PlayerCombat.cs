@@ -9,6 +9,7 @@ public class PlayerCombat : MonoBehaviour
 
     public bool IsAttacking => _attackCoroutine != null;
     public float AttackRange => _stats != null ? _stats.AttackRange : 0f;
+    public EnemyData CurrentTargetData => _target != null ? _target.GetComponent<Enemy>()?.Data : null;
 
     public event Action OnTargetOutOfRange;
     public event Action OnTargetKilled;

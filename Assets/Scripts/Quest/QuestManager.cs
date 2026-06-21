@@ -157,6 +157,21 @@ public class QuestManager : MonoBehaviour
         return result;
     }
 
+    public void AddOfflineKills(EnemyData enemy, int count)
+    {
+        if (enemy == null || count <= 0) return;
+        foreach (var kvp in _states)
+        {
+            QuestData quest = kvp.Key;
+            if (kvp.Value != QuestState.Active) continue;
+            if (quest.Type != QuestType.Kill || quest.TargetEnemy != enemy) continue;
+
+            _killCounts.TryGetValue(quest, out int current);
+            _killCounts[quest] = current + count;
+            OnQuestUpdated?.Invoke(quest);
+        }
+    }
+
     public void LoadQuests(List<QuestSaveEntry> entries, SaveRegistry registry)
     {
         _states.Clear();

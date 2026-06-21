@@ -24,6 +24,13 @@ public class SaveData
     public List<ItemSaveEntry>  inventory  = new();
     public List<QuestSaveEntry> quests     = new();
     public List<EnemyKillEntry> enemyKills = new();
+
+    // AFK / offline progression
+    public string lastScene             = "";
+    public string lastTargetType        = "none"; // "none" | "enemy" | "resource"
+    public string lastTargetName        = "";     // SO asset name for registry lookup
+    public string lastTargetDisplayName = "";     // human-readable display name
+    public long   saveTimestamp         = 0L;     // UTC Unix seconds
 }
 
 [Serializable]

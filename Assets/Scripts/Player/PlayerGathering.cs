@@ -9,6 +9,7 @@ public class PlayerGathering : MonoBehaviour
 
     public bool IsGathering => _gatherCoroutine != null;
     public float GatherRange => _stats != null ? _stats.GatherRange : 0f;
+    public ResourceData CurrentTargetData => _target != null ? _target.GetComponent<ResourceNode>()?.Data : null;
 
     public event Action OnTargetOutOfRange;
 

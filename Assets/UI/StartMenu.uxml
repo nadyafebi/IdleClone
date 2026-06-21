@@ -5,8 +5,10 @@
         <ui:VisualElement class="menu-panel">
             <ui:Button name="btn-new-game" text="New Game" class="btn-start"/>
             <ui:VisualElement name="save-panel" class="save-panel">
-                <ui:VisualElement name="info-panel" class="info-panel">
+                <ui:VisualElement name="info-panel" class="info-panel" style="background-color: rgba(0, 0, 0, 0);">
                     <ui:Label name="lbl-level" text="Level 1" class="lbl-level"/>
+                    <ui:Label name="lbl-activity" text="" class="lbl-activity" style="display: none;"/>
+                    <ui:Label name="lbl-afk" text="" class="lbl-afk"/>
                 </ui:VisualElement>
                 <ui:VisualElement class="save-actions">
                     <ui:Button name="btn-load" text="Load Game" class="btn-start"/>
@@ -16,5 +18,13 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement class="cheat-container">
+        <ui:VisualElement name="cheat-panel" class="cheat-panel" style="display: none;">
+            <ui:Button name="btn-add-5m"  text="+5 minutes"  class="cheat-time-btn"/>
+            <ui:Button name="btn-add-30m" text="+30 minutes" class="cheat-time-btn"/>
+            <ui:Button name="btn-add-1h"  text="+1 hour"     class="cheat-time-btn"/>
+        </ui:VisualElement>
+        <ui:Button name="btn-cheat-toggle" text="Cheat" class="cheat-toggle-btn"/>
     </ui:VisualElement>
 </ui:UXML>
